@@ -78,11 +78,28 @@ a {
   width: 44px;
   height: 44px;
   object-fit: contain;
+  transition: all 0.4s ease-in-out;
+}
+.brand img:hover {
+  transform: rotate(-4deg) scale(1.1);
+  transition: all 0.4s ease-in-out;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
 }
 .refresh img {
   width: 34px;
   height: 34px;
   object-fit: contain;
+  transition: all 0.5s ease-in-out;
+}
+
+.refresh img:hover {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  transform: rotate(360deg);
+  transition: all 0.5s ease-in-out;
 }
 
 .site-nav {
@@ -95,6 +112,14 @@ a {
   text-decoration: none;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.site-nav a:hover {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  scale: 1.05;
+  transition: all 0.2s ease-in-out;
 }
 
 .hero {
