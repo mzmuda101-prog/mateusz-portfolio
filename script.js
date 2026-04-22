@@ -6,6 +6,12 @@ const projects = {
     accentDeep: "#245849",
     glow: "rgba(47, 111, 92, 0.22)",
     glowSoft: "rgba(168, 217, 184, 0.18)",
+    repoTheme: {
+      fillStrength: "18%",
+      borderStrength: "28%",
+      shadowStrength: "24%",
+      softGlowSize: "52%",
+    },
     description:
       "Offline-first aplikacja do przeglądania, filtrowania, analizowania i lekkiego przekształcania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
     image: "./assets/excel-workbench-pwa-2.png",
@@ -34,6 +40,12 @@ const projects = {
     accentDeep: "#294676",
     glow: "rgba(63, 109, 181, 0.2)",
     glowSoft: "rgba(122, 162, 224, 0.18)",
+    repoTheme: {
+      fillStrength: "16%",
+      borderStrength: "24%",
+      shadowStrength: "22%",
+      softGlowSize: "50%",
+    },
     description:
       "Modularne narzędzie desktopowe do pracy z workbookami Excela, z wyraźnym podziałem logiki na moduły odpowiedzialne za filtrowanie, formatowanie, układ kolumn i obsługę plików.",
     image: "./assets/excel-workbench-logo.png",
@@ -53,6 +65,12 @@ const projects = {
     accentDeep: "#9a4e0f",
     glow: "rgba(230, 126, 34, 0.22)",
     glowSoft: "rgba(241, 196, 15, 0.18)",
+    repoTheme: {
+      fillStrength: "20%",
+      borderStrength: "30%",
+      shadowStrength: "26%",
+      softGlowSize: "54%",
+    },
     description:
       "Marketplace z panelem administratora, publikacją ogłoszeń oraz integracjami z Firebase i Cloudinary. Projekt łączy prostą ścieżkę publikacji z realnym deployem online.",
     image: "./assets/portal-bg.jpg",
@@ -81,6 +99,12 @@ const projects = {
     accentDeep: "#a5283f",
     glow: "rgba(233, 69, 96, 0.24)",
     glowSoft: "rgba(255, 107, 107, 0.18)",
+    repoTheme: {
+      fillStrength: "19%",
+      borderStrength: "29%",
+      shadowStrength: "26%",
+      softGlowSize: "52%",
+    },
     description:
       "Interaktywna strona demonstracyjna, która łączy motion-driven frontend z praktycznym przepływem danych i eksportem do pliku Excel przez SheetJS.",
     image: "./assets/data-collector-bg.png",
@@ -109,6 +133,12 @@ const projects = {
     accentDeep: "#48309f",
     glow: "rgba(111, 84, 217, 0.2)",
     glowSoft: "rgba(166, 144, 255, 0.18)",
+    repoTheme: {
+      fillStrength: "18%",
+      borderStrength: "27%",
+      shadowStrength: "24%",
+      softGlowSize: "50%",
+    },
     description:
       "Analizator jakości kodu dla osób uczących się programowania i projektów portfolio. Generuje raporty tekstowe, Excel, PDF i HTML, a przy tym tłumaczy sens metryk.",
     image: "./assets/code-learning-analyzer-ui.png",
@@ -191,6 +221,129 @@ let cursorHintTargetX = -999;
 let cursorHintTargetY = -999;
 let cursorHintFrame = null;
 
+const repoProjectAliases = {
+  "excel-workbench-pwa": "excel-workbench-pwa",
+  "portal-ogloszeniowy": "portal-ogloszeniowy",
+  "portal-ogloszeniowy-vercel-app": "portal-ogloszeniowy",
+  "data-collector-excel-app": "data-collector",
+  "strona-6-vercel-app": "data-collector",
+  "code-learning-analyzer": "code-learning-analyzer",
+  "excel-workbench": "excel-workbench",
+};
+
+const defaultRepoTheme = {
+  fillStrength: "14%",
+  borderStrength: "20%",
+  shadowStrength: "18%",
+  softGlowSize: "46%",
+};
+
+function normalizeRepoToken(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/+$/, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getRepoProjectKey(repo) {
+  const directMatch = repoProjectAliases[normalizeRepoToken(repo.name)];
+  if (directMatch && projects[directMatch]) return directMatch;
+
+  const homepageMatch = repoProjectAliases[normalizeRepoToken(repo.homepage)];
+  if (homepageMatch && projects[homepageMatch]) return homepageMatch;
+
+  const repoUrlMatch = repoProjectAliases[normalizeRepoToken(repo.html_url)];
+  if (repoUrlMatch && projects[repoUrlMatch]) return repoUrlMatch;
+
+  return null;
+}
+
+function buildRepoThemeVars(repo) {
+  const projectKey = getRepoProjectKey(repo);
+  const project = projectKey ? projects[projectKey] : null;
+
+  if (!project) return "";
+
+  const theme = {
+    ...defaultRepoTheme,
+    ...(project.repoTheme || {}),
+  };
+
+  return [
+    `--repo-accent:${project.accent || "var(--accent)"}`,
+    `--repo-accent-deep:${project.accentDeep || "var(--accent-deep)"}`,
+    `--repo-glow:${project.glow || "rgba(206, 90, 47, 0.18)"}`,
+    `--repo-glow-soft:${project.glowSoft || "rgba(206, 90, 47, 0.12)"}`,
+    `--repo-fill-strength:${theme.fillStrength}`,
+    `--repo-border-strength:${theme.borderStrength}`,
+    `--repo-shadow-strength:${theme.shadowStrength}`,
+    `--repo-soft-glow-size:${theme.softGlowSize}`,
+  ].join(";");
+}
+
+function createProjectAction(action, index) {
+  const link = document.createElement("a");
+  link.className = `button ${index === 0 ? "button-primary" : "button-secondary"}`;
+  link.href = action.href;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = action.label;
+  return link;
+}
+
+function createRepoAction(label, href, variant) {
+  const link = document.createElement("a");
+  link.className = `button ${variant}`;
+  link.href = href;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = label;
+  return link;
+}
+
+function createRepoCard(repo) {
+  const article = document.createElement("article");
+  const repoThemeVars = buildRepoThemeVars(repo);
+
+  article.className = "repo-card";
+  if (repoThemeVars) {
+    article.style.cssText = repoThemeVars;
+  }
+
+  const meta = document.createElement("div");
+  meta.className = "repo-meta";
+
+  const language = document.createElement("span");
+  language.textContent = repo.language || "Mixed stack";
+
+  const updated = document.createElement("span");
+  updated.textContent = `Update: ${formatDate(repo.updated_at)}`;
+
+  meta.append(language, updated);
+
+  const title = document.createElement("h3");
+  title.textContent = repo.name;
+
+  const description = document.createElement("p");
+  description.textContent =
+    repo.description || "Repozytorium bez opisu, ale dostępne publicznie na GitHubie.";
+
+  const actions = document.createElement("div");
+  actions.className = "project-actions";
+  actions.append(createRepoAction("Repo", repo.html_url, "button-primary"));
+
+  if (repo.homepage) {
+    actions.append(createRepoAction("Live", repo.homepage, "button-secondary"));
+  }
+
+  article.append(meta, title, description, actions);
+  return article;
+}
+
 function renderSpotlight(projectKey) {
   const project = projects[projectKey];
   if (!project) return;
@@ -211,22 +364,33 @@ function renderSpotlight(projectKey) {
   spotlight.image.src = project.image;
   spotlight.image.alt = project.imageAlt;
 
-  spotlight.meta.innerHTML = project.meta.map((item) => `<li>${item}</li>`).join("");
-  spotlight.stack.innerHTML = project.stack.map((item) => `<span>${item}</span>`).join("");
-  spotlight.actions.innerHTML = project.actions.length
-    ? project.actions
-        .map(
-          (action, index) => `
-            <a
-              class="button ${index === 0 ? "button-primary" : "button-secondary"}"
-              href="${action.href}"
-              target="_blank"
-              rel="noreferrer"
-            >${action.label}</a>
-          `
-        )
-        .join("")
-    : `<span class="button button-secondary" aria-disabled="true">Projekt lokalny / bez publicznego linku</span>`;
+  spotlight.meta.replaceChildren(
+    ...project.meta.map((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = item;
+      return listItem;
+    })
+  );
+
+  spotlight.stack.replaceChildren(
+    ...project.stack.map((item) => {
+      const stackItem = document.createElement("span");
+      stackItem.textContent = item;
+      return stackItem;
+    })
+  );
+
+  if (project.actions.length) {
+    spotlight.actions.replaceChildren(
+      ...project.actions.map((action, index) => createProjectAction(action, index))
+    );
+  } else {
+    const fallback = document.createElement("span");
+    fallback.className = "button button-secondary";
+    fallback.setAttribute("aria-disabled", "true");
+    fallback.textContent = "Projekt lokalny / bez publicznego linku";
+    spotlight.actions.replaceChildren(fallback);
+  }
 
   tabs.forEach((tab) => {
     const isActive = tab.dataset.project === projectKey;
@@ -267,28 +431,7 @@ function formatDate(dateString) {
 }
 
 function renderRepos(repos) {
-  repoGrid.innerHTML = repos
-    .map((repo) => {
-      const homepageLink = repo.homepage
-        ? `<a class="button button-secondary" href="${repo.homepage}" target="_blank" rel="noreferrer">Live</a>`
-        : "";
-
-      return `
-        <article class="repo-card">
-          <div class="repo-meta">
-            <span>${repo.language || "Mixed stack"}</span>
-            <span>Update: ${formatDate(repo.updated_at)}</span>
-          </div>
-          <h3>${repo.name}</h3>
-          <p>${repo.description || "Repozytorium bez opisu, ale dostępne publicznie na GitHubie."}</p>
-          <div class="project-actions">
-            <a class="button button-primary" href="${repo.html_url}" target="_blank" rel="noreferrer">Repo</a>
-            ${homepageLink}
-          </div>
-        </article>
-      `;
-    })
-    .join("");
+  repoGrid.replaceChildren(...repos.map((repo) => createRepoCard(repo)));
 }
 
 async function loadRepos() {
