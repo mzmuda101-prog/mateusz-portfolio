@@ -79,6 +79,11 @@ a {
   height: 44px;
   object-fit: contain;
 }
+.refresh img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
 
 .site-nav {
   display: inline-flex;
