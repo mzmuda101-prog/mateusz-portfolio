@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mateusz Zmuda | Portfolio</title>
+    <meta
+      name="description"
+      content="Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps."
+    />
+    <link rel="icon" type="image/png" href="./assets/favicon.png" />
+    <link rel="apple-touch-icon" href="./assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Przejdź do początku strony">
+          <img src="./assets/mateusz-logo.png" alt="Logo Mateusz Zmuda" />
+          <span>Mateusz Zmuda</span>
+        </a>
+        <nav class="site-nav" aria-label="Główna nawigacja">
+          <a href="#projects">Projekty</a>
+          <a href="#about">Profil</a>
+          <a href="#github">GitHub</a>
+          <a href="#contact">Kontakt</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Portfolio / Web & utility projects</p>
+            <h1>
+              Buduję strony i narzędzia,
+              <span>które mają konkretną pracę do wykonania.</span>
+            </h1>
+            <p class="hero-lead">
+              Tworzę projekty z pogranicza frontendu, danych i workflow:
+              aplikacje do pracy z Excelem, interaktywne strony, marketplace'y
+              i eksperymenty z analizą kodu.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary button-magnetic" href="#projects">
+                <span>Zobacz wybrane projekty</span>
+              </a
+              >
+              <a
+                class="button button-secondary button-magnetic"
+                href="https://github.com/mzmuda101-prog"
+                target="_blank"
+                rel="noreferrer"
+                ><span>Otwórz GitHub</span></a
+              >
+            </div>
+            <div class="hero-metrics">
+              <div>
+                <strong>5+</strong>
+                <span>projektów publicznych i showcase'ów</span>
+              </div>
+              <div>
+                <strong>3</strong>
+                <span>główne osie pracy: web, Excel, utility tools</span>
+              </div>
+              <div>
+                <strong>1</strong>
+                <span>cel: budować rzeczy przydatne, nie tylko efektowne</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-stage">
+            <div class="hero-orb hero-orb-a"></div>
+            <div class="hero-orb hero-orb-b"></div>
+            <button
+              class="hero-panel hero-panel-main hero-panel-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="hero-panel-main-content"
+            >
+              <p>Wybrane obszary</p>
+              <ul id="hero-panel-main-content">
+                <li>Frontend i UI z charakterem</li>
+                <li>Excel / workflow / dane</li>
+                <li>Narzędzia desktopowe i utility apps</li>
+              </ul>
+            </button>
+            <button
+              class="hero-panel hero-panel-side hero-panel-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="hero-panel-side-content"
+            >
+              <span>Aktualnie rozwijane</span>
+              <strong>Excel Workbench PWA</strong>
+              <p id="hero-panel-side-content">
+                Offline-first workbench do eksploracji, filtrowania i
+                przekształcania plików Excel w przeglądarce.
+              </p>
+            </button>
+            <figure class="hero-shot">
+              <img
+                src="./assets/excel-workbench-pwa-1.png"
+                alt="Zrzut ekranu projektu Excel Workbench PWA"
+              />
+            </figure>
+          </div>
+        </section>
+
+        <section class="section intro-strip reveal">
+          <p>
+            Najchętniej buduję rzeczy użyteczne: od narzędzi do analizy i pracy
+            z danymi, po strony, które mają wyraźny styl i czytelny cel.
+          </p>
+        </section>
+
+        <section class="section projects-section reveal" id="projects">
+          <div class="section-heading">
+            <p class="eyebrow">Selected work</p>
+            <h2>Najmocniejsze projekty w jednym miejscu</h2>
+          </div>
+
+          <div class="project-layout">
+            <div
+              class="project-list"
+              role="tablist"
+              aria-label="Lista wyróżnionych projektów"
+            >
+              <button
+                class="project-tab is-active"
+                type="button"
+                data-project="excel-workbench-pwa"
+                role="tab"
+                aria-selected="true"
+              >
+                Excel Workbench PWA
+              </button>
+              <button
+                class="project-tab"
+                type="button"
+                data-project="excel-workbench"
+                role="tab"
+                aria-selected="false"
+              >
+                Excel Workbench
+              </button>
+              <button
+                class="project-tab"
+                type="button"
+                data-project="portal-ogloszeniowy"
+                role="tab"
+                aria-selected="false"
+              >
+                Portal Ogłoszeniowy
+              </button>
+              <button
+                class="project-tab"
+                type="button"
+                data-project="data-collector"
+                role="tab"
+                aria-selected="false"
+              >
+                Data Collector & Excel Export
+              </button>
+              <button
+                class="project-tab"
+                type="button"
+                data-project="code-learning-analyzer"
+                role="tab"
+                aria-selected="false"
+              >
+                Code Learning Analyzer
+              </button>
+            </div>
+
+            <article class="project-spotlight" id="project-spotlight">
+              <div class="project-visual">
+                <img
+                  id="spotlight-image"
+                  src="./assets/excel-workbench-pwa-1.png"
+                  alt="Podgląd projektu"
+                />
+              </div>
+              <div class="project-content">
+                <p class="project-kicker" id="spotlight-kicker">PWA / data tools</p>
+                <h3 id="spotlight-title">Excel Workbench PWA</h3>
+                <p id="spotlight-description">
+                  Lokalny, offline-first workbench do eksploracji i lekkiej
+                  obróbki plików Excel bez backendu.
+                </p>
+                <ul class="project-meta" id="spotlight-meta"></ul>
+                <div class="project-stack" id="spotlight-stack"></div>
+                <div class="project-actions" id="spotlight-actions"></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section process-section reveal">
+          <div class="section-heading">
+            <p class="eyebrow">Approach</p>
+            <h2>Łączę klimat strony z jasną funkcją produktu</h2>
+          </div>
+
+          <div class="process-rail">
+            <div class="process-step">
+              <span>01</span>
+              <div>
+                <h3>Punkt wyjścia</h3>
+                <p>
+                  Szukam realnego problemu albo konkretnego przepływu pracy:
+                  czego użytkownik potrzebuje szybciej, prościej albo czytelniej.
+                </p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span>02</span>
+              <div>
+                <h3>Forma</h3>
+                <p>
+                  Potem dopiero dobieram język wizualny: rytm sekcji, proporcje,
+                  ruch i typografię, tak żeby projekt miał charakter, ale nie
+                  przeszkadzał w użyciu.
+                </p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span>03</span>
+              <div>
+                <h3>Dowiezienie</h3>
+                <p>
+                  Lubię domykać projekt do wersji, którą da się uruchomić,
+                  pokazać online, przetestować i dalej rozwijać.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section about-section reveal" id="about">
+          <div class="section-heading">
+            <p class="eyebrow">Profile</p>
+            <h2>Jak podchodzę do budowania produktów</h2>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-block">
+              <span>01</span>
+              <h3>Utility-first thinking</h3>
+              <p>
+                Najbardziej interesują mnie projekty, które rozwiązują realny
+                problem: upraszczają workflow, porządkują dane albo przyspieszają
+                codzienną pracę.
+              </p>
+            </div>
+            <div class="about-block">
+              <span>02</span>
+              <h3>Frontend z klimatem</h3>
+              <p>
+                Nawet w prostych aplikacjach zależy mi na kompozycji, ruchu,
+                rytmie sekcji i wyrazistej warstwie wizualnej.
+              </p>
+            </div>
+            <div class="about-block">
+              <span>03</span>
+              <h3>Od pomysłu do wdrożenia</h3>
+              <p>
+                Lubię spinać pełną całość: interfejs, logikę, eksport danych,
+                integracje z chmurą i wersję gotową do pokazania online.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section github-section reveal" id="github">
+          <div class="section-heading">
+            <p class="eyebrow">GitHub</p>
+            <h2>Repozytoria pobierane na żywo z profilu</h2>
+          </div>
+
+          <div class="github-toolbar">
+            <p>
+              Profil:
+              <a
+                href="https://github.com/mzmuda101-prog"
+                target="_blank"
+                rel="noreferrer"
+                >github.com/mzmuda101-prog</a
+              >
+            </p>
+            <span id="github-status">Ładowanie repozytoriów…</span>
+          </div>
+
+          <div class="repo-grid" id="repo-grid"></div>
+        </section>
+
+        <section class="section contact-section reveal" id="contact">
+          <p class="eyebrow">Kontakt</p>
+          <h2>Otwarte na ciekawe projekty, współpracę i kolejne webowe wyzwania.</h2>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#projects">Przejdź do projektów</a>
+            <a
+              class="button button-secondary"
+              href="https://github.com/mzmuda101-prog?tab=repositories"
+              target="_blank"
+              rel="noreferrer"
+              >Zobacz wszystkie repo</a
+            >
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="cursor-hint" id="cursor-hint" aria-hidden="true">
+      <span>Kliknij</span>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
