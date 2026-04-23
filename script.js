@@ -629,6 +629,25 @@ if (!prefersReducedMotion) {
       ensureAnimation();
     });
   });
+
+  // --- AUTO-BLUR HERO FOCUS WHEN FAR WITH CURSOR ---
+  // Uwaga: focus panelu dezaktywuje się automatycznie, jeśli mysz ucieknie poza heroStage+margin
+
+  let lastPointerPosition = {x: null, y: null};
+
+  function globalPointerMoveHandler(event) {
+    lastPointerPosition.x = event.clientX;
+    lastPointerPosition.y = event.clientY;
+
+    if (activeHeroPanel) {
+      if (isPointerFarFromHero(lastPointerPosition.x, lastPointerPosition.y)) {
+        setPanelFocus(null);
+      }
+    }
+  }
+
+  // Global nasłuchiwacz do automatycznego wyłączania paneli
+  window.addEventListener('pointermove', globalPointerMoveHandler);
 }
 
 function setPanelFocus(activePanel) {
@@ -661,9 +680,13 @@ function isPointerFarFromHero(x, y) {
 
 function moveCursorHint(x, y) {
   if (!cursorHint) return;
-  cursorHintTargetX = x + 22;
-  cursorHintTargetY = y - 18;
+  // Pobieramy offsety z CSS (jeśli nie ma w CSS, używamy domyślnych 22 i -18)
+  const style = getComputedStyle(cursorHint);
+  const offsetX = parseInt(style.getPropertyValue('--hint-offset-x')) || 22;
+  const offsetY = parseInt(style.getPropertyValue('--hint-offset-y')) || -18;
 
+  cursorHintTargetX = x + offsetX;
+  cursorHintTargetY = y + offsetY;
   if (cursorHintFrame !== null) return;
 
   const animateHint = () => {
@@ -699,22 +722,40 @@ function setupCursorHint(elements, clickCallback = null) {
   elements.forEach((el) => {
     el.addEventListener("pointerenter", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
-                      // JESLI W < > w HTML WPISZĘ jeden z atrybutów, np. data-hint="Napis" to  w tym przypadku bezposrednio bierze z tego atrybutu czyli bedzie "Napis" zamiast "Kliknij"
-      // 1. Zmiana tekstu: bierze z data-hint="Napis" lub daje "Kliknij"
+    
+      // 1. Tekst
       const span = cursorHint.querySelector('span');
       if (span) span.textContent = el.dataset.hint || "Kliknij";
-
-      // 2. Dodanie dodatkowej klasy stylu: bierze z data-hint-class-only="klasa" lub data-hint-class="klasa" lub z klasy .cursor-hint
-      if (el.dataset.hintClassOnly) {// Czyści wszystko i ustawia TYLKO Moją klasę + widoczność
+    
+      // 2. Obsługa klas
+      if (el.dataset.hintClassOnly) {
         cursorHint.className = `is-visible ${el.dataset.hintClassOnly}`;
-      } else if (el.dataset.hintClass) {// Standard: bazowa klasa + Twoja dodatkowa
+      } else if (el.dataset.hintClass) {
         cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass}`;
-      } else {// Domyślnie
+      } else {
         cursorHint.className = "cursor-hint is-visible";
       }
-
+    
+      // 3. WYMUSZENIE DZIAŁAJĄCYCH STYLI (Twoja baza)
+      // To sprawi, że nawet pusta klasa będzie działać poprawnie
+      Object.assign(cursorHint.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        zIndex: '9999',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0.72rem 0.95rem',
+        borderRadius: '999px',
+        pointerEvents: 'none',
+        willChange: 'transform, opacity',
+        transition: 'opacity 140ms ease'
+      });
+    
       moveCursorHint(event.clientX, event.clientY);
     });
+    
 
     el.addEventListener("pointermove", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
@@ -746,7 +787,7 @@ setupCursorHint(heroPanels, (panel) => {
 });
 
 // Dla dowolnych innych przycisków (tylko hint, bez dodatkowej akcji kliknięcia)
-const otherStuff = document.querySelectorAll(""); /* tu będe mógł dodawać nowe elementy np według klas czyli np. ".button-magnetic" */
+const otherStuff = document.querySelectorAll("[data-hint]:not(.hero-panel-trigger), [data-hint-class], [data-hint-class-only]"); /* tu będe mógł dodawać nowe elementy np według klas czyli np. ".button-magnetic" */
 setupCursorHint(otherStuff);
 
 

@@ -88,9 +88,16 @@ a {
   object-fit: contain;
 }
 .refresh img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  transition: all 0.5s ease-in-out;
+}
+.refresh img:hover {
   width: 34px;
   height: 34px;
   object-fit: contain;
+  transform: rotate(360deg) scale(1.1);
   transition: all 0.5s ease-in-out;
 }
 
@@ -774,6 +781,23 @@ a {
 .cursor-hint.is-visible {
   opacity: 1;
 }
+.cursor-hint.smaller {
+  scale: 0.78;
+}
+/* .cursor-hint-blue {
+  color: blue;
+  padding: 10px 20px;
+  border-radius: 50px;
+  opacity: 0; // JS doda .is-visible
+  // Sterujesz odległością od kursora prosto z CSS!
+  --hint-offset-x: 10; 
+  --hint-offset-y: 10;
+}
+
+.cursor-hint-blue.is-visible {
+  opacity: 1;
+}
+ */
 
 .reveal {
   opacity: 0;
