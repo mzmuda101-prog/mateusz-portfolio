@@ -612,38 +612,67 @@ function moveCursorHint(x, y) {
   cursorHintFrame = window.requestAnimationFrame(animateHint);
 }
 
-heroPanels.forEach((panel) => {
-  panel.addEventListener("pointerenter", (event) => {
-    if (!cursorHint || prefersReducedMotion) return;
-    cursorHint.classList.add("is-visible");
-    moveCursorHint(event.clientX, event.clientY);
-  });
+/**
+ * Uniwersalna funkcja przypisująca podążający hint do elementów
+ * @param {NodeList|Array} elements - Lista elementów (np. z querySelectorAll)
+ * @param {Function} clickCallback - Opcjonalna funkcja wywoływana przy kliknięciu
+ */
+function setupCursorHint(elements, clickCallback = null) {
+  elements.forEach((el) => {
+    el.addEventListener("pointerenter", (event) => {
+      if (!cursorHint || prefersReducedMotion) return;
+                      // JESLI W < > w HTML WPISZĘ jeden z atrybutów, np. data-hint="Napis" to  w tym przypadku bezposrednio bierze z tego atrybutu czyli bedzie "Napis" zamiast "Kliknij"
+      // 1. Zmiana tekstu: bierze z data-hint="Napis" lub daje "Kliknij"
+      const span = cursorHint.querySelector('span');
+      if (span) span.textContent = el.dataset.hint || "Kliknij";
 
-  panel.addEventListener("pointermove", (event) => {
-    if (!cursorHint || prefersReducedMotion) return;
-    moveCursorHint(event.clientX, event.clientY);
-  });
+      // 2. Dodanie dodatkowej klasy stylu: bierze z data-hint-class-only="klasa" lub data-hint-class="klasa" lub z klasy .cursor-hint
+      if (el.dataset.hintClassOnly) {// Czyści wszystko i ustawia TYLKO Moją klasę + widoczność
+        cursorHint.className = `is-visible ${el.dataset.hintClassOnly}`;
+      } else if (el.dataset.hintClass) {// Standard: bazowa klasa + Twoja dodatkowa
+        cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass}`;
+      } else {// Domyślnie
+        cursorHint.className = "cursor-hint is-visible";
+      }
 
-  panel.addEventListener("pointerleave", () => {
-    if (!cursorHint) return;
-    cursorHint.classList.remove("is-visible");
-    cursorHintTargetX = -999;
-    cursorHintTargetY = -999;
-    moveCursorHint(-999, -999);
-  });
+      moveCursorHint(event.clientX, event.clientY);
+    });
 
-  panel.addEventListener("click", () => {
-    const isAlreadyFocused = panel.classList.contains("is-focused");
-    setPanelFocus(isAlreadyFocused ? null : panel);
+    el.addEventListener("pointermove", (event) => {
+      if (!cursorHint || prefersReducedMotion) return;
+      moveCursorHint(event.clientX, event.clientY);
+    });
+
+    el.addEventListener("pointerleave", () => {
+      if (!cursorHint) return;
+      cursorHint.classList.remove("is-visible");
+      
+      // Resetowanie pozycji (Twój skok)
+      cursorHintTargetX = -999;
+      cursorHintTargetY = -999;
+      moveCursorHint(-999, -999);
+    });
+
+    if (clickCallback) {
+      el.addEventListener("click", () => clickCallback(el));
+    }
   });
+}
+
+// --- UŻYCIE ---
+
+// Dla paneli (z logiką focusowania)
+setupCursorHint(heroPanels, (panel) => {
+  const isAlreadyFocused = panel.classList.contains("is-focused");
+  setPanelFocus(isAlreadyFocused ? null : panel);
 });
 
-document.addEventListener("click", (event) => {
-  const clickedPanel = event.target.closest(".hero-panel-trigger");
-  if (!clickedPanel) {
-    setPanelFocus(null);
-  }
-});
+// Dla dowolnych innych przycisków (tylko hint, bez dodatkowej akcji kliknięcia)
+const otherStuff = document.querySelectorAll(""); /* tu będe mógł dodawać nowe elementy np według klas czyli np. ".button-magnetic" */
+setupCursorHint(otherStuff);
+
+
+
 
 document.addEventListener("pointermove", (event) => {
   if (!activeHeroPanel) return;
