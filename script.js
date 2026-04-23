@@ -1,5 +1,67 @@
+// Uogólniam projekty żeby łatwiej dokładać i można było dynamicznie coś dograć (np. kolory czy dane z fetchowania z API).
+const defaultProjectProps = {
+  accent: "#ce5a2f", // domyślny accent (fallback gdy nie określono per-project)
+  accentDeep: "#a03e1b",
+  glow: "rgba(206, 90, 47, 0.18)",
+  glowSoft: "rgba(206, 90, 47, 0.12)",
+  repoTheme: {
+    fillStrength: "14%",
+    borderStrength: "20%",
+    shadowStrength: "18%",
+    softGlowSize: "46%",
+  },
+  // Można dodać tu domyślne ikony czy cokolwiek do dziedziczenia
+};
+
+// Elastyczny helper, z możliwością podmiany configów głębiej jeśli projekty są bardziej zagnieżdżone
+function makeProject(spec, overrideDefaultProps = {}) {
+  return {
+    ...defaultProjectProps,
+    ...overrideDefaultProps,
+    ...spec,
+    repoTheme: {
+      ...defaultProjectProps.repoTheme,
+      ...(overrideDefaultProps.repoTheme || {}),
+      ...(spec.repoTheme || {})
+    }
+  };
+}
+
+// --- [NOWE]: Zautomatyzowane wykrywanie i tworzenie project configów na podstawie zfetchowanych repozytoriów
+// Pomysł: jeśli fetch z GitHub da nowe repo bez wpisu per-project w poniższym 'projects', to dodać go automatycznie z fallbackiem do defaultowych styli
+function insertDynamicProjectFromRepo(repo) {
+  // Sprawdź czy istnieje w projects - jeśli nie, stwórz z fallbackiem
+  const key = normalizeRepoToken(repo.name);
+  if (!(key in projects)) {
+    projects[key] = makeProject({
+      title: repo.name.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+      kicker: repo.language ? `${repo.language} / GitHub` : "GitHub",
+      description: repo.description || "Projekt zaimportowany automatycznie z GitHub.",
+      actions: [
+        ...(repo.homepage ? [{ label: "Live demo", href: repo.homepage }] : []),
+        { label: "Repozytorium", href: repo.html_url }
+      ],
+      // Spróbuj podpiąć jakikolwiek domyślny stack jeżeli nieznany język
+      stack: repo.language ? [repo.language] : ["Unknown"],
+      // Kolory mogą być pobierane dynamicznie! Można podrasować np. do generowania na podstawie language/brand
+      accent: defaultProjectProps.accent,
+      accentDeep: defaultProjectProps.accentDeep,
+      glow: defaultProjectProps.glow,
+      glowSoft: defaultProjectProps.glowSoft,
+      image: "", // Można spróbować pobierać np. GitHub social image, albo fallback ikonke
+      imageAlt: `Screenshot of ${repo.name}`,
+      meta: [
+        repo.description || "Repozytorium bez opisu.",
+        `Ostatnia aktualizacja: ${(new Date(repo.updated_at)).toLocaleDateString()}`,
+      ],
+    });
+    // @mateusz: jeżeli chcesz mocniej stylować po języku albo "brandować" - można tu podpiąć mapę domyślnych akcentów per język!
+  }
+}
+
+// Wersja rozwojowa, pozwala na kick-off z fetchem danych czy sekcjami - można np. dynamicznie doklejać do tego obiektu projekty!
 const projects = {
-  "excel-workbench-pwa": {
+  "excel-workbench-pwa": makeProject({
     kicker: "PWA / data tools",
     title: "Excel Workbench PWA",
     accent: "#2f6f5c",
@@ -32,8 +94,8 @@ const projects = {
         href: "https://github.com/mzmuda101-prog/excel-workbench-pwa",
       },
     ],
-  },
-  "excel-workbench": {
+  }),
+  "excel-workbench": makeProject({
     kicker: "Desktop app / Excel tooling",
     title: "Excel Workbench",
     accent: "#3f6db5",
@@ -57,14 +119,14 @@ const projects = {
     ],
     stack: ["Python", "Tkinter", "openpyxl", "Desktop UI"],
     actions: [],
-  },
-  "portal-ogloszeniowy": {
+  }),
+  "portal-ogloszeniowy": makeProject({
     kicker: "Marketplace / cloud integrations",
     title: "Portal Ogłoszeniowy",
-    accent: "#e67e22",
-    accentDeep: "#9a4e0f",
+    accent: "#E67C21",
+    accentDeep: "#D55704",
     glow: "rgba(230, 126, 34, 0.22)",
-    glowSoft: "rgba(241, 196, 15, 0.18)",
+    glowSoft: "rgba(241, 158, 15, 0.18)",
     repoTheme: {
       fillStrength: "20%",
       borderStrength: "30%",
@@ -91,8 +153,8 @@ const projects = {
         href: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy",
       },
     ],
-  },
-  "data-collector": {
+  }),
+  "data-collector": makeProject({
     kicker: "Frontend / Excel export",
     title: "Data Collector & Excel Export",
     accent: "#e94560",
@@ -125,8 +187,8 @@ const projects = {
         href: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App",
       },
     ],
-  },
-  "code-learning-analyzer": {
+  }),
+  "code-learning-analyzer": makeProject({
     kicker: "CLI / reports / learning tool",
     title: "Code Learning Analyzer",
     accent: "#6f54d9",
@@ -155,9 +217,11 @@ const projects = {
         href: "https://github.com/mzmuda101-prog/code-learning-analyzer",
       },
     ],
-  },
+  }),
 };
 
+// --- fallbacky dla repozytoriów: można by dynamicznie dogrywać z GitHub API jeśli offline no to z tego arraya (no i np. ładować później język/kategorie)
+// Rozważam trzymanie tylko minimalnego fallbacka, a resztę updateować przez fetch jak online!
 const repoFallback = [
   {
     name: "excel-workbench-pwa",
@@ -166,6 +230,7 @@ const repoFallback = [
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/excel-workbench-pwa",
     homepage: "https://excel-workbench-pwa.vercel.app",
+    isPublic: true, // można wyfiltrować do podglądu tylko publiczne itd.
   },
   {
     name: "Portal-Ogloszeniowy",
@@ -174,6 +239,7 @@ const repoFallback = [
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy",
     homepage: "https://portal-ogloszeniowy.vercel.app",
+    isPublic: true,
   },
   {
     name: "Data-Collector-Excel-App",
@@ -182,6 +248,7 @@ const repoFallback = [
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App",
     homepage: "https://strona-6.vercel.app",
+    isPublic: true,
   },
   {
     name: "code-learning-analyzer",
@@ -190,29 +257,41 @@ const repoFallback = [
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/code-learning-analyzer",
     homepage: "",
+    isPublic: true,
   },
 ];
 
+// Centralizuję pobieranie elementów z możliwością refaktoru pod lazy-get czy proxy (pomysł: "UI.get('spotlight-kicker')")
+function getEl(id) {
+  // fallbacky (np. do testów: można tu dorobić try/catch czy warn)
+  return document.getElementById(id);
+}
+
+// Spotlight można w sumie łatwo w przyszłości zrobić jako class z metodami typu "set" czy animacjami CSS - dla elastyczności zostaje tu prosty obiekt
 const spotlight = {
-  kicker: document.getElementById("spotlight-kicker"),
-  title: document.getElementById("spotlight-title"),
-  description: document.getElementById("spotlight-description"),
-  image: document.getElementById("spotlight-image"),
-  meta: document.getElementById("spotlight-meta"),
-  stack: document.getElementById("spotlight-stack"),
-  actions: document.getElementById("spotlight-actions"),
-  root: document.getElementById("project-spotlight"),
+  kicker: getEl("spotlight-kicker"),
+  title: getEl("spotlight-title"),
+  description: getEl("spotlight-description"),
+  image: getEl("spotlight-image"),
+  meta: getEl("spotlight-meta"),
+  stack: getEl("spotlight-stack"),
+  actions: getEl("spotlight-actions"),
+  root: getEl("project-spotlight"),
 };
 
+// Tabsy - pamiętać, że łatwo potem dorobić tryb dynamiczny przez data-* lub nadpisać poniższy Selectorem
 const tabs = Array.from(document.querySelectorAll(".project-tab"));
-const repoGrid = document.getElementById("repo-grid");
-const githubStatus = document.getElementById("github-status");
+// repoGrid, githubStatus itp trzymam bardziej klasycznie - nie ma sensu tu proxy dawać na razie
+const repoGrid = getEl("repo-grid");
+const githubStatus = getEl("github-status");
 const revealTargets = document.querySelectorAll(".reveal");
 const heroStage = document.querySelector(".hero-stage");
 const heroShot = document.querySelector(".hero-shot");
 const magneticButtons = document.querySelectorAll(".button-magnetic");
 const heroPanels = Array.from(document.querySelectorAll(".hero-panel-trigger"));
-const cursorHint = document.getElementById("cursor-hint");
+const cursorHint = getEl("cursor-hint");
+
+// UI State - przewidziane na przyszłość do scentralizowania (można zrobić object UIState/Reactive)
 let activeProjectKey = "excel-workbench-pwa";
 let activeHeroPanel = null;
 let cursorHintX = -999;
@@ -221,6 +300,8 @@ let cursorHintTargetX = -999;
 let cursorHintTargetY = -999;
 let cursorHintFrame = null;
 
+// Repozytoria - aliasy (potencjał na dynamiczny mapping jak integracja z GitHub API, np. z automatu generować aliasy)
+// --- [NOWE] hint: można dorzucić wstępne uzgadnianie aliasów na podstawie homepage czy url automatycznie!
 const repoProjectAliases = {
   "excel-workbench-pwa": "excel-workbench-pwa",
   "portal-ogloszeniowy": "portal-ogloszeniowy",
@@ -229,14 +310,11 @@ const repoProjectAliases = {
   "strona-6-vercel-app": "data-collector",
   "code-learning-analyzer": "code-learning-analyzer",
   "excel-workbench": "excel-workbench",
+  // @mateusz: Jeśli chcesz by nowe projekty łapały mapowanie aliasów automatycznie, możesz odpalić loopa po fetchowanych repo i dodawać tutaj aliasy per homepage/url!
 };
 
-const defaultRepoTheme = {
-  fillStrength: "14%",
-  borderStrength: "20%",
-  shadowStrength: "18%",
-  softGlowSize: "46%",
-};
+// Domyślny theme dla repo, jeśli nie znajdzie - patrz makeProject (głębokie dziedziczenie, zawsze coś jest)
+const defaultRepoTheme = { ...defaultProjectProps.repoTheme };
 
 function normalizeRepoToken(value) {
   return String(value || "")

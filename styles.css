@@ -94,14 +94,6 @@ a {
   transition: all 0.5s ease-in-out;
 }
 
-.refresh img:hover {
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  transform: rotate(360deg);
-  transition: all 0.5s ease-in-out;
-}
-
 .site-nav {
   display: inline-flex;
   flex-wrap: wrap;

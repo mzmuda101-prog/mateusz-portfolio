@@ -40,3 +40,8 @@ Strona nadaje się do wrzucenia jako repo statyczne i publikacji np. na Vercel.
 - `styles.css`
 - `script.js`
 - `assets/`
+
+## Roadmapa
+
+TODO: docelowo - spróbować dorzucić jakis mechanizm który jeszcze bardziej automatycznie dopasuje styl (kolory np.) pokazywania projektu/panelu do nowego repo na podstawie fetchowanych danych (np. z GitHub API).
+
