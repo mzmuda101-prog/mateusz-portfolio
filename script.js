@@ -408,7 +408,7 @@ function createRepoCard(repo) {
 
   const description = document.createElement("p");
   description.textContent =
-    repo.description || "Repozytorium bez opisu, ale dostępne publicznie na GitHubie.";
+    repo.description || "Repozytorium bez opisu w sekcji 'About', ale README jak i sam projekt dostępny publicznie na GitHubie.";
 
   const actions = document.createElement("div");
   actions.className = "project-actions";
@@ -717,20 +717,43 @@ function moveCursorHint(x, y) {
  * Uniwersalna funkcja przypisująca podążający hint do elementów
  * @param {NodeList|Array} elements - Lista elementów (np. z querySelectorAll)
  * @param {Function} clickCallback - Opcjonalna funkcja wywoływana przy kliknięciu
+ *
+ * Ulepszenia:
+ * - Jeśli w data-hint treść zawiera sekcję oddzieloną znakiem | (pipe), to tekst po | pojawia się w drugiej linii.
+ *   Przykład: data-hint="Kliknij tu|To jest podpowiedź na dole"
+ * - (Wyłączono automatyczne łamanie tekstu – zaleca się ręczne "przewijanie" za pomocą znaku | w atrybucie data-hint)
  */
 function setupCursorHint(elements, clickCallback = null) {
   elements.forEach((el) => {
     el.addEventListener("pointerenter", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
-
-      // 1. Obsługa tekstu
+      // 1. Obsługa tekstu (tylko manualny podział linii znakiem "|")
       const span = cursorHint.querySelector('span');
-      if (span) span.textContent = el.dataset.hint || "Kliknij";
+      let hintContent = el.dataset.hint || "Kliknij";
+
+      // Obsługa manualnego podziału linii znakiem "|"
+      if (hintContent.includes('/|')) {
+        // Pozwalamy na wielolinijkowy hint za pomocą bezpiecznego HTML (przez .textContent i <br>)
+        // Dawniej: span.innerHTML używano, ale tu robimy to całkowicie bezpiecznie!
+        // UWAGA: Jeżeli będe chciał uzywać HTML wewnątrz hinta lub podglady stron, to trzeba będzie zmienić logikę w przyszlosci.
+        const lines = hintContent.split('/|').map(str => str.trim());
+        if (span) {
+          span.textContent = ''; // Reset
+          lines.forEach((line, idx) => {
+            if (idx > 0) {
+              span.appendChild(document.createElement('br'));
+            }
+            span.appendChild(document.createTextNode(line));
+          });
+        }
+      } else {
+        if (span) {
+          span.textContent = hintContent;
+        }
+      }
 
       // 2. Obsługa klas (Logika elastyczna)
-      // Zawsze zostawiamy bazową klasę dla mechaniki, a Only traktujemy jako "styl wizualny"
       if (el.dataset.hintClassOnly) {
-        // Czyścimy style inline, które mogły zostać z poprzedniego elementu
         cursorHint.removeAttribute('style');
         
         // Ustawiamy TYLKO klasę użytkownika
@@ -752,7 +775,18 @@ function setupCursorHint(elements, clickCallback = null) {
       // 3. Naprawa skalowania - wymuszamy punkt zakotwiczenia tam, gdzie jest kursor
       // Dzięki temu dymek rośnie "od myszki" i długi tekst go nie przesuwa
       cursorHint.style.transformOrigin = "left bottom"; 
-      
+
+      /* 
+      // 4. Automatyczny styl wielolinijkowy/łamania tekstu – wyłączone, można w CSS globalnym!
+      // Te poniższe linie w razie czego mogą być przywrócone później, jeśli zmienie zdanie.
+      // if (span) {
+      //   span.style.whiteSpace = 'normal';                
+      //   span.style.wordBreak = 'break-word';             
+      //   span.style.maxWidth = '260px';                   
+      //   span.style.display = 'block';                    
+      // }
+      */
+
       moveCursorHint(event.clientX, event.clientY);
     });
 
