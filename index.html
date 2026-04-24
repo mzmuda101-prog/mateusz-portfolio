@@ -21,8 +21,8 @@
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <a class="brand" href="#top" aria-label="Przejdź do początku strony">
-          <img src="./assets/mateusz-logo.png" alt="Logo Mateusz Zmuda" />
+        <a class="brand" href="#top" aria-label="Przejdź do początku strony"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
+          <img src="./assets/mateusz-logo.png" alt="Logo Mateusz Zmuda"/>
           <span>Mateusz Zmuda</span>
         </a>
         <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller">
@@ -321,7 +321,9 @@
     </div>
 
     <div class="cursor-hint" id="cursor-hint" aria-hidden="true">
-      <span>Kliknij</span>
+      <div class="cursor-hint-scaler"> <!-- tu dodalem dodatkowego diva i klase na pozniej -->
+        <span>Kliknij</span>
+      </div>
     </div>
 
     <script src="./script.js"></script>

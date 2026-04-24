@@ -680,13 +680,13 @@ function isPointerFarFromHero(x, y) {
 
 function moveCursorHint(x, y) {
   if (!cursorHint) return;
-  // Pobieramy offsety z CSS (jeśli nie ma w CSS, używamy domyślnych 22 i -18)
+  // Pobieramy offsety z CSS (jeśli nie ma w CSS, używamy domyślnych 22 i 18)
   const style = getComputedStyle(cursorHint);
   const offsetX = parseInt(style.getPropertyValue('--hint-offset-x')) || 22;
-  const offsetY = parseInt(style.getPropertyValue('--hint-offset-y')) || -18;
+  const offsetY = parseInt(style.getPropertyValue('--hint-offset-y')) || 18;
 
   cursorHintTargetX = x + offsetX;
-  cursorHintTargetY = y + offsetY;
+  cursorHintTargetY = y - offsetY;
   if (cursorHintFrame !== null) return;
 
   const animateHint = () => {
@@ -722,40 +722,39 @@ function setupCursorHint(elements, clickCallback = null) {
   elements.forEach((el) => {
     el.addEventListener("pointerenter", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
-    
-      // 1. Tekst
+
+      // 1. Obsługa tekstu
       const span = cursorHint.querySelector('span');
       if (span) span.textContent = el.dataset.hint || "Kliknij";
-    
-      // 2. Obsługa klas
+
+      // 2. Obsługa klas (Logika elastyczna)
+      // Zawsze zostawiamy bazową klasę dla mechaniki, a Only traktujemy jako "styl wizualny"
       if (el.dataset.hintClassOnly) {
+        // Czyścimy style inline, które mogły zostać z poprzedniego elementu
+        cursorHint.removeAttribute('style');
+        
+        // Ustawiamy TYLKO klasę użytkownika
         cursorHint.className = `is-visible ${el.dataset.hintClassOnly}`;
-      } else if (el.dataset.hintClass) {
-        cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass}`;
+        
+        // FALLBACK TECHNICZNY (Tylko to, co niezbędne do życia)
+        Object.assign(cursorHint.style, {
+          top: '0', // top i left ustawilem tu po to by przegladarka nie wyrzucila hintu gdzies gdzie w domysle by sie znjdowal w html
+          left: '0',
+          position: 'fixed',
+          zIndex: '9999',
+          pointerEvents: 'none',
+          display: 'inline-flex' // Aby dymek nie był niewidzialnym punktem
+        });
       } else {
-        cursorHint.className = "cursor-hint is-visible";
+        cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass || ''}`;
       }
-    
-      // 3. WYMUSZENIE DZIAŁAJĄCYCH STYLI (Twoja baza)
-      // To sprawi, że nawet pusta klasa będzie działać poprawnie
-      Object.assign(cursorHint.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        zIndex: '9999',
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '0.72rem 0.95rem',
-        borderRadius: '999px',
-        pointerEvents: 'none',
-        willChange: 'transform, opacity',
-        transition: 'opacity 140ms ease'
-      });
-    
+
+      // 3. Naprawa skalowania - wymuszamy punkt zakotwiczenia tam, gdzie jest kursor
+      // Dzięki temu dymek rośnie "od myszki" i długi tekst go nie przesuwa
+      cursorHint.style.transformOrigin = "left bottom"; 
+      
       moveCursorHint(event.clientX, event.clientY);
     });
-    
 
     el.addEventListener("pointermove", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
@@ -765,8 +764,6 @@ function setupCursorHint(elements, clickCallback = null) {
     el.addEventListener("pointerleave", () => {
       if (!cursorHint) return;
       cursorHint.classList.remove("is-visible");
-      
-      // Resetowanie pozycji (Twój skok)
       cursorHintTargetX = -999;
       cursorHintTargetY = -999;
       moveCursorHint(-999, -999);
@@ -777,6 +774,7 @@ function setupCursorHint(elements, clickCallback = null) {
     }
   });
 }
+
 
 // --- UŻYCIE ---
 

@@ -782,22 +782,16 @@ a {
   opacity: 1;
 }
 .cursor-hint.smaller {
-  scale: 0.78;
-}
-/* .cursor-hint-blue {
-  color: blue;
-  padding: 10px 20px;
-  border-radius: 50px;
-  opacity: 0; // JS doda .is-visible
-  // Sterujesz odległością od kursora prosto z CSS!
-  --hint-offset-x: 10; 
-  --hint-offset-y: 10;
+  transform-origin: left bottom;
+  scale: 0.8;
+   --hint-offset-x: 200; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 22 chyba jesli pamietam */
+   --hint-offset-y: 0; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 18 chyba jesli pamietam */
+  /* ^ mozna sterować odległością od kursora prosto z CSS! */
 }
 
-.cursor-hint-blue.is-visible {
-  opacity: 1;
-}
- */
+/* .cursor-hint-blue-transparent {
+  color:aqua;
+} */
 
 .reveal {
   opacity: 0;
