@@ -22,10 +22,10 @@ const copy = {
       "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
     heroEyebrowTop: "Portfolio / Web & utility projects.",
     heroEyebrowBottom: "Głównie Frontend Developer | JavaScript | Firebase",
-    heroTitleMain: "Buduję strony i narzędzia,",
+    heroTitleMain: "Buduję strony i narzędzia, aplikacje,",
     heroTitleAccent: "które mają konkretną pracę do wykonania.",
     heroLead:
-      "Tworzę projekty z pogranicza frontendu, danych i workflow: aplikacje do pracy z Excelem, interaktywne strony, marketplace'y i eksperymenty z analizą kodu.",
+      "Tworzę projekty z pogranicza frontendu, danych i workflow: aplikacje, np. do pracy z Excelem, interaktywne strony, marketplace'y i eksperymenty z analizą kodu.",
     heroPrimaryCta: "Zobacz wybrane projekty",
     heroSecondaryCta: "Otwórz GitHub",
     heroMetric1: "projektów publicznych i showcase'ów",
@@ -45,7 +45,7 @@ const copy = {
     projectsTitle: "Najmocniejsze projekty w jednym miejscu",
     projectListAria: "Lista wyróżnionych projektów",
     processEyebrow: "Approach",
-    processTitle: "Łączę klimat strony z jasną funkcją produktu",
+    processTitle: "Łączę klimat i wygląd z jasną funkcją produktu",
     processStep1Title: "Punkt wyjścia",
     processStep1Text:
       "Szukam realnego problemu albo konkretnego przepływu pracy: czego użytkownik potrzebuje szybciej, prościej albo czytelniej.",
