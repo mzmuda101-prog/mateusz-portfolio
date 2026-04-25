@@ -748,6 +748,23 @@ function setHTML(id, value) {
   }
 }
 
+function updateLangSwitchIndicator() {
+  const langSwitch = getEl("lang-switch");
+  if (!langSwitch) return;
+
+  const activeButton = langButtons.find((button) => button.classList.contains("is-active"));
+  if (!activeButton) return;
+
+  langSwitch.style.setProperty("--lang-pill-x", `${activeButton.offsetLeft}px`);
+  langSwitch.style.setProperty("--lang-pill-width", `${activeButton.offsetWidth}px`);
+
+  if (!langSwitch.classList.contains("is-ready")) {
+    window.requestAnimationFrame(() => {
+      langSwitch.classList.add("is-ready");
+    });
+  }
+}
+
 function applyLanguage(lang) {
   currentLang = lang;
   localStorage.setItem(STORAGE_KEY, lang);
@@ -842,6 +859,8 @@ function applyLanguage(lang) {
     button.setAttribute("aria-pressed", String(isActive));
   });
 
+  updateLangSwitchIndicator();
+
   renderSpotlight(activeProjectKey);
   if (currentRepos.length) {
     renderRepos(currentRepos);
@@ -873,6 +892,10 @@ langButtons.forEach((button) => {
       applyLanguage(nextLang);
     }
   });
+});
+
+window.addEventListener("resize", () => {
+  updateLangSwitchIndicator();
 });
 
 async function loadRepos() {

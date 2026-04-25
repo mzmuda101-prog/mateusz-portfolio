@@ -115,6 +115,7 @@ a {
 }
 
 .lang-switch {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -123,9 +124,42 @@ a {
   border-radius: 999px;
   background: rgba(255, 249, 242, 0.58);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+  isolation: isolate;
+}
+
+.lang-switch::before {
+  content: "";
+  position: absolute;
+  top: 0.28rem;
+  left: 0;
+  width: var(--lang-pill-width, 48px);
+  height: calc(100% - 0.56rem);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(32, 26, 24, 0.92), rgba(80, 52, 37, 0.88));
+  box-shadow:
+    0 12px 24px rgba(41, 26, 16, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateX(var(--lang-pill-x, 0));
+  will-change: transform, width;
+  z-index: 0;
+}
+
+.lang-switch.is-ready::before {
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms ease;
+}
+
+.lang-switch:has(.lang-button.is-active:hover)::before,
+.lang-switch:has(.lang-button.is-active:focus-visible)::before {
+  transform: translateX(var(--lang-pill-x, 0)) translateY(-2px);
 }
 
 .lang-button {
+  position: relative;
+  z-index: 1;
   border: 0;
   background: transparent;
   color: var(--muted);
@@ -152,10 +186,20 @@ a {
 }
 
 .lang-button.is-active {
-  background:
-    linear-gradient(135deg, rgba(32, 26, 24, 0.92), rgba(80, 52, 37, 0.88));
   color: #fff8f1;
-  box-shadow: 0 12px 24px rgba(41, 26, 16, 0.16);
+  transform: none;
+}
+
+.lang-button.is-active:hover,
+.lang-button.is-active:focus-visible {
+  transform: translateY(-2px);
+}
+
+.lang-switch:hover::before,
+.lang-switch:focus-within::before {
+  box-shadow:
+    0 14px 28px rgba(41, 26, 16, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .site-nav a {
