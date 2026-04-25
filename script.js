@@ -22,7 +22,7 @@ const copy = {
       "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
     heroEyebrowTop: "Portfolio / Web & utility projects.",
     heroEyebrowBottom: "Głównie Frontend Developer | JavaScript | Firebase",
-    heroTitleMain: "Buduję strony i narzędzia, aplikacje,",
+    heroTitleMain: "Buduję strony i narzędzia,",
     heroTitleAccent: "które mają konkretną pracę do wykonania.",
     heroLead:
       "Tworzę projekty z pogranicza frontendu, danych i workflow: aplikacje, np. do pracy z Excelem, interaktywne strony, marketplace'y i eksperymenty z analizą kodu.",
