@@ -82,7 +82,8 @@ const copy = {
     projectLocalOnly: "Projekt lokalny / bez publicznego linku",
     contactEyebrow: "Kontakt",
     contactTitle:
-      "Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.",
+      "Otwarty na ciekawe projekty, współpracę i kolejne webowe\n(i nie tylko...) wyzwania.",
+ 
     contactPrimaryCta: "Przejdź do projektów",
     contactSecondaryCta: "Zobacz wszystkie repo na GitHubie",
     clickHint: "Kliknij",
@@ -168,7 +169,7 @@ const copy = {
     projectLocalOnly: "Local project / no public link",
     contactEyebrow: "Contact",
     contactTitle:
-      "Open to interesting projects, collaboration, and more web <br> (and not only web) challenges.",
+      "Open to interesting projects, collaboration, and more web (and not only web) challenges.",
     contactPrimaryCta: "Go to projects",
     contactSecondaryCta: "See all GitHub repos",
     clickHint: "Click",
