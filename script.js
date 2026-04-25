@@ -1,6 +1,182 @@
-// Uogólniam projekty żeby łatwiej dokładać i można było dynamicznie coś dograć (np. kolory czy dane z fetchowania z API).
+const STORAGE_KEY = "mateusz-portfolio-lang";
+
+const copy = {
+  pl: {
+    locale: "pl-PL",
+    pageTitle: "Mateusz Zmuda | Portfolio",
+    pageDescription:
+      "Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps.",
+    brandAria: "Przejdź do początku strony",
+    refreshAria: "Odśwież stronę",
+    refreshHint: "kliknij aby Odświeżyć stronę",
+    refreshAlt: "Odśwież stronę",
+    navAria: "Główna nawigacja",
+    nav: {
+      projects: "Projekty",
+      about: "Profil",
+      github: "GitHub",
+      contact: "Kontakt",
+    },
+    langSwitchAria: "Przełącznik języka",
+    heroEyebrowHint:
+      "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
+    heroEyebrowTop: "Portfolio / Web & utility projects.",
+    heroEyebrowBottom: "Głównie Frontend Developer | JavaScript | Firebase",
+    heroTitleMain: "Buduję strony i narzędzia,",
+    heroTitleAccent: "które mają konkretną pracę do wykonania.",
+    heroLead:
+      "Tworzę projekty z pogranicza frontendu, danych i workflow: aplikacje do pracy z Excelem, interaktywne strony, marketplace'y i eksperymenty z analizą kodu.",
+    heroPrimaryCta: "Zobacz wybrane projekty",
+    heroSecondaryCta: "Otwórz GitHub",
+    heroMetric1: "projektów publicznych i showcase'ów",
+    heroMetric2: "główne osie pracy: web, Excel, utility tools",
+    heroMetric3: "cel: budować rzeczy przydatne, nie tylko efektowne",
+    heroPanelMainLabel: "Wybrane obszary",
+    heroPanelMain1: "Frontend i UI z charakterem",
+    heroPanelMain2: "Excel / workflow / dane",
+    heroPanelMain3: "Narzędzia desktopowe i utility apps",
+    heroPanelSideLabel: "Aktualnie rozwijane",
+    heroPanelSideTitle: "Excel Workbench PWA",
+    heroPanelSideText:
+      "Offline-first workbench do eksploracji, filtrowania i przekształcania plików Excel w przeglądarce.",
+    introStrip:
+      "Najchętniej buduję rzeczy użyteczne: od narzędzi do analizy i pracy z danymi, po strony, które mają wyraźny styl i czytelny cel.",
+    projectsEyebrow: "Selected work",
+    projectsTitle: "Najmocniejsze projekty w jednym miejscu",
+    projectListAria: "Lista wyróżnionych projektów",
+    processEyebrow: "Approach",
+    processTitle: "Łączę klimat strony z jasną funkcją produktu",
+    processStep1Title: "Punkt wyjścia",
+    processStep1Text:
+      "Szukam realnego problemu albo konkretnego przepływu pracy: czego użytkownik potrzebuje szybciej, prościej albo czytelniej.",
+    processStep2Title: "Forma",
+    processStep2Text:
+      "Potem dopiero dobieram język wizualny: rytm sekcji, proporcje, ruch i typografię, tak żeby projekt miał charakter, ale nie przeszkadzał w użyciu.",
+    processStep3Title: "Dowiezienie",
+    processStep3Text:
+      "Lubię domykać projekt do wersji, którą da się uruchomić, pokazać online, przetestować i dalej rozwijać.",
+    aboutEyebrow: "Profile",
+    aboutTitle: "Jak podchodzę do budowania produktów",
+    about1Title: "Utility-first thinking",
+    about1Text:
+      "Najbardziej interesują mnie projekty, które rozwiązują realny problem: upraszczają workflow, porządkują dane albo przyspieszają codzienną pracę.",
+    about2Title: "Frontend z klimatem",
+    about2Text:
+      "Nawet w prostych aplikacjach zależy mi na kompozycji, ruchu, rytmie sekcji i wyrazistej warstwie wizualnej.",
+    about3Title: "Od pomysłu do wdrożenia",
+    about3Text:
+      "Lubię spinać pełną całość: interfejs, logikę, eksport danych, integracje z chmurą i wersję gotową do pokazania online.",
+    githubEyebrow: "GitHub",
+    githubTitle: "Repozytoria publiczne pobierane na żywo z profilu",
+    githubProfileLabel: "Profil:",
+    githubStatusLoading: "Ładowanie repozytoriów…",
+    githubStatusLoaded: "Sekcja jest aktualizowana z GitHub API.",
+    githubStatusFallback:
+      "Nie udało się pobrać API, więc pokazuję przygotowaną listę najważniejszych repozytoriów.",
+    repoMixedStack: "Mixed stack",
+    repoUpdated: "Aktualizacja",
+    repoNoDescription:
+      "Repozytorium bez opisu w sekcji About, ale README i sam projekt są dostępne publicznie na GitHubie.",
+    buttonRepo: "Repozytorium",
+    buttonLive: "Live demo",
+    projectLocalOnly: "Projekt lokalny / bez publicznego linku",
+    contactEyebrow: "Kontakt",
+    contactTitle:
+      "Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.",
+    contactPrimaryCta: "Przejdź do projektów",
+    contactSecondaryCta: "Zobacz wszystkie repo na GitHubie",
+    clickHint: "Kliknij",
+  },
+  en: {
+    locale: "en-US",
+    pageTitle: "Mateusz Zmuda | Portfolio",
+    pageDescription:
+      "Mateusz Zmuda's portfolio: web apps, Excel tools, frontend projects, and utility apps.",
+    brandAria: "Go to the top of the page",
+    refreshAria: "Refresh the page",
+    refreshHint: "click to refresh the page",
+    refreshAlt: "Refresh the page",
+    navAria: "Main navigation",
+    nav: {
+      projects: "Projects",
+      about: "Profile",
+      github: "GitHub",
+      contact: "Contact",
+    },
+    langSwitchAria: "Language switcher",
+    heroEyebrowHint:
+      "Primarily Frontend Developer, JavaScript, Firebase /| I build interactive web apps and tools for working with data",
+    heroEyebrowTop: "Portfolio / Web & utility projects.",
+    heroEyebrowBottom: "Primarily Frontend Developer | JavaScript | Firebase",
+    heroTitleMain: "I build websites and tools",
+    heroTitleAccent: "that have a real job to do.",
+    heroLead:
+      "I create projects at the intersection of frontend, data, and workflow: Excel-oriented apps, interactive websites, marketplaces, and code-analysis experiments.",
+    heroPrimaryCta: "See selected projects",
+    heroSecondaryCta: "Open GitHub",
+    heroMetric1: "public projects and showcase builds",
+    heroMetric2: "main focus areas: web, Excel, utility tools",
+    heroMetric3: "goal: build useful things, not just flashy ones",
+    heroPanelMainLabel: "Selected areas",
+    heroPanelMain1: "Frontend and UI with character",
+    heroPanelMain2: "Excel / workflow / data",
+    heroPanelMain3: "Desktop tools and utility apps",
+    heroPanelSideLabel: "Currently evolving",
+    heroPanelSideTitle: "Excel Workbench PWA",
+    heroPanelSideText:
+      "An offline-first workbench for exploring, filtering, and transforming Excel files directly in the browser.",
+    introStrip:
+      "I most enjoy building useful things: from tools for analysis and data work to websites with a clear style and a clear purpose.",
+    projectsEyebrow: "Selected work",
+    projectsTitle: "The strongest projects in one place",
+    projectListAria: "List of featured projects",
+    processEyebrow: "Approach",
+    processTitle: "I connect visual atmosphere with a clear product function",
+    processStep1Title: "Starting point",
+    processStep1Text:
+      "I look for a real problem or a concrete workflow: what the user needs faster, simpler, or in a clearer form.",
+    processStep2Title: "Form",
+    processStep2Text:
+      "Only then do I shape the visual language: section rhythm, proportions, motion, and typography, so the project has personality without getting in the way.",
+    processStep3Title: "Delivery",
+    processStep3Text:
+      "I like taking projects to a version that can be launched, shown online, tested, and improved further.",
+    aboutEyebrow: "Profile",
+    aboutTitle: "How I approach building products",
+    about1Title: "Utility-first thinking",
+    about1Text:
+      "I'm most interested in projects that solve a real problem: simplifying workflows, organizing data, or speeding up everyday work.",
+    about2Title: "Frontend with atmosphere",
+    about2Text:
+      "Even in simple apps, I care about composition, motion, section rhythm, and a distinct visual layer.",
+    about3Title: "From idea to launch",
+    about3Text:
+      "I like tying the whole thing together: interface, logic, data export, cloud integrations, and a version ready to show online.",
+    githubEyebrow: "GitHub",
+    githubTitle: "Public repositories pulled live from the profile",
+    githubProfileLabel: "Profile:",
+    githubStatusLoading: "Loading repositories…",
+    githubStatusLoaded: "This section is being updated from the GitHub API.",
+    githubStatusFallback:
+      "The API couldn't be loaded, so I'm showing a prepared list of key repositories.",
+    repoMixedStack: "Mixed stack",
+    repoUpdated: "Updated",
+    repoNoDescription:
+      "This repository has no About description, but the README and project are publicly available on GitHub.",
+    buttonRepo: "Repository",
+    buttonLive: "Live demo",
+    projectLocalOnly: "Local project / no public link",
+    contactEyebrow: "Contact",
+    contactTitle:
+      "Open to interesting projects, collaboration, and more web <br> (and not only web) challenges.",
+    contactPrimaryCta: "Go to projects",
+    contactSecondaryCta: "See all GitHub repos",
+    clickHint: "Click",
+  },
+};
+
 const defaultProjectProps = {
-  accent: "#ce5a2f", // domyślny accent (fallback gdy nie określono per-project)
+  accent: "#ce5a2f",
   accentDeep: "#a03e1b",
   glow: "rgba(206, 90, 47, 0.18)",
   glowSoft: "rgba(206, 90, 47, 0.12)",
@@ -10,10 +186,8 @@ const defaultProjectProps = {
     shadowStrength: "18%",
     softGlowSize: "46%",
   },
-  // Można dodać tu domyślne ikony czy cokolwiek do dziedziczenia
 };
 
-// Elastyczny helper, z możliwością podmiany configów głębiej jeśli projekty są bardziej zagnieżdżone
 function makeProject(spec, overrideDefaultProps = {}) {
   return {
     ...defaultProjectProps,
@@ -22,48 +196,13 @@ function makeProject(spec, overrideDefaultProps = {}) {
     repoTheme: {
       ...defaultProjectProps.repoTheme,
       ...(overrideDefaultProps.repoTheme || {}),
-      ...(spec.repoTheme || {})
-    }
+      ...(spec.repoTheme || {}),
+    },
   };
 }
 
-// --- [NOWE]: Zautomatyzowane wykrywanie i tworzenie project configów na podstawie zfetchowanych repozytoriów
-// Pomysł: jeśli fetch z GitHub da nowe repo bez wpisu per-project w poniższym 'projects', to dodać go automatycznie z fallbackiem do defaultowych styli
-function insertDynamicProjectFromRepo(repo) {
-  // Sprawdź czy istnieje w projects - jeśli nie, stwórz z fallbackiem
-  const key = normalizeRepoToken(repo.name);
-  if (!(key in projects)) {
-    projects[key] = makeProject({
-      title: repo.name.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      kicker: repo.language ? `${repo.language} / GitHub` : "GitHub",
-      description: repo.description || "Projekt zaimportowany automatycznie z GitHub.",
-      actions: [
-        ...(repo.homepage ? [{ label: "Live demo", href: repo.homepage }] : []),
-        { label: "Repozytorium", href: repo.html_url }
-      ],
-      // Spróbuj podpiąć jakikolwiek domyślny stack jeżeli nieznany język
-      stack: repo.language ? [repo.language] : ["Unknown"],
-      // Kolory mogą być pobierane dynamicznie! Można podrasować np. do generowania na podstawie language/brand
-      accent: defaultProjectProps.accent,
-      accentDeep: defaultProjectProps.accentDeep,
-      glow: defaultProjectProps.glow,
-      glowSoft: defaultProjectProps.glowSoft,
-      image: "", // Można spróbować pobierać np. GitHub social image, albo fallback ikonke
-      imageAlt: `Screenshot of ${repo.name}`,
-      meta: [
-        repo.description || "Repozytorium bez opisu.",
-        `Ostatnia aktualizacja: ${(new Date(repo.updated_at)).toLocaleDateString()}`,
-      ],
-    });
-    // @mateusz: jeżeli chcesz mocniej stylować po języku albo "brandować" - można tu podpiąć mapę domyślnych akcentów per język!
-  }
-}
-
-// Wersja rozwojowa, pozwala na kick-off z fetchem danych czy sekcjami - można np. dynamicznie doklejać do tego obiektu projekty!
 const projects = {
   "excel-workbench-pwa": makeProject({
-    kicker: "PWA / data tools",
-    title: "Excel Workbench PWA",
     accent: "#2f6f5c",
     accentDeep: "#245849",
     glow: "rgba(47, 111, 92, 0.22)",
@@ -74,30 +213,45 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    description:
-      "Offline-first aplikacja do przeglądania, filtrowania, analizowania i lekkiego przekształcania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
     image: "./assets/excel-workbench-pwa-2.png",
-    imageAlt: "Zrzut ekranu Excel Workbench PWA",
-    meta: [
-      "Działa lokalnie w przeglądarce i wspiera tryb offline.",
-      "Skupiona na realnym workflow wokół arkuszy, a nie na kopiowaniu całego Excela.",
-      "Ma narzędzia do inspekcji struktury, filtrów, sortowania i eksportu.",
-    ],
-    stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
+    imageAlt: {
+      pl: "Zrzut ekranu Excel Workbench PWA",
+      en: "Screenshot of Excel Workbench PWA",
+    },
     actions: [
-      {
-        label: "Live demo",
-        href: "https://excel-workbench-pwa.vercel.app",
-      },
-      {
-        label: "Repozytorium",
-        href: "https://github.com/mzmuda101-prog/excel-workbench-pwa",
-      },
+      { type: "live", href: "https://excel-workbench-pwa.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/excel-workbench-pwa" },
     ],
+    copy: {
+      pl: {
+        tabLabel: "Excel Workbench PWA",
+        kicker: "PWA / data tools",
+        title: "Excel Workbench PWA",
+        description:
+          "Offline-first aplikacja do przeglądania, filtrowania, analizowania i lekkiego przekształcania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
+        meta: [
+          "Działa lokalnie w przeglądarce i wspiera tryb offline.",
+          "Skupiona na realnym workflow wokół arkuszy, a nie na kopiowaniu całego Excela.",
+          "Ma narzędzia do inspekcji struktury, filtrów, sortowania i eksportu.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
+      },
+      en: {
+        tabLabel: "Excel Workbench PWA",
+        kicker: "PWA / data tools",
+        title: "Excel Workbench PWA",
+        description:
+          "An offline-first app for browsing, filtering, analyzing, and lightly transforming Excel files without a backend and without sending data off the device.",
+        meta: [
+          "Runs locally in the browser and supports offline mode.",
+          "Focused on real spreadsheet workflows instead of copying all of Excel.",
+          "Includes tools for structure inspection, filtering, sorting, and export.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
+      },
+    },
   }),
   "excel-workbench": makeProject({
-    kicker: "Desktop app / Excel tooling",
-    title: "Excel Workbench",
     accent: "#3f6db5",
     accentDeep: "#294676",
     glow: "rgba(63, 109, 181, 0.2)",
@@ -108,23 +262,44 @@ const projects = {
       shadowStrength: "22%",
       softGlowSize: "50%",
     },
-    description:
-      "Modularne narzędzie desktopowe do pracy z workbookami Excela, z wyraźnym podziałem logiki na moduły odpowiedzialne za filtrowanie, formatowanie, układ kolumn i obsługę plików.",
     image: "./assets/excel-workbench-logo.png",
-    imageAlt: "Logo projektu Excel Workbench",
-    meta: [
-      "Refaktoryzacja z monolitu do czytelnej, modułowej architektury.",
-      "Obsługa filtrowania, sortowania, edycji komórek i analizy workbooka.",
-      "Silny nacisk na utrzymanie, testowalność i dalszą rozbudowę.",
-    ],
-    stack: ["Python", "Tkinter", "openpyxl", "Desktop UI"],
+    imageAlt: {
+      pl: "Logo projektu Excel Workbench",
+      en: "Excel Workbench project logo",
+    },
     actions: [],
+    copy: {
+      pl: {
+        tabLabel: "Excel Workbench",
+        kicker: "Desktop app / Excel tooling",
+        title: "Excel Workbench",
+        description:
+          "Modularne narzędzie desktopowe do pracy z workbookami Excela, z wyraźnym podziałem logiki na moduły odpowiedzialne za filtrowanie, formatowanie, układ kolumn i obsługę plików.",
+        meta: [
+          "Refaktoryzacja z monolitu do czytelnej, modułowej architektury.",
+          "Obsługa filtrowania, sortowania, edycji komórek i analizy workbooka.",
+          "Silny nacisk na utrzymanie, testowalność i dalszą rozbudowę.",
+        ],
+        stack: ["Python", "Tkinter", "openpyxl", "Desktop UI"],
+      },
+      en: {
+        tabLabel: "Excel Workbench",
+        kicker: "Desktop app / Excel tooling",
+        title: "Excel Workbench",
+        description:
+          "A modular desktop tool for working with Excel workbooks, with clear logic split into modules responsible for filtering, formatting, column layout, and file handling.",
+        meta: [
+          "Refactored from a monolith into a cleaner modular architecture.",
+          "Supports filtering, sorting, cell editing, and workbook inspection.",
+          "Built with a strong focus on maintainability, testability, and future growth.",
+        ],
+        stack: ["Python", "Tkinter", "openpyxl", "Desktop UI"],
+      },
+    },
   }),
   "portal-ogloszeniowy": makeProject({
-    kicker: "Marketplace / cloud integrations",
-    title: "Portal Ogłoszeniowy",
-    accent: "#E67C21",
-    accentDeep: "#D55704",
+    accent: "#e67c21",
+    accentDeep: "#d55704",
     glow: "rgba(230, 126, 34, 0.22)",
     glowSoft: "rgba(241, 158, 15, 0.18)",
     repoTheme: {
@@ -133,30 +308,45 @@ const projects = {
       shadowStrength: "26%",
       softGlowSize: "54%",
     },
-    description:
-      "Marketplace z panelem administratora, publikacją ogłoszeń oraz integracjami z Firebase i Cloudinary. Projekt łączy prostą ścieżkę publikacji z realnym deployem online.",
     image: "./assets/portal-bg.jpg",
-    imageAlt: "Tło projektu Portal Ogłoszeniowy",
-    meta: [
-      "Logowanie administratora i zarządzanie ogłoszeniami.",
-      "Obsługa uploadu zdjęć i filtrowania po kategoriach.",
-      "Wersja live dostępna online na Vercel.",
-    ],
-    stack: ["HTML", "CSS", "JavaScript", "Node.js", "Firebase", "Cloudinary"],
+    imageAlt: {
+      pl: "Tło projektu Portal Ogłoszeniowy",
+      en: "Listings Portal project background",
+    },
     actions: [
-      {
-        label: "Live demo",
-        href: "https://portal-ogloszeniowy.vercel.app",
-      },
-      {
-        label: "Repozytorium",
-        href: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy",
-      },
+      { type: "live", href: "https://portal-ogloszeniowy.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy" },
     ],
+    copy: {
+      pl: {
+        tabLabel: "Portal Ogłoszeniowy",
+        kicker: "Marketplace / cloud integrations",
+        title: "Portal Ogłoszeniowy",
+        description:
+          "Marketplace z panelem administratora, publikacją ogłoszeń oraz integracjami z Firebase i Cloudinary. Projekt łączy prostą ścieżkę publikacji z realnym deployem online.",
+        meta: [
+          "Logowanie administratora i zarządzanie ogłoszeniami.",
+          "Obsługa uploadu zdjęć i filtrowania po kategoriach.",
+          "Wersja live dostępna online na Vercel.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "Node.js", "Firebase", "Cloudinary"],
+      },
+      en: {
+        tabLabel: "Listings Portal",
+        kicker: "Marketplace / cloud integrations",
+        title: "Listings Portal",
+        description:
+          "A marketplace with an admin panel, listing publishing, and Firebase plus Cloudinary integrations. The project combines a simple publishing flow with a real online deployment.",
+        meta: [
+          "Admin authentication and listing management.",
+          "Image upload support and category-based filtering.",
+          "A live version deployed on Vercel.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "Node.js", "Firebase", "Cloudinary"],
+      },
+    },
   }),
   "data-collector": makeProject({
-    kicker: "Frontend / Excel export",
-    title: "Data Collector & Excel Export",
     accent: "#e94560",
     accentDeep: "#a5283f",
     glow: "rgba(233, 69, 96, 0.24)",
@@ -167,31 +357,46 @@ const projects = {
       shadowStrength: "26%",
       softGlowSize: "52%",
     },
-    description:
-      "Interaktywna strona demonstracyjna, która łączy motion-driven frontend z praktycznym przepływem danych i eksportem do pliku Excel przez SheetJS.",
     image: "./assets/data-collector-bg.png",
-    imageAlt: "Tło projektu Data Collector & Excel Export",
-    meta: [
-      "Animowany layout project-first z intro i efektami wizualnymi.",
-      "Dynamiczny formularz danych i eksport do `.xlsx`.",
-      "Pokazuje połączenie UX, frontendu i pracy z danymi po stronie klienta.",
-    ],
-    stack: ["HTML", "CSS", "JavaScript", "GSAP", "SheetJS"],
+    imageAlt: {
+      pl: "Tło projektu Data Collector & Excel Export",
+      en: "Data Collector & Excel Export project background",
+    },
     actions: [
-      {
-        label: "Live demo",
-        href: "https://strona-6.vercel.app",
-      },
-      {
-        label: "Repozytorium",
-        href: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App",
-      },
+      { type: "live", href: "https://strona-6.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App" },
     ],
+    copy: {
+      pl: {
+        tabLabel: "Data Collector & Excel Export",
+        kicker: "Frontend / Excel export",
+        title: "Data Collector & Excel Export",
+        description:
+          "Interaktywna strona demonstracyjna, która łączy motion-driven frontend z praktycznym przepływem danych i eksportem do pliku Excel przez SheetJS.",
+        meta: [
+          "Animowany layout project-first z intro i efektami wizualnymi.",
+          "Dynamiczny formularz danych i eksport do `.xlsx`.",
+          "Pokazuje połączenie UX, frontendu i pracy z danymi po stronie klienta.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "GSAP", "SheetJS"],
+      },
+      en: {
+        tabLabel: "Data Collector & Excel Export",
+        kicker: "Frontend / Excel export",
+        title: "Data Collector & Excel Export",
+        description:
+          "An interactive showcase page that connects a motion-driven frontend with a practical data flow and Excel export via SheetJS.",
+        meta: [
+          "An animated project-first layout with intro and visual effects.",
+          "A dynamic data form and `.xlsx` export.",
+          "Shows the intersection of UX, frontend work, and client-side data handling.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "GSAP", "SheetJS"],
+      },
+    },
   }),
   "code-learning-analyzer": makeProject({
-    kicker: "CLI / reports / learning tool",
-    title: "Code Learning Analyzer",
-    accent: "#6f54d9",
+    accent: "#6e4fbc",
     accentDeep: "#48309f",
     glow: "rgba(111, 84, 217, 0.2)",
     glowSoft: "rgba(166, 144, 255, 0.18)",
@@ -201,73 +406,94 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "50%",
     },
-    description:
-      "Analizator jakości kodu dla osób uczących się programowania i projektów portfolio. Generuje raporty tekstowe, Excel, PDF i HTML, a przy tym tłumaczy sens metryk.",
     image: "./assets/code-learning-analyzer-ui.png",
-    imageAlt: "Zrzut interfejsu projektu Code Learning Analyzer",
-    meta: [
-      "Obsługuje analizę folderów, plików, Git i udział języków.",
-      "Łączy utility CLI z trybem nauki i wyjaśnianiem metryk.",
-      "Projekt skierowany do nauki świadomego rozwijania jakości kodu.",
-    ],
-    stack: ["Python", "CLI", "Tkinter", "HTML reports", "PDF/XLSX export"],
-    actions: [
-      {
-        label: "Repozytorium",
-        href: "https://github.com/mzmuda101-prog/code-learning-analyzer",
+    imageAlt: {
+      pl: "Zrzut interfejsu projektu Code Learning Analyzer",
+      en: "Code Learning Analyzer interface screenshot",
+    },
+    actions: [{ type: "repo", href: "https://github.com/mzmuda101-prog/code-learning-analyzer" }],
+    copy: {
+      pl: {
+        tabLabel: "Code Learning Analyzer",
+        kicker: "CLI / reports / learning tool",
+        title: "Code Learning Analyzer",
+        description:
+          "Analizator jakości kodu dla osób uczących się programowania i projektów portfolio. Generuje raporty tekstowe, Excel, PDF i HTML, a przy tym tłumaczy sens metryk.",
+        meta: [
+          "Obsługuje analizę folderów, plików, Git i udział języków.",
+          "Łączy utility CLI z trybem nauki i wyjaśnianiem metryk.",
+          "Projekt skierowany do nauki świadomego rozwijania jakości kodu.",
+        ],
+        stack: ["Python", "CLI", "Tkinter", "HTML reports", "PDF/XLSX export"],
       },
-    ],
+      en: {
+        tabLabel: "Code Learning Analyzer",
+        kicker: "CLI / reports / learning tool",
+        title: "Code Learning Analyzer",
+        description:
+          "A code quality analyzer for people learning programming and building portfolio projects. It generates text, Excel, PDF, and HTML reports while also explaining what the metrics actually mean.",
+        meta: [
+          "Supports folder, file, Git, and language-share analysis.",
+          "Combines a utility CLI with a learning mode and metric explanations.",
+          "Built to support more conscious improvement of code quality.",
+        ],
+        stack: ["Python", "CLI", "Tkinter", "HTML reports", "PDF/XLSX export"],
+      },
+    },
   }),
 };
 
-// --- fallbacky dla repozytoriów: można by dynamicznie dogrywać z GitHub API jeśli offline no to z tego arraya (no i np. ładować później język/kategorie)
-// Rozważam trzymanie tylko minimalnego fallbacka, a resztę updateować przez fetch jak online!
 const repoFallback = [
   {
     name: "excel-workbench-pwa",
-    description: "Offline-first workbench do pracy z plikami Excel w przeglądarce.",
+    description: {
+      pl: "Offline-first workbench do pracy z plikami Excel w przeglądarce.",
+      en: "An offline-first workbench for working with Excel files in the browser.",
+    },
     language: "JavaScript",
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/excel-workbench-pwa",
     homepage: "https://excel-workbench-pwa.vercel.app",
-    isPublic: true, // można wyfiltrować do podglądu tylko publiczne itd.
   },
   {
     name: "Portal-Ogloszeniowy",
-    description: "Marketplace z panelem administratora i integracjami chmurowymi.",
+    description: {
+      pl: "Marketplace z panelem administratora i integracjami chmurowymi.",
+      en: "A marketplace with an admin panel and cloud integrations.",
+    },
     language: "JavaScript",
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy",
     homepage: "https://portal-ogloszeniowy.vercel.app",
-    isPublic: true,
   },
   {
     name: "Data-Collector-Excel-App",
-    description: "Interaktywny frontend z eksportem danych do Excela.",
+    description: {
+      pl: "Interaktywny frontend z eksportem danych do Excela.",
+      en: "An interactive frontend with Excel data export.",
+    },
     language: "JavaScript",
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App",
     homepage: "https://strona-6.vercel.app",
-    isPublic: true,
   },
   {
     name: "code-learning-analyzer",
-    description: "Analizator jakości kodu z raportami i trybem nauki.",
+    description: {
+      pl: "Analizator jakości kodu z raportami i trybem nauki.",
+      en: "A code quality analyzer with reports and a learning mode.",
+    },
     language: "Python",
     updated_at: "2026-04-22T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/code-learning-analyzer",
     homepage: "",
-    isPublic: true,
   },
 ];
 
-// Centralizuję pobieranie elementów z możliwością refaktoru pod lazy-get czy proxy (pomysł: "UI.get('spotlight-kicker')")
 function getEl(id) {
-  // fallbacky (np. do testów: można tu dorobić try/catch czy warn)
   return document.getElementById(id);
 }
 
-// Spotlight można w sumie łatwo w przyszłości zrobić jako class z metodami typu "set" czy animacjami CSS - dla elastyczności zostaje tu prosty obiekt
 const spotlight = {
   kicker: getEl("spotlight-kicker"),
   title: getEl("spotlight-title"),
@@ -279,9 +505,7 @@ const spotlight = {
   root: getEl("project-spotlight"),
 };
 
-// Tabsy - pamiętać, że łatwo potem dorobić tryb dynamiczny przez data-* lub nadpisać poniższy Selectorem
 const tabs = Array.from(document.querySelectorAll(".project-tab"));
-// repoGrid, githubStatus itp trzymam bardziej klasycznie - nie ma sensu tu proxy dawać na razie
 const repoGrid = getEl("repo-grid");
 const githubStatus = getEl("github-status");
 const revealTargets = document.querySelectorAll(".reveal");
@@ -290,18 +514,19 @@ const heroShot = document.querySelector(".hero-shot");
 const magneticButtons = document.querySelectorAll(".button-magnetic");
 const heroPanels = Array.from(document.querySelectorAll(".hero-panel-trigger"));
 const cursorHint = getEl("cursor-hint");
+const langButtons = Array.from(document.querySelectorAll(".lang-button"));
 
-// UI State - przewidziane na przyszłość do scentralizowania (można zrobić object UIState/Reactive)
+let currentLang = localStorage.getItem(STORAGE_KEY) === "en" ? "en" : "pl";
 let activeProjectKey = "excel-workbench-pwa";
 let activeHeroPanel = null;
+let currentRepos = [];
+let githubStatusMode = "loading";
 let cursorHintX = -999;
 let cursorHintY = -999;
 let cursorHintTargetX = -999;
 let cursorHintTargetY = -999;
 let cursorHintFrame = null;
 
-// Repozytoria - aliasy (potencjał na dynamiczny mapping jak integracja z GitHub API, np. z automatu generować aliasy)
-// --- [NOWE] hint: można dorzucić wstępne uzgadnianie aliasów na podstawie homepage czy url automatycznie!
 const repoProjectAliases = {
   "excel-workbench-pwa": "excel-workbench-pwa",
   "portal-ogloszeniowy": "portal-ogloszeniowy",
@@ -310,11 +535,10 @@ const repoProjectAliases = {
   "strona-6-vercel-app": "data-collector",
   "code-learning-analyzer": "code-learning-analyzer",
   "excel-workbench": "excel-workbench",
-  // @mateusz: Jeśli chcesz by nowe projekty łapały mapowanie aliasów automatycznie, możesz odpalić loopa po fetchowanych repo i dodawać tutaj aliasy per homepage/url!
 };
 
-// Domyślny theme dla repo, jeśli nie znajdzie - patrz makeProject (głębokie dziedziczenie, zawsze coś jest)
 const defaultRepoTheme = { ...defaultProjectProps.repoTheme };
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function normalizeRepoToken(value) {
   return String(value || "")
@@ -325,6 +549,12 @@ function normalizeRepoToken(value) {
     .replace(/\/+$/, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+function getProjectCopy(projectKey, lang = currentLang) {
+  const project = projects[projectKey];
+  if (!project) return null;
+  return project.copy[lang] || project.copy.pl;
 }
 
 function getRepoProjectKey(repo) {
@@ -346,10 +576,7 @@ function buildRepoThemeVars(repo) {
 
   if (!project) return "";
 
-  const theme = {
-    ...defaultRepoTheme,
-    ...(project.repoTheme || {}),
-  };
+  const theme = { ...defaultRepoTheme, ...(project.repoTheme || {}) };
 
   return [
     `--repo-accent:${project.accent || "var(--accent)"}`,
@@ -363,23 +590,45 @@ function buildRepoThemeVars(repo) {
   ].join(";");
 }
 
+function formatDate(dateString) {
+  return new Intl.DateTimeFormat(copy[currentLang].locale, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(new Date(dateString));
+}
+
+function getGithubStatusText() {
+  if (githubStatusMode === "loaded") return copy[currentLang].githubStatusLoaded;
+  if (githubStatusMode === "fallback") return copy[currentLang].githubStatusFallback;
+  return copy[currentLang].githubStatusLoading;
+}
+
+function getRepoDescription(repo) {
+  if (typeof repo.description === "object" && repo.description !== null) {
+    return repo.description[currentLang] || repo.description.pl || repo.description.en;
+  }
+
+  return repo.description || copy[currentLang].repoNoDescription;
+}
+
 function createProjectAction(action, index) {
   const link = document.createElement("a");
   link.className = `button ${index === 0 ? "button-primary" : "button-secondary"}`;
   link.href = action.href;
   link.target = "_blank";
   link.rel = "noreferrer";
-  link.textContent = action.label;
+  link.textContent = action.type === "repo" ? copy[currentLang].buttonRepo : copy[currentLang].buttonLive;
   return link;
 }
 
-function createRepoAction(label, href, variant) {
+function createRepoAction(type, href, variant) {
   const link = document.createElement("a");
   link.className = `button ${variant}`;
   link.href = href;
   link.target = "_blank";
   link.rel = "noreferrer";
-  link.textContent = label;
+  link.textContent = type === "repo" ? copy[currentLang].buttonRepo : copy[currentLang].buttonLive;
   return link;
 }
 
@@ -396,10 +645,10 @@ function createRepoCard(repo) {
   meta.className = "repo-meta";
 
   const language = document.createElement("span");
-  language.textContent = repo.language || "Mixed stack";
+  language.textContent = repo.language || copy[currentLang].repoMixedStack;
 
   const updated = document.createElement("span");
-  updated.textContent = `Update: ${formatDate(repo.updated_at)}`;
+  updated.textContent = `${copy[currentLang].repoUpdated}: ${formatDate(repo.updated_at)}`;
 
   meta.append(language, updated);
 
@@ -407,43 +656,46 @@ function createRepoCard(repo) {
   title.textContent = repo.name;
 
   const description = document.createElement("p");
-  description.textContent =
-    repo.description || "Repozytorium bez opisu w sekcji 'About', ale README jak i sam projekt dostępny publicznie na GitHubie.";
+  description.textContent = getRepoDescription(repo);
 
   const actions = document.createElement("div");
   actions.className = "project-actions";
-  actions.append(createRepoAction("Repo", repo.html_url, "button-primary"));
+  actions.append(createRepoAction("repo", repo.html_url, "button-primary"));
 
   if (repo.homepage) {
-    actions.append(createRepoAction("Live", repo.homepage, "button-secondary"));
+    actions.append(createRepoAction("live", repo.homepage, "button-secondary"));
   }
 
   article.append(meta, title, description, actions);
   return article;
 }
 
+function renderRepos(repos) {
+  currentRepos = repos;
+  repoGrid.replaceChildren(...repos.map((repo) => createRepoCard(repo)));
+  githubStatus.textContent = getGithubStatusText();
+}
+
 function renderSpotlight(projectKey) {
   const project = projects[projectKey];
-  if (!project) return;
+  const projectCopy = getProjectCopy(projectKey);
+  if (!project || !projectCopy) return;
 
   if (spotlight.root) {
     spotlight.root.style.setProperty("--project-accent", project.accent || "#ce5a2f");
     spotlight.root.style.setProperty("--project-accent-deep", project.accentDeep || "#8c3416");
     spotlight.root.style.setProperty("--project-glow", project.glow || "rgba(206, 90, 47, 0.18)");
-    spotlight.root.style.setProperty(
-      "--project-glow-soft",
-      project.glowSoft || "rgba(206, 90, 47, 0.12)"
-    );
+    spotlight.root.style.setProperty("--project-glow-soft", project.glowSoft || "rgba(206, 90, 47, 0.12)");
   }
 
-  spotlight.kicker.textContent = project.kicker;
-  spotlight.title.textContent = project.title;
-  spotlight.description.textContent = project.description;
+  spotlight.kicker.textContent = projectCopy.kicker;
+  spotlight.title.textContent = projectCopy.title;
+  spotlight.description.textContent = projectCopy.description;
   spotlight.image.src = project.image;
-  spotlight.image.alt = project.imageAlt;
+  spotlight.image.alt = project.imageAlt[currentLang] || project.imageAlt.pl;
 
   spotlight.meta.replaceChildren(
-    ...project.meta.map((item) => {
+    ...projectCopy.meta.map((item) => {
       const listItem = document.createElement("li");
       listItem.textContent = item;
       return listItem;
@@ -451,7 +703,7 @@ function renderSpotlight(projectKey) {
   );
 
   spotlight.stack.replaceChildren(
-    ...project.stack.map((item) => {
+    ...projectCopy.stack.map((item) => {
       const stackItem = document.createElement("span");
       stackItem.textContent = item;
       return stackItem;
@@ -466,17 +718,136 @@ function renderSpotlight(projectKey) {
     const fallback = document.createElement("span");
     fallback.className = "button button-secondary";
     fallback.setAttribute("aria-disabled", "true");
-    fallback.textContent = "Projekt lokalny / bez publicznego linku";
+    fallback.textContent = copy[currentLang].projectLocalOnly;
     spotlight.actions.replaceChildren(fallback);
   }
 
   tabs.forEach((tab) => {
     const isActive = tab.dataset.project === projectKey;
+    const tabCopy = getProjectCopy(tab.dataset.project);
     tab.classList.toggle("is-active", isActive);
     tab.setAttribute("aria-selected", String(isActive));
+    if (tabCopy) tab.textContent = tabCopy.tabLabel;
   });
 
   activeProjectKey = projectKey;
+}
+
+function setText(id, value) {
+  const element = getEl(id);
+  if (element) element.textContent = value;
+}
+
+function setHTML(id, value) {
+  const element = getEl(id);
+  if (element) {
+    // Usuwamy całe dzieci elementu, unikając bezpośredniego użycia innerHTML
+    element.replaceChildren();
+    // Dodajemy tekstowy węzeł (bezpieczne dla plain text)
+    element.appendChild(document.createTextNode(value));
+  }
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem(STORAGE_KEY, lang);
+  document.documentElement.lang = lang;
+  document.title = copy[lang].pageTitle;
+
+  const descriptionMeta = getEl("page-description");
+  if (descriptionMeta) descriptionMeta.setAttribute("content", copy[lang].pageDescription);
+
+  const brandLink = getEl("brand-link");
+  if (brandLink) brandLink.setAttribute("aria-label", copy[lang].brandAria);
+
+  const refreshLink = getEl("refresh-link");
+  if (refreshLink) {
+    refreshLink.setAttribute("aria-label", copy[lang].refreshAria);
+    refreshLink.dataset.hint = copy[lang].refreshHint;
+  }
+
+  const refreshImage = getEl("refresh-image");
+  if (refreshImage) refreshImage.alt = copy[lang].refreshAlt;
+
+  const siteNav = getEl("site-nav");
+  if (siteNav) siteNav.setAttribute("aria-label", copy[lang].navAria);
+
+  const langSwitch = getEl("lang-switch");
+  if (langSwitch) langSwitch.setAttribute("aria-label", copy[lang].langSwitchAria);
+
+  document.querySelectorAll("[data-nav]").forEach((link) => {
+    const key = link.dataset.nav;
+    if (copy[lang].nav[key]) link.textContent = copy[lang].nav[key];
+  });
+
+  const heroEyebrow = getEl("hero-eyebrow");
+  if (heroEyebrow) heroEyebrow.dataset.hint = copy[lang].heroEyebrowHint;
+
+  setText("hero-eyebrow-top", copy[lang].heroEyebrowTop);
+  setText("hero-eyebrow-bottom", copy[lang].heroEyebrowBottom);
+  setText("hero-title-main", copy[lang].heroTitleMain);
+  setText("hero-title-accent", copy[lang].heroTitleAccent);
+  setText("hero-lead", copy[lang].heroLead);
+  setText("hero-metric-1", copy[lang].heroMetric1);
+  setText("hero-metric-2", copy[lang].heroMetric2);
+  setText("hero-metric-3", copy[lang].heroMetric3);
+  setText("hero-panel-main-label", copy[lang].heroPanelMainLabel);
+  setText("hero-panel-main-item-1", copy[lang].heroPanelMain1);
+  setText("hero-panel-main-item-2", copy[lang].heroPanelMain2);
+  setText("hero-panel-main-item-3", copy[lang].heroPanelMain3);
+  setText("hero-panel-side-label", copy[lang].heroPanelSideLabel);
+  setText("hero-panel-side-title", copy[lang].heroPanelSideTitle);
+  setText("hero-panel-side-content", copy[lang].heroPanelSideText);
+  setText("intro-strip-text", copy[lang].introStrip);
+  setText("projects-eyebrow", copy[lang].projectsEyebrow);
+  setText("projects-title", copy[lang].projectsTitle);
+  setText("process-eyebrow", copy[lang].processEyebrow);
+  setText("process-title", copy[lang].processTitle);
+  setText("process-step-1-title", copy[lang].processStep1Title);
+  setText("process-step-1-text", copy[lang].processStep1Text);
+  setText("process-step-2-title", copy[lang].processStep2Title);
+  setText("process-step-2-text", copy[lang].processStep2Text);
+  setText("process-step-3-title", copy[lang].processStep3Title);
+  setText("process-step-3-text", copy[lang].processStep3Text);
+  setText("about-eyebrow", copy[lang].aboutEyebrow);
+  setText("about-title", copy[lang].aboutTitle);
+  setText("about-block-1-title", copy[lang].about1Title);
+  setText("about-block-1-text", copy[lang].about1Text);
+  setText("about-block-2-title", copy[lang].about2Title);
+  setText("about-block-2-text", copy[lang].about2Text);
+  setText("about-block-3-title", copy[lang].about3Title);
+  setText("about-block-3-text", copy[lang].about3Text);
+  setText("github-eyebrow", copy[lang].githubEyebrow);
+  setText("github-title", copy[lang].githubTitle);
+  setText("github-profile-label", copy[lang].githubProfileLabel);
+  setText("contact-eyebrow", copy[lang].contactEyebrow);
+  setHTML("contact-title", copy[lang].contactTitle);
+  setText("cursor-hint-text", copy[lang].clickHint);
+
+  const heroPrimary = getEl("hero-primary-cta");
+  const heroSecondary = getEl("hero-secondary-cta");
+  const contactPrimary = getEl("contact-primary-cta");
+  const contactSecondary = getEl("contact-secondary-cta");
+  if (heroPrimary?.firstElementChild) heroPrimary.firstElementChild.textContent = copy[lang].heroPrimaryCta;
+  if (heroSecondary?.firstElementChild) heroSecondary.firstElementChild.textContent = copy[lang].heroSecondaryCta;
+  if (contactPrimary) contactPrimary.textContent = copy[lang].contactPrimaryCta;
+  if (contactSecondary) contactSecondary.textContent = copy[lang].contactSecondaryCta;
+
+  const projectList = document.querySelector(".project-list");
+  if (projectList) projectList.setAttribute("aria-label", copy[lang].projectListAria);
+
+  langButtons.forEach((button) => {
+    const isActive = button.dataset.lang === lang;
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+
+  renderSpotlight(activeProjectKey);
+  if (currentRepos.length) {
+    renderRepos(currentRepos);
+  } else {
+    githubStatus.textContent = getGithubStatusText();
+  }
 }
 
 tabs.forEach((tab) => {
@@ -486,12 +857,8 @@ tabs.forEach((tab) => {
 
     if (spotlight.root) {
       spotlight.root.classList.add("is-switching");
-      window.setTimeout(() => {
-        renderSpotlight(nextProjectKey);
-      }, 110);
-      window.setTimeout(() => {
-        spotlight.root.classList.remove("is-switching");
-      }, 320);
+      window.setTimeout(() => renderSpotlight(nextProjectKey), 110);
+      window.setTimeout(() => spotlight.root.classList.remove("is-switching"), 320);
       return;
     }
 
@@ -499,46 +866,36 @@ tabs.forEach((tab) => {
   });
 });
 
-function formatDate(dateString) {
-  const formatter = new Intl.DateTimeFormat("pl-PL", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
+langButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const nextLang = button.dataset.lang;
+    if (nextLang && nextLang !== currentLang) {
+      applyLanguage(nextLang);
+    }
   });
-  return formatter.format(new Date(dateString));
-}
-
-function renderRepos(repos) {
-  repoGrid.replaceChildren(...repos.map((repo) => createRepoCard(repo)));
-}
+});
 
 async function loadRepos() {
+  githubStatusMode = "loading";
+  githubStatus.textContent = getGithubStatusText();
+
   try {
-    const response = await fetch(
-      "https://api.github.com/users/mzmuda101-prog/repos?sort=updated&per_page=9",
-      {
-        headers: {
-          Accept: "application/vnd.github+json",
-        },
-      }
-    );
+    const response = await fetch("https://api.github.com/users/mzmuda101-prog/repos?sort=updated&per_page=9", {
+      headers: { Accept: "application/vnd.github+json" },
+    });
 
     if (!response.ok) {
       throw new Error(`GitHub API responded with ${response.status}`);
     }
 
     const repos = await response.json();
-    githubStatus.textContent = "Sekcja jest aktualizowana z GitHub API.";
+    githubStatusMode = "loaded";
     renderRepos(repos);
-  } catch (error) {
-    githubStatus.textContent =
-      "Nie udało się pobrać API, więc pokazuję przygotowaną listę najważniejszych repozytoriów.";
+  } catch {
+    githubStatusMode = "fallback";
     renderRepos(repoFallback);
   }
 }
-
-renderSpotlight("excel-workbench-pwa");
-loadRepos();
 
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
@@ -550,9 +907,7 @@ if ("IntersectionObserver" in window) {
         }
       });
     },
-    {
-      threshold: 0.18,
-    }
+    { threshold: 0.18 }
   );
 
   revealTargets.forEach((target) => observer.observe(target));
@@ -560,7 +915,7 @@ if ("IntersectionObserver" in window) {
   revealTargets.forEach((target) => target.classList.add("is-visible"));
 }
 
-if (heroStage && heroShot && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (heroStage && heroShot && !prefersReducedMotion) {
   heroStage.addEventListener("pointermove", (event) => {
     if (heroStage.classList.contains("has-panel-focus")) return;
 
@@ -575,8 +930,6 @@ if (heroStage && heroShot && !window.matchMedia("(prefers-reduced-motion: reduce
     heroShot.style.transform = "rotate(-4deg) translate(0, 0)";
   });
 }
-
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 if (!prefersReducedMotion) {
   magneticButtons.forEach((button) => {
@@ -630,24 +983,11 @@ if (!prefersReducedMotion) {
     });
   });
 
-  // --- AUTO-BLUR HERO FOCUS WHEN FAR WITH CURSOR ---
-  // Uwaga: focus panelu dezaktywuje się automatycznie, jeśli mysz ucieknie poza heroStage+margin
-
-  let lastPointerPosition = {x: null, y: null};
-
-  function globalPointerMoveHandler(event) {
-    lastPointerPosition.x = event.clientX;
-    lastPointerPosition.y = event.clientY;
-
-    if (activeHeroPanel) {
-      if (isPointerFarFromHero(lastPointerPosition.x, lastPointerPosition.y)) {
-        setPanelFocus(null);
-      }
+  window.addEventListener("pointermove", (event) => {
+    if (activeHeroPanel && isPointerFarFromHero(event.clientX, event.clientY)) {
+      setPanelFocus(null);
     }
-  }
-
-  // Global nasłuchiwacz do automatycznego wyłączania paneli
-  window.addEventListener('pointermove', globalPointerMoveHandler);
+  });
 }
 
 function setPanelFocus(activePanel) {
@@ -670,20 +1010,14 @@ function isPointerFarFromHero(x, y) {
   const rect = heroStage.getBoundingClientRect();
   const margin = 90;
 
-  return (
-    x < rect.left - margin ||
-    x > rect.right + margin ||
-    y < rect.top - margin ||
-    y > rect.bottom + margin
-  );
+  return x < rect.left - margin || x > rect.right + margin || y < rect.top - margin || y > rect.bottom + margin;
 }
 
 function moveCursorHint(x, y) {
   if (!cursorHint) return;
-  // Pobieramy offsety z CSS (jeśli nie ma w CSS, używamy domyślnych 22 i 18)
   const style = getComputedStyle(cursorHint);
-  const offsetX = parseInt(style.getPropertyValue('--hint-offset-x')) || 22;
-  const offsetY = parseInt(style.getPropertyValue('--hint-offset-y')) || 18;
+  const offsetX = parseInt(style.getPropertyValue("--hint-offset-x"), 10) || 22;
+  const offsetY = parseInt(style.getPropertyValue("--hint-offset-y"), 10) || 18;
 
   cursorHintTargetX = x + offsetX;
   cursorHintTargetY = y - offsetY;
@@ -693,13 +1027,8 @@ function moveCursorHint(x, y) {
     cursorHintX += (cursorHintTargetX - cursorHintX) * 0.24;
     cursorHintY += (cursorHintTargetY - cursorHintY) * 0.24;
 
-    if (Math.abs(cursorHintTargetX - cursorHintX) < 0.2) {
-      cursorHintX = cursorHintTargetX;
-    }
-
-    if (Math.abs(cursorHintTargetY - cursorHintY) < 0.2) {
-      cursorHintY = cursorHintTargetY;
-    }
+    if (Math.abs(cursorHintTargetX - cursorHintX) < 0.2) cursorHintX = cursorHintTargetX;
+    if (Math.abs(cursorHintTargetY - cursorHintY) < 0.2) cursorHintY = cursorHintTargetY;
 
     cursorHint.style.transform = `translate3d(${cursorHintX}px, ${cursorHintY}px, 0) scale(1)`;
 
@@ -713,80 +1042,42 @@ function moveCursorHint(x, y) {
   cursorHintFrame = window.requestAnimationFrame(animateHint);
 }
 
-/**
- * Uniwersalna funkcja przypisująca podążający hint do elementów
- * @param {NodeList|Array} elements - Lista elementów (np. z querySelectorAll)
- * @param {Function} clickCallback - Opcjonalna funkcja wywoływana przy kliknięciu
- *
- * Ulepszenia:
- * - Jeśli w data-hint treść zawiera sekcję oddzieloną znakiem | (pipe), to tekst po | pojawia się w drugiej linii.
- *   Przykład: data-hint="Kliknij tu|To jest podpowiedź na dole"
- * - (Wyłączono automatyczne łamanie tekstu – zaleca się ręczne "przewijanie" za pomocą znaku | w atrybucie data-hint)
- */
 function setupCursorHint(elements, clickCallback = null) {
   elements.forEach((el) => {
     el.addEventListener("pointerenter", (event) => {
       if (!cursorHint || prefersReducedMotion) return;
-      // 1. Obsługa tekstu (tylko manualny podział linii znakiem "|")
-      const span = cursorHint.querySelector('span');
-      let hintContent = el.dataset.hint || "Kliknij";
+      const span = cursorHint.querySelector("span");
+      const hintContent = el.dataset.hint || copy[currentLang].clickHint;
 
-      // Obsługa manualnego podziału linii znakiem "|"
-      if (hintContent.includes('/|')) {
-        // Pozwalamy na wielolinijkowy hint za pomocą bezpiecznego HTML (przez .textContent i <br>)
-        // Dawniej: span.innerHTML używano, ale tu robimy to całkowicie bezpiecznie!
-        // UWAGA: Jeżeli będe chciał uzywać HTML wewnątrz hinta lub podglady stron, to trzeba będzie zmienić logikę w przyszlosci.
-        const lines = hintContent.split('/|').map(str => str.trim());
+      if (hintContent.includes("/|")) {
+        const lines = hintContent.split("/|").map((line) => line.trim());
         if (span) {
-          span.textContent = ''; // Reset
-          lines.forEach((line, idx) => {
-            if (idx > 0) {
-              span.appendChild(document.createElement('br'));
-            }
+          span.textContent = "";
+          lines.forEach((line, index) => {
+            if (index > 0) span.appendChild(document.createElement("br"));
             span.appendChild(document.createTextNode(line));
           });
         }
-      } else {
-        if (span) {
-          span.textContent = hintContent;
-        }
+      } else if (span) {
+        span.textContent = hintContent;
       }
 
-      // 2. Obsługa klas (Logika elastyczna)
       if (el.dataset.hintClassOnly) {
-        cursorHint.removeAttribute('style');
-        
-        // Ustawiamy TYLKO klasę użytkownika
+        cursorHint.removeAttribute("style");
         cursorHint.className = `is-visible ${el.dataset.hintClassOnly}`;
-        
-        // FALLBACK TECHNICZNY (Tylko to, co niezbędne do życia)
         Object.assign(cursorHint.style, {
-          top: '0', // top i left ustawilem tu po to by przegladarka nie wyrzucila hintu gdzies gdzie w domysle by sie znjdowal w html
-          left: '0',
-          position: 'fixed',
-          zIndex: '9999',
-          pointerEvents: 'none',
-          display: 'inline-flex' // Aby dymek nie był niewidzialnym punktem
+          top: "0",
+          left: "0",
+          position: "fixed",
+          zIndex: "9999",
+          pointerEvents: "none",
+          display: "inline-flex",
         });
       } else {
-        cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass || ''}`;
+        cursorHint.className = `cursor-hint is-visible ${el.dataset.hintClass || ""}`;
       }
 
-      // 3. Naprawa skalowania - wymuszamy punkt zakotwiczenia tam, gdzie jest kursor
-      // Dzięki temu dymek rośnie "od myszki" i długi tekst go nie przesuwa
-      cursorHint.style.transformOrigin = "left bottom"; 
-
-      /* 
-      // 4. Automatyczny styl wielolinijkowy/łamania tekstu – wyłączone, można w CSS globalnym!
-      // Te poniższe linie w razie czego mogą być przywrócone później, jeśli zmienie zdanie.
-      // if (span) {
-      //   span.style.whiteSpace = 'normal';                
-      //   span.style.wordBreak = 'break-word';             
-      //   span.style.maxWidth = '260px';                   
-      //   span.style.display = 'block';                    
-      // }
-      */
-
+      cursorHint.style.transformOrigin = "left bottom";
       moveCursorHint(event.clientX, event.clientY);
     });
 
@@ -809,30 +1100,22 @@ function setupCursorHint(elements, clickCallback = null) {
   });
 }
 
-
-// --- UŻYCIE ---
-
-// Dla paneli (z logiką focusowania)
 setupCursorHint(heroPanels, (panel) => {
   const isAlreadyFocused = panel.classList.contains("is-focused");
   setPanelFocus(isAlreadyFocused ? null : panel);
 });
 
-// Dla dowolnych innych przycisków (tylko hint, bez dodatkowej akcji kliknięcia)
-const otherStuff = document.querySelectorAll("[data-hint]:not(.hero-panel-trigger), [data-hint-class], [data-hint-class-only]"); /* tu będe mógł dodawać nowe elementy np według klas czyli np. ".button-magnetic" */
-setupCursorHint(otherStuff);
-
-
-
-
-document.addEventListener("pointermove", (event) => {
-  if (!activeHeroPanel) return;
-  if (!isPointerFarFromHero(event.clientX, event.clientY)) return;
-  setPanelFocus(null);
-});
+const hintTargets = document.querySelectorAll(
+  "[data-hint]:not(.hero-panel-trigger), [data-hint-class], [data-hint-class-only]"
+);
+setupCursorHint(hintTargets);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     setPanelFocus(null);
   }
 });
+
+applyLanguage(currentLang);
+renderSpotlight(activeProjectKey);
+loadRepos();

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mateusz Zmuda | Portfolio</title>
     <meta
+      id="page-description"
       name="description"
       content="Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps."
     />
@@ -21,37 +22,43 @@
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <a class="brand" href="#top" aria-label="Przejdź do początku strony"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
+        <a class="brand" href="#top" aria-label="Przejdź do początku strony" id="brand-link"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
           <img src="./assets/mateusz-logo.png" alt="Logo Mateusz Zmuda"/>
           <span>Mateusz Zmuda</span>
         </a>
-        <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller">
-          <img src="./assets/Logo Mateusz przezroczyste Refresh.png" alt="Odśwież stronę"/>
-        </a>
-        <nav class="site-nav" aria-label="Główna nawigacja">
-          <a href="#projects">Projekty</a>
-          <a href="#about">Profil</a>
-          <a href="#github">GitHub</a>
-          <a href="#contact">Kontakt</a>
-        </nav>
+        <div class="header-controls">
+          <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller" id="refresh-link">
+            <img src="./assets/Logo Mateusz przezroczyste Refresh.png" alt="Odśwież stronę" id="refresh-image"/>
+          </a>
+          <nav class="site-nav" aria-label="Główna nawigacja" id="site-nav">
+            <a href="#projects" data-nav="projects">Projekty</a>
+            <a href="#about" data-nav="about">Profil</a>
+            <a href="#github" data-nav="github">GitHub</a>
+            <a href="#contact" data-nav="contact">Kontakt</a>
+          </nav>
+          <div class="lang-switch" role="group" aria-label="Przełącznik języka" id="lang-switch">
+            <button class="lang-button is-active" type="button" data-lang="pl" aria-pressed="true">PL</button>
+            <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+        </div>
       </header>
 
       <main id="top">
         <section class="hero">
           <div class="hero-copy">
-            <p class="eyebrow" data-hint="Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi"> <!-- '/|' robi za enter -->
-              Portfolio / Web & utility projects. <br> Głównie Frontend Developer | JavaScript | Firebase</p>
+            <p class="eyebrow" data-hint="Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi" id="hero-eyebrow"> <!-- '/|' robi za enter -->
+              <span id="hero-eyebrow-top">Portfolio / Web & utility projects.</span> <br><span id="hero-eyebrow-bottom">Głównie Frontend Developer | JavaScript | Firebase</span></p>
             <h1>
-              Buduję strony i narzędzia,
-              <span>które mają konkretną pracę do wykonania.</span>
+              <span id="hero-title-main">Buduję strony i narzędzia,</span>
+              <span id="hero-title-accent">które mają konkretną pracę do wykonania.</span>
             </h1>
-            <p class="hero-lead">
+            <p class="hero-lead" id="hero-lead">
               Tworzę projekty z pogranicza frontendu, danych i workflow:
               aplikacje do pracy z Excelem, interaktywne strony, marketplace'y
               i eksperymenty z analizą kodu.
             </p>
             <div class="hero-actions">
-              <a class="button button-primary button-magnetic" href="#projects">
+              <a class="button button-primary button-magnetic" href="#projects" id="hero-primary-cta">
                 <span>Zobacz wybrane projekty</span>
               </a
               >
@@ -59,22 +66,23 @@
               class="button button-secondary button-magnetic"
                 href="https://github.com/mzmuda101-prog"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+                id="hero-secondary-cta">
                 <span>Otwórz GitHub</span>
               </a>
             </div>
             <div class="hero-metrics">
               <div>
                 <strong>5+</strong>
-                <span>projektów publicznych i showcase'ów</span>
+                <span id="hero-metric-1">projektów publicznych i showcase'ów</span>
               </div>
               <div>
                 <strong>3</strong>
-                <span>główne osie pracy: web, Excel, utility tools</span>
+                <span id="hero-metric-2">główne osie pracy: web, Excel, utility tools</span>
               </div>
               <div>
                 <strong>1</strong>
-                <span>cel: budować rzeczy przydatne, nie tylko efektowne</span>
+                <span id="hero-metric-3">cel: budować rzeczy przydatne, nie tylko efektowne</span>
               </div>
             </div>
           </div>
@@ -88,11 +96,11 @@
               aria-expanded="false"
               aria-controls="hero-panel-main-content"
             >
-              <p>Wybrane obszary</p>
+              <p id="hero-panel-main-label">Wybrane obszary</p>
               <ul id="hero-panel-main-content">
-                <li>Frontend i UI z charakterem</li>
-                <li>Excel / workflow / dane</li>
-                <li>Narzędzia desktopowe i utility apps</li>
+                <li id="hero-panel-main-item-1">Frontend i UI z charakterem</li>
+                <li id="hero-panel-main-item-2">Excel / workflow / dane</li>
+                <li id="hero-panel-main-item-3">Narzędzia desktopowe i utility apps</li>
               </ul>
             </button>
             <button
@@ -101,8 +109,8 @@
               aria-expanded="false"
               aria-controls="hero-panel-side-content"
             >
-              <span>Aktualnie rozwijane</span>
-              <strong>Excel Workbench PWA</strong>
+              <span id="hero-panel-side-label">Aktualnie rozwijane</span>
+              <strong id="hero-panel-side-title">Excel Workbench PWA</strong>
               <p id="hero-panel-side-content">
                 Offline-first workbench do eksploracji, filtrowania i
                 przekształcania plików Excel w przeglądarce.
@@ -118,7 +126,7 @@
         </section>
 
         <section class="section intro-strip reveal">
-          <p>
+          <p id="intro-strip-text">
             Najchętniej buduję rzeczy użyteczne: od narzędzi do analizy i pracy
             z danymi, po strony, które mają wyraźny styl i czytelny cel.
           </p>
@@ -126,8 +134,8 @@
 
         <section class="section projects-section reveal" id="projects">
           <div class="section-heading">
-            <p class="eyebrow">Selected work</p>
-            <h2>Najmocniejsze projekty w jednym miejscu</h2>
+            <p class="eyebrow" id="projects-eyebrow">Selected work</p>
+            <h2 id="projects-title">Najmocniejsze projekty w jednym miejscu</h2>
           </div>
 
           <div class="project-layout">
@@ -208,16 +216,16 @@
 
         <section class="section process-section reveal">
           <div class="section-heading">
-            <p class="eyebrow">Approach</p>
-            <h2>Łączę klimat strony z jasną funkcją produktu</h2>
+            <p class="eyebrow" id="process-eyebrow">Approach</p>
+            <h2 id="process-title">Łączę klimat strony z jasną funkcją produktu</h2>
           </div>
 
           <div class="process-rail">
             <div class="process-step">
               <span>01</span>
               <div>
-                <h3>Punkt wyjścia</h3>
-                <p>
+                <h3 id="process-step-1-title">Punkt wyjścia</h3>
+                <p id="process-step-1-text">
                   Szukam realnego problemu albo konkretnego przepływu pracy:
                   czego użytkownik potrzebuje szybciej, prościej albo czytelniej.
                 </p>
@@ -226,8 +234,8 @@
             <div class="process-step">
               <span>02</span>
               <div>
-                <h3>Forma</h3>
-                <p>
+                <h3 id="process-step-2-title">Forma</h3>
+                <p id="process-step-2-text">
                   Potem dopiero dobieram język wizualny: rytm sekcji, proporcje,
                   ruch i typografię, tak żeby projekt miał charakter, ale nie
                   przeszkadzał w użyciu.
@@ -237,8 +245,8 @@
             <div class="process-step">
               <span>03</span>
               <div>
-                <h3>Dowiezienie</h3>
-                <p>
+                <h3 id="process-step-3-title">Dowiezienie</h3>
+                <p id="process-step-3-text">
                   Lubię domykać projekt do wersji, którą da się uruchomić,
                   pokazać online, przetestować i dalej rozwijać.
                 </p>
@@ -249,15 +257,15 @@
 
         <section class="section about-section reveal" id="about">
           <div class="section-heading">
-            <p class="eyebrow">Profile</p>
-            <h2>Jak podchodzę do budowania produktów</h2>
+            <p class="eyebrow" id="about-eyebrow">Profile</p>
+            <h2 id="about-title">Jak podchodzę do budowania produktów</h2>
           </div>
 
           <div class="about-grid">
             <div class="about-block">
               <span>01</span>
-              <h3>Utility-first thinking</h3>
-              <p>
+              <h3 id="about-block-1-title">Utility-first thinking</h3>
+              <p id="about-block-1-text">
                 Najbardziej interesują mnie projekty, które rozwiązują realny
                 problem: upraszczają workflow, porządkują dane albo przyspieszają
                 codzienną pracę.
@@ -265,16 +273,16 @@
             </div>
             <div class="about-block">
               <span>02</span>
-              <h3>Frontend z klimatem</h3>
-              <p>
+              <h3 id="about-block-2-title">Frontend z klimatem</h3>
+              <p id="about-block-2-text">
                 Nawet w prostych aplikacjach zależy mi na kompozycji, ruchu,
                 rytmie sekcji i wyrazistej warstwie wizualnej.
               </p>
             </div>
             <div class="about-block">
               <span>03</span>
-              <h3>Od pomysłu do wdrożenia</h3>
-              <p>
+              <h3 id="about-block-3-title">Od pomysłu do wdrożenia</h3>
+              <p id="about-block-3-text">
                 Lubię spinać pełną całość: interfejs, logikę, eksport danych,
                 integracje z chmurą i wersję gotową do pokazania online.
               </p>
@@ -284,13 +292,13 @@
 
         <section class="section github-section reveal" id="github">
           <div class="section-heading">
-            <p class="eyebrow">GitHub</p>
-            <h2>Repozytoria publiczne pobierane na żywo z profilu</h2>
+            <p class="eyebrow" id="github-eyebrow">GitHub</p>
+            <h2 id="github-title">Repozytoria publiczne pobierane na żywo z profilu</h2>
           </div>
 
           <div class="github-toolbar">
             <p>
-              Profil:
+              <span id="github-profile-label">Profil:</span>
               <a
                 href="https://github.com/mzmuda101-prog"
                 target="_blank"
@@ -305,17 +313,18 @@
         </section>
 
         <section class="section contact-section reveal" id="contact">
-          <p class="eyebrow">Kontakt</p>
-          <h2>Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.</h2>
+          <p class="eyebrow" id="contact-eyebrow">Kontakt</p>
+          <h2 id="contact-title">Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.</h2>
           <div class="hero-actions">
-            <a class="button button-primary" href="#projects">Przejdź do projektów</a>
+            <a class="button button-primary" href="#projects" id="contact-primary-cta">Przejdź do projektów</a>
             <a
               class="button button-secondary"
               href="https://github.com/mzmuda101-prog?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
-              >Zobacz wszystkie repo na GitHubie</a
-            >
+              id="contact-secondary-cta"
+              >Zobacz wszystkie repo na GitHubie</a>
+              
           </div>
         </section>
       </main>
@@ -323,7 +332,7 @@
 
     <div class="cursor-hint" id="cursor-hint" aria-hidden="true">
       <div class="cursor-hint-scaler"> <!-- tu dodalem dodatkowego diva i klase na pozniej -->
-        <span>Kliknij</span>
+        <span id="cursor-hint-text">Kliknij</span>
       </div>
     </div>
 
