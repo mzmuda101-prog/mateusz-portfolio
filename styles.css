@@ -786,6 +786,14 @@ a {
   left: 0;
   z-index: 40;
   display: inline-flex;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 140ms ease;
+  will-change: transform, opacity;
+}
+
+.cursor-hint-scaler {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 92px;
@@ -797,13 +805,10 @@ a {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  pointer-events: none;
-  opacity: 0;
   box-shadow: 0 18px 40px rgba(30, 18, 11, 0.18);
   backdrop-filter: blur(10px);
-  /* transform: translate3d(-999px, -999px, 0) scale(0.88); */
-  transition: opacity 140ms ease;
-  will-change: transform, opacity;
+  transform-origin: left bottom;
+  transition: transform 140ms ease;
 }
 
 .cursor-hint.is-visible {
@@ -813,11 +818,12 @@ a {
 }
 
 .cursor-hint.smaller {
-  transform-origin: left bottom;
-  scale: 0.8;
-  --hint-offset-x: -50; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 22 chyba jesli pamietam */
-  --hint-offset-y: 0; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 18 chyba jesli pamietam */
-  /* ^ mozna sterować odległością od kursora prosto z CSS! */
+  --hint-offset-x: 18;
+  --hint-offset-y: 22;
+}
+
+.cursor-hint.smaller .cursor-hint-scaler {
+  transform: scale(0.8);
 }
 
 /* .cursor-hint-blue-transparent {
@@ -825,10 +831,10 @@ a {
 } */
 .is-splash {
   /* 
-     4s trwania animacji + 2s czekania (delay) 
-     = całkowite zniknięcie w 6 sekundzie (animacja + delay)
+     5.5s trwania animacji + 1.5s czekania (delay) 
+     = całkowite zniknięcie w 7 sekundzie (animacja + delay)
   */
-  animation: ultraSmoothFadeOut 4s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+  animation: ultraSmoothFadeOut 5.5s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
   /* Optymalizacja, by przeglądarka wiedziała, co będziemy zmieniać */
   will-change: opacity, filter;
 }
