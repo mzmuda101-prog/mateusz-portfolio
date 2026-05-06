@@ -1,11 +1,11 @@
 const {
   STORAGE_KEY,
-  copy,
   defaultProjectProps,
   projects,
   repoFallback,
   repoProjectAliases,
 } = window.PortfolioData;
+const copy = window.PortfolioTranslations;
 
 function getEl(id) {
   return document.getElementById(id);
@@ -392,7 +392,6 @@ function isPointerFarFromHero(x, y) {
 const languageController = window.PortfolioLanguage.createLanguageController({
   storageKey: STORAGE_KEY,
   copy,
-  getEl,
   langButtons,
   getActiveProjectKey: () => activeProjectKey,
   getCurrentRepos: () => currentRepos,
