@@ -27,6 +27,8 @@ const repoGrid = getEl("repo-grid");
 const githubStatus = getEl("github-status");
 const revealTargets = document.querySelectorAll(".reveal");
 const heroStage = document.querySelector(".hero-stage");
+const heroStageButton1 = document.querySelector(".hero-stage-button-1");
+const heroStageButton2 = document.querySelector(".hero-stage-button-2");
 const heroShot = document.querySelector(".hero-shot");
 const magneticButtons = document.querySelectorAll(".button-magnetic");
 const heroPanels = Array.from(document.querySelectorAll(".hero-panel-trigger"));
@@ -365,7 +367,7 @@ if (!prefersReducedMotion) {
     }
   });
 }
-
+// _______________________________________________________________ SET PANEL FOCUS _____________________________________________________________
 function setPanelFocus(activePanel) {
   activeHeroPanel = activePanel;
 
@@ -388,7 +390,7 @@ function isPointerFarFromHero(x, y) {
 
   return x < rect.left - margin || x > rect.right + margin || y < rect.top - margin || y > rect.bottom + margin;
 }
-
+// ________________________________________________________________ Language controler _________________________________________________________
 const languageController = window.PortfolioLanguage.createLanguageController({
   storageKey: STORAGE_KEY,
   copy,
@@ -405,15 +407,12 @@ const languageController = window.PortfolioLanguage.createLanguageController({
     currentLang = lang;
   },
 });
-
+// ________________________________________________________________ CURSOR HINT ________________________________________________________________
 const cursorHintController = window.PortfolioCursorHint.createCursorHintController({
   cursorHint,
   prefersReducedMotion,
   getFallbackHint: () => copy[currentLang].clickHint,
 });
-
-currentLang = languageController.getCurrentLang();
-languageController.init();
 
 cursorHintController.setupCursorHint(heroPanels, (panel) => {
   const isAlreadyFocused = panel.classList.contains("is-focused");
@@ -424,13 +423,15 @@ const hintTargets = document.querySelectorAll(
   "[data-hint]:not(.hero-panel-trigger), [data-hint-class], [data-hint-class-only]"
 );
 cursorHintController.setupCursorHint(hintTargets);
-
+// ________________________________________________________________ KEYBOARD NAVIGATION ________________________________________________________________
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     setPanelFocus(null);
   }
 });
-
+// ________________________________________________________________ LANGUAGE init ________________________________________________________________
+currentLang = languageController.getCurrentLang();
+languageController.init();
 
 languageController.applyLanguage(currentLang);
 loadRepos();
