@@ -19,7 +19,7 @@ const translations = {
     langSwitchAria: "Przełącznik języka",
     heroEyebrowHint:
       "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
-    heroTitleHint: "najedź na karty po lewej stronie - te lekko przykryte",
+    heroTitleHint: "najedź na karty po prawej stronie /|(te lekko przykryte)",
     heroEyebrowTop: "Portfolio / Web & utility projects.",
     heroEyebrowBottom: "Głównie Frontend Developer | JavaScript | Firebase",
     heroTitleMain: "Buduję strony i narzędzia,",
@@ -108,7 +108,7 @@ const translations = {
     langSwitchAria: "Language switcher",
     heroEyebrowHint:
       "Primarily Frontend Developer, JavaScript, Firebase /| I build interactive web apps and tools for working with data",
-    heroTitleHint: "hover over the slightly covered cards on the left",
+    heroTitleHint: "hover over the slightly covered cards /|(on the right)",
     heroEyebrowTop: "Portfolio / Web & utility projects.",
     heroEyebrowBottom: "Primarily Frontend Developer | JavaScript | Firebase",
     heroTitleMain: "I build websites and tools",
