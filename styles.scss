@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root {
   --bg: #f6f0e8;
   --bg-strong: #e9dfd0;
@@ -31,7 +30,10 @@ body {
   margin: 0;
   min-width: 320px;
   font-family: "Manrope", sans-serif;
-  background: radial-gradient(circle at top left, rgba(206, 90, 47, 0.18), transparent 28%), radial-gradient(circle at 80% 18%, rgba(39, 56, 78, 0.15), transparent 24%), linear-gradient(180deg, #f8f4ef 0%, #f0e7dc 52%, #ede2d3 100%);
+  background:
+    radial-gradient(circle at top left, rgba(206, 90, 47, 0.18), transparent 28%),
+    radial-gradient(circle at 80% 18%, rgba(39, 56, 78, 0.15), transparent 24%),
+    linear-gradient(180deg, #f8f4ef 0%, #f0e7dc 52%, #ede2d3 100%);
   color: var(--text);
 }
 
@@ -79,33 +81,26 @@ a {
 .brand img {
   width: 44px;
   height: 44px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   transition: all 0.4s ease-in-out;
 }
-
 .brand img:hover {
   transform: rotate(-4deg) scale(1.1);
   transition: all 0.4s ease-in-out;
   width: 44px;
   height: 44px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
-
 .refresh img {
   width: 24px;
   height: 24px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   transition: all 0.5s ease-in-out;
 }
-
 .refresh img:hover {
   width: 34px;
   height: 34px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   transform: rotate(360deg) scale(1.1);
   transition: all 0.5s ease-in-out;
 }
@@ -144,15 +139,21 @@ a {
   width: var(--lang-pill-width, 48px);
   height: calc(100% - 0.56rem);
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(32, 26, 24, 0.92), rgba(80, 52, 37, 0.88));
-  box-shadow: 0 12px 24px rgba(41, 26, 16, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(135deg, rgba(32, 26, 24, 0.92), rgba(80, 52, 37, 0.88));
+  box-shadow:
+    0 12px 24px rgba(41, 26, 16, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transform: translateX(var(--lang-pill-x, 0));
   will-change: transform, width;
   z-index: 0;
 }
 
 .lang-switch.is-ready::before {
-  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), width 360ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease;
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms ease;
 }
 
 .lang-switch:has(.lang-button.is-active:hover)::before,
@@ -175,7 +176,11 @@ a {
   padding: 0.5rem 0.7rem;
   border-radius: 999px;
   cursor: pointer;
-  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .lang-button:hover,
@@ -196,7 +201,9 @@ a {
 
 .lang-switch:hover::before,
 .lang-switch:focus-within::before {
-  box-shadow: 0 14px 28px rgba(41, 26, 16, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 14px 28px rgba(41, 26, 16, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .site-nav a {
@@ -282,7 +289,8 @@ a {
   border-radius: 999px;
   text-decoration: none;
   font-weight: 700;
-  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease,
+    border-color 160ms ease;
 }
 
 .button span {
@@ -298,15 +306,23 @@ a {
 .button-magnetic {
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-  cursor: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+    cursor: none;
 }
 
 .button-magnetic {
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
-  cursor: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+    cursor: none;
 }
 
 .button-magnetic span {
@@ -418,7 +434,12 @@ a {
 
 .hero-panel-trigger {
   cursor: pointer;
-  transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease, opacity 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    opacity 220ms ease;
 }
 
 .hero-panel-trigger:hover,
@@ -488,15 +509,17 @@ a {
   box-shadow: 0 42px 90px rgba(41, 26, 16, 0.22);
   transform: rotate(-4deg) scale(1.05);
   transform-origin: center center;
-  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease, filter 320ms ease;
+  transition:
+    transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease,
+    filter 320ms ease;
 }
 
 .hero-shot img,
 .project-visual img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .section {
@@ -542,22 +565,32 @@ a {
   padding: 1rem 1.1rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: linear-gradient(120deg, rgba(255, 249, 242, 0.74), rgba(255, 249, 242, 0.42)), radial-gradient(circle at left center, var(--project-glow-soft, rgba(206, 90, 47, 0.08)), transparent 62%);
+  background:
+    linear-gradient(120deg, rgba(255, 249, 242, 0.74), rgba(255, 249, 242, 0.42)),
+    radial-gradient(circle at left center, var(--project-glow-soft, rgba(206, 90, 47, 0.08)), transparent 62%);
   text-align: left;
   font: inherit;
   color: var(--text);
   cursor: pointer;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .project-tab:hover,
 .project-tab:focus-visible,
 .project-tab.is-active {
-  background: linear-gradient(120deg, rgba(255, 249, 242, 0.88), rgba(255, 249, 242, 0.56)), radial-gradient(circle at left center, var(--project-glow, rgba(206, 90, 47, 0.18)), transparent 64%);
+  background:
+    linear-gradient(120deg, rgba(255, 249, 242, 0.88), rgba(255, 249, 242, 0.56)),
+    radial-gradient(circle at left center, var(--project-glow, rgba(206, 90, 47, 0.18)), transparent 64%);
   border-color: color-mix(in srgb, var(--project-accent, #ce5a2f) 26%, rgba(32, 26, 24, 0.12));
   transform: translateX(4px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.46), 0 12px 30px color-mix(in srgb, var(--project-accent, #ce5a2f) 12%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.46),
+    0 12px 30px color-mix(in srgb, var(--project-accent, #ce5a2f) 12%, transparent);
 }
 
 .project-spotlight {
@@ -568,7 +601,10 @@ a {
   border-radius: var(--radius-lg);
   position: relative;
   overflow: hidden;
-  background: radial-gradient(circle at 14% 18%, var(--project-glow, rgba(206, 90, 47, 0.12)), transparent 48%), radial-gradient(circle at 88% 84%, var(--project-glow-soft, rgba(39, 56, 78, 0.09)), transparent 54%), var(--surface);
+  background:
+    radial-gradient(circle at 14% 18%, var(--project-glow, rgba(206, 90, 47, 0.12)), transparent 48%),
+    radial-gradient(circle at 88% 84%, var(--project-glow-soft, rgba(39, 56, 78, 0.09)), transparent 54%),
+    var(--surface);
   transition: transform 260ms ease, opacity 260ms ease;
 }
 
@@ -576,7 +612,9 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%), linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08));
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%),
+    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.08));
   pointer-events: none;
 }
 
@@ -585,7 +623,9 @@ a {
   overflow: hidden;
   border-radius: calc(var(--radius-lg) - 8px);
   position: relative;
-  background: radial-gradient(circle at 30% 24%, var(--project-glow-soft, rgba(206, 90, 47, 0.16)), transparent 32%), linear-gradient(140deg, #ddd0bd, #f6efe8);
+  background:
+    radial-gradient(circle at 30% 24%, var(--project-glow-soft, rgba(206, 90, 47, 0.16)), transparent 32%),
+    linear-gradient(140deg, #ddd0bd, #f6efe8);
 }
 
 .project-visual img {
@@ -655,14 +695,17 @@ a {
 }
 
 .project-actions .button-primary {
-  background: linear-gradient(135deg, var(--project-accent, #ce5a2f), color-mix(in srgb, var(--project-accent, #ce5a2f) 68%, #201a18));
+  background:
+    linear-gradient(135deg, var(--project-accent, #ce5a2f), color-mix(in srgb, var(--project-accent, #ce5a2f) 68%, #201a18));
   color: #fffaf4;
   box-shadow: 0 14px 30px color-mix(in srgb, var(--project-accent, #ce5a2f) 28%, transparent);
 }
 
 .project-actions .button-secondary {
   border-color: color-mix(in srgb, var(--project-accent, #ce5a2f) 20%, rgba(32, 26, 24, 0.16));
-  background: linear-gradient(120deg, rgba(255, 249, 242, 0.82), rgba(255, 249, 242, 0.62)), radial-gradient(circle at 14% 24%, var(--project-glow-soft, rgba(206, 90, 47, 0.12)), transparent 46%);
+  background:
+    linear-gradient(120deg, rgba(255, 249, 242, 0.82), rgba(255, 249, 242, 0.62)),
+    radial-gradient(circle at 14% 24%, var(--project-glow-soft, rgba(206, 90, 47, 0.12)), transparent 46%);
 }
 
 .process-rail {
@@ -744,9 +787,21 @@ a {
   gap: 0.8rem;
   padding: 1.2rem;
   border-radius: var(--radius-md);
-  border: 1px solid color-mix(in srgb, var(--repo-accent, rgba(32, 26, 24, 0.12)) var(--repo-border-strength), rgba(32, 26, 24, 0.08));
-  background: radial-gradient(circle at 14% 18%, var(--repo-glow-soft, rgba(206, 90, 47, 0.1)), transparent var(--repo-soft-glow-size)), linear-gradient(160deg, color-mix(in srgb, var(--repo-accent, #ce5a2f) var(--repo-fill-strength), rgba(255, 249, 242, 0.92)), rgba(255, 249, 242, 0.74));
-  box-shadow: 0 18px 36px color-mix(in srgb, var(--repo-accent, #ce5a2f) var(--repo-shadow-strength), transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--repo-accent, rgba(32, 26, 24, 0.12)) var(--repo-border-strength), rgba(32, 26, 24, 0.08));
+  background:
+    radial-gradient(
+      circle at 14% 18%,
+      var(--repo-glow-soft, rgba(206, 90, 47, 0.1)),
+      transparent var(--repo-soft-glow-size)
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--repo-accent, #ce5a2f) var(--repo-fill-strength), rgba(255, 249, 242, 0.92)),
+      rgba(255, 249, 242, 0.74)
+    );
+  box-shadow: 0 18px 36px
+    color-mix(in srgb, var(--repo-accent, #ce5a2f) var(--repo-shadow-strength), transparent);
 }
 
 .repo-card p {
@@ -766,14 +821,30 @@ a {
 }
 
 .repo-card .project-actions .button-primary {
-  background: linear-gradient(135deg, var(--repo-accent, var(--text)), color-mix(in srgb, var(--repo-accent, var(--text)) 72%, #201a18));
+  background:
+    linear-gradient(
+      135deg,
+      var(--repo-accent, var(--text)),
+      color-mix(in srgb, var(--repo-accent, var(--text)) 72%, #201a18)
+    );
   color: #fffaf4;
-  box-shadow: 0 14px 30px color-mix(in srgb, var(--repo-accent, var(--text)) var(--repo-shadow-strength), transparent);
+  box-shadow: 0 14px 30px
+    color-mix(in srgb, var(--repo-accent, var(--text)) var(--repo-shadow-strength), transparent);
 }
 
 .repo-card .project-actions .button-secondary {
-  border-color: color-mix(in srgb, var(--repo-accent, #ce5a2f) var(--repo-border-strength), rgba(32, 26, 24, 0.16));
-  background: linear-gradient(120deg, rgba(255, 249, 242, 0.86), rgba(255, 249, 242, 0.66)), radial-gradient(circle at 14% 24%, var(--repo-glow-soft, rgba(206, 90, 47, 0.12)), transparent var(--repo-soft-glow-size));
+  border-color: color-mix(
+    in srgb,
+    var(--repo-accent, #ce5a2f) var(--repo-border-strength),
+    rgba(32, 26, 24, 0.16)
+  );
+  background:
+    linear-gradient(120deg, rgba(255, 249, 242, 0.86), rgba(255, 249, 242, 0.66)),
+    radial-gradient(
+      circle at 14% 24%,
+      var(--repo-glow-soft, rgba(206, 90, 47, 0.12)),
+      transparent var(--repo-soft-glow-size)
+    );
 }
 
 .contact-section {
@@ -809,26 +880,27 @@ a {
 .cursor-hint.is-visible {
   opacity: 1;
   visibility: visible;
-  filter: blur(0);
+  filter: blur(0); // Resetuje blur z animacji znikania
 }
-
 .cursor-hint.smaller {
   transform-origin: left bottom;
   scale: 0.8;
-  --hint-offset-x: -50; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 22 chyba jesli pamietam */
-  --hint-offset-y: 0; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 18 chyba jesli pamietam */
+   --hint-offset-x: -50; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 22 chyba jesli pamietam */
+   --hint-offset-y: 0; /* jak dajemy 0 to pozwalamy wykorzystac domyslne ustawienia z js czyli 18 chyba jesli pamietam */
   /* ^ mozna sterować odległością od kursora prosto z CSS! */
 }
 
 /* .cursor-hint-blue-transparent {
   color:aqua;
 } */
+// ________________________________________________________________ SCSS ________________________________________________________________
 .is-splash {
   /* 
      4s trwania animacji + 2s czekania (delay) 
      = całkowite zniknięcie w 6 sekundzie (animacja + delay)
   */
   animation: ultraSmoothFadeOut 4s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+  
   /* Optymalizacja, by przeglądarka wiedziała, co będziemy zmieniać */
   will-change: opacity, filter;
 }
@@ -845,6 +917,10 @@ a {
     pointer-events: none;
   }
 }
+
+
+
+// ________________________________________________________________SCSS^________________________________________________________________
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -864,113 +940,142 @@ a {
   .repo-grid {
     grid-template-columns: 1fr;
   }
+
   .hero {
     min-height: unset;
   }
+
   .hero-metrics {
     grid-template-columns: 1fr;
   }
+
   .hero-stage {
     min-height: 580px;
   }
+
   .hero-shot {
     inset: 7.5rem 1rem 5rem 1rem;
   }
+
   .project-visual {
     min-height: 360px;
   }
 }
+
 @media (max-width: 760px) {
   .site-header {
     align-items: flex-start;
     flex-direction: column;
   }
+
   .header-controls {
     width: 100%;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 0;
   }
+
   .site-nav {
     gap: 0.8rem 1rem;
   }
+
   .lang-switch {
     align-self: flex-start;
   }
+
   .hero {
     padding-top: 1rem;
   }
+
   .hero h1 {
     font-size: clamp(2.9rem, 16vw, 4.8rem);
   }
+
   .hero-stage {
     min-height: 500px;
   }
+
   .hero-panel-main,
   .hero-panel-side {
     width: auto;
     max-width: 74vw;
   }
+
   .hero-stage.has-panel-focus .hero-shot {
     transform: translateY(10px) scale(1);
     opacity: 0.32;
   }
+
   .hero-panel-main.is-focused,
   .hero-panel-side.is-focused {
     transform: translateY(-10px) scale(1.02);
   }
+
   .hero-panel-trigger.is-dimmed {
     opacity: 0.78;
   }
+
   .hero-panel-main {
     top: 0.5rem;
   }
+
   .hero-panel-side {
     bottom: 0.5rem;
   }
+
   .hero-shot {
     inset: 7rem 0 7rem 0;
     transform: none;
   }
+
   .process-step {
     grid-template-columns: 1fr;
     gap: 0.6rem;
   }
+
   .section-heading h2,
   .contact-section h2 {
     font-size: clamp(2.4rem, 12vw, 3.4rem);
   }
+
   .project-spotlight {
     padding: 0.8rem;
   }
+
   .project-content {
     padding: 0.5rem 0.3rem 0.8rem;
   }
+
   .github-toolbar {
     align-items: flex-start;
     flex-direction: column;
   }
 }
+
 @media (hover: none), (pointer: coarse) {
   .cursor-hint {
     display: none;
   }
 }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
     animation: none !important;
     transition: none !important;
   }
+
   .reveal {
     opacity: 1;
     transform: none;
   }
+
   .cursor-hint {
     transition: none;
   }
-}/*# sourceMappingURL=styles.css.map */
+}

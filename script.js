@@ -1069,7 +1069,11 @@ function moveCursorHint(x, y) {
 function setupCursorHint(elements, clickCallback = null) {
   elements.forEach((el) => {
     el.addEventListener("pointerenter", (event) => {
+      // ---to dodałem by nie było przekazywania zdarzenia do rodziców ---
+      event.stopPropagation(); // Zatrzymuje "płynięcie" zdarzenia do rodziców
+      // ------------------
       if (!cursorHint || prefersReducedMotion) return;
+
       const span = cursorHint.querySelector("span");
       const hintContent = el.dataset.hint || copy[currentLang].clickHint;
 
@@ -1106,6 +1110,9 @@ function setupCursorHint(elements, clickCallback = null) {
     });
 
     el.addEventListener("pointermove", (event) => {
+      // ---to też dodałem by nie było przekazywania zdarzenia do rodziców ---
+      event.stopPropagation();
+      // --------------------------
       if (!cursorHint || prefersReducedMotion) return;
       moveCursorHint(event.clientX, event.clientY);
     });
@@ -1139,6 +1146,7 @@ document.addEventListener("keydown", (event) => {
     setPanelFocus(null);
   }
 });
+
 
 applyLanguage(currentLang);
 renderSpotlight(activeProjectKey);
