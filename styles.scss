@@ -464,7 +464,10 @@ a {
 }
 
 .hero-panel-trigger.is-dimmed {
-  opacity: 0.5;
+  z-index: 0;
+  opacity: 0.14;
+  filter: saturate(0.7) blur(0.4px);
+  transform: scale(0.96);
 }
 
 .hero-panel p,
@@ -1018,7 +1021,7 @@ a {
   }
 
   .hero-panel-trigger.is-dimmed {
-    opacity: 0.78;
+    opacity: 0.12;
   }
 
   .hero-panel-main {

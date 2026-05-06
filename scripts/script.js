@@ -407,7 +407,7 @@ const languageController = window.PortfolioLanguage.createLanguageController({
     currentLang = lang;
   },
 });
-// ________________________________________________________________ CURSOR HINT ________________________________________________________________
+// ________________________________________________________________ PODPIĘCIE CURSOR HINT ________________________________________________________________
 const cursorHintController = window.PortfolioCursorHint.createCursorHintController({
   cursorHint,
   prefersReducedMotion,
