@@ -87,7 +87,7 @@ const translations = {
     contactPrimaryCta: "Przejdź do projektów",
     contactSecondaryCta: "Zobacz wszystkie repo na GitHubie",
     contactEmailHint: "kliknij aby wyslac wiadomośc na ten adres email",
-    clickHint: "Kliknij",
+    clickHint: "Kliknij aby odkryć",
   },
   en: {
     locale: "en-US",
@@ -175,7 +175,7 @@ const translations = {
     contactPrimaryCta: "Go to projects",
     contactSecondaryCta: "See all GitHub repos",
     contactEmailHint: "click to send a message to this email address",
-    clickHint: "Click",
+    clickHint: "Click to reveal",
   },
 };
 
