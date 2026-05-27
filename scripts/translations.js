@@ -70,7 +70,7 @@ const translations = {
     githubTitle: "Repozytoria publiczne pobierane na żywo z profilu",
     githubProfileLabel: "Profil:",
     githubStatusLoading: "Ładowanie repozytoriów…",
-    githubStatusLoaded: "Sekcja jest aktualizowana z GitHub API.",
+    githubStatusLoaded: "Sekcja oraz niektóre palety kolorów są aktualizowane z GitHub API.",
     githubStatusFallback:
       "Nie udało się pobrać API, więc pokazuję przygotowaną listę najważniejszych repozytoriów.",
     repoMixedStack: "Mixed stack",
@@ -159,7 +159,7 @@ const translations = {
     githubTitle: "Public repositories pulled live from the profile",
     githubProfileLabel: "Profile:",
     githubStatusLoading: "Loading repositories…",
-    githubStatusLoaded: "This section is being updated from the GitHub API.",
+    githubStatusLoaded: "This section and some palette colours is being updated from the GitHub API.",
     githubStatusFallback:
       "The API couldn't be loaded, so I'm showing a prepared list of key repositories.",
     repoMixedStack: "Mixed stack",
