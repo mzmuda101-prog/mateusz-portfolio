@@ -44,6 +44,7 @@ const translations = {
     projectsEyebrow: "Selected work",
     projectsTitle: "Najmocniejsze projekty w jednym miejscu",
     projectTabInfo: "reszta projektów w sekcji: \"GitHub\"",
+    projectTabCalc: "Kalkulator by Matm0 PWA",
     projectListAria: "Lista wyróżnionych projektów",
     processEyebrow: "Approach",
     processTitle: "Łączę klimat i wygląd z jasną funkcją produktu",
@@ -137,6 +138,7 @@ const translations = {
     processEyebrow: "Approach",
     processTitle: "I connect visual atmosphere with a clear product function",
     projectTabInfo: "rest of the projects in the \"GitHub\" section",
+    projectTabCalc: "Calculator by Matm0 PWA",
     processStep1Title: "Starting point",
     processStep1Text:
       "I look for a real problem or a concrete workflow: what the user needs faster, simpler, or in a clearer form.",
