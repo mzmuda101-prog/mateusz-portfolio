@@ -54,11 +54,12 @@ const projects = {
         kicker: "PWA / data tools",
         title: "Excel Workbench PWA",
         description:
-          "Offline-first aplikacja do przeglądania, filtrowania, analizowania i lekkiego przekształcania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
+          "Offline-first aplikacja do przeglądania, filtrowania, analizowania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
         meta: [
-          "Działa lokalnie w przeglądarce i wspiera tryb offline.",
+          "Działa lokalnie w przeglądarce, na tablecie, komputerze czy nawet telefonie i wspiera tryb offline.",
           "Skupiona na realnym workflow wokół arkuszy, a nie na kopiowaniu całego Excela.",
           "Ma narzędzia do inspekcji struktury, filtrów, sortowania i eksportu.",
+          "Ma panel - agregacje, który zastępuje tabele przestawne i lekkie makra.",
         ],
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
       },
@@ -67,11 +68,12 @@ const projects = {
         kicker: "PWA / data tools",
         title: "Excel Workbench PWA",
         description:
-          "An offline-first app for browsing, filtering, analyzing, and lightly transforming Excel files without a backend and without sending data off the device.",
+          "An offline-first app for browsing, filtering, analyzing Excel files without a backend and without sending data off the device.",
         meta: [
-          "Runs locally in the browser and supports offline mode.",
+          "It runs locally in a browser, on a tablet, computer or even phone and supports offline mode.",
           "Focused on real spreadsheet workflows instead of copying all of Excel.",
           "Includes tools for structure inspection, filtering, sorting, and export.",
+          "It has an aggregations panel that replaces pivot tables and lightweight macros.",
         ],
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
       },
