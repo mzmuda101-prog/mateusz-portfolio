@@ -11,7 +11,7 @@ const translations = {
     refreshAlt: "Odśwież stronę",
     navAria: "Główna nawigacja",
     nav: {
-      projects: "Projekty",
+      projects: "Najmocniejsze Projekty",
       about: "Profil",
       github: "GitHub",
       contact: "Kontakt",
@@ -102,7 +102,7 @@ const translations = {
     refreshAlt: "Refresh the page",
     navAria: "Main navigation",
     nav: {
-      projects: "Projects",
+      projects: "Best Projects",
       about: "Profile",
       github: "GitHub",
       contact: "Contact",
