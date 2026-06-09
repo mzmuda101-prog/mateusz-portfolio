@@ -426,6 +426,12 @@ a {
   transform: translateY(-4px);
 }
 
+/* Karta 2 ma ruch odwrotny — przesuwa się w dół zamiast w górę */
+.hero-stage-button-2:hover,
+.hero-stage-button-2:focus-visible {
+  transform: translateY(4px);
+}
+
 .hero-panel-trigger.is-focused {
   z-index: 5;
   background: var(--surface-strong);
