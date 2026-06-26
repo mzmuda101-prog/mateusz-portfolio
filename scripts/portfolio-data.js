@@ -39,10 +39,10 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/excel-workbench-pwa-2.png",
+    image: "./assets/excel-workbench-pwa-1.png",
     imageAlt: {
-      pl: "Zrzut ekranu Excel Workbench PWA",
-      en: "Screenshot of Excel Workbench PWA",
+      pl: "Zrzut ekranu Sheet Workbench PWA",
+      en: "Screenshot of Sheet Workbench PWA",
     },
     actions: [
       { type: "live", href: "https://excel-workbench-pwa.vercel.app" },
@@ -50,9 +50,9 @@ const projects = {
     ],
     copy: {
       pl: {
-        tabLabel: "Excel Workbench PWA",
+        tabLabel: "Sheet Workbench PWA",
         kicker: "PWA / data tools",
-        title: "Excel Workbench PWA",
+        title: "Sheet Workbench PWA",
         description:
           "Offline-first aplikacja do przeglądania, filtrowania, analizowania plików Excel bez backendu i bez wysyłania danych poza urządzenie.",
         meta: [
@@ -76,6 +76,55 @@ const projects = {
           "It has an aggregations panel that replaces pivot tables and lightweight macros.",
         ],
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
+      },
+    },
+  }),
+  "calc-pwa": makeProject({
+    accent: "#4088F4",
+    accentDeep: "#2463EB",
+    glow: "rgba(36, 99, 235, 0.30)",
+    glowSoft: "rgba(36, 99, 235, 0.15)",
+    repoTheme: {
+      fillStrength: "18%",
+      borderStrength: "28%",
+      shadowStrength: "24%",
+      softGlowSize: "52%",
+    },
+    image: "./assets/smart-kalkulator-pwa.png",
+    imageAlt: {
+      pl: "Zrzut ekranu Smart Kalkulator PWA",
+      en: "Screenshot of Smart Calculator PWA",
+    },
+    actions: [
+      { type: "live", href: "https://kalkulator-by-matm0.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/smart-kalkulator-pwa" },
+    ],
+    copy: {
+      pl: {
+        tabLabel: "Smart Kalkulator PWA",
+        kicker: "PWA / calc-tools",
+        title: "Smart Kalkulator PWA",
+        description:
+          "Offline-first aplikacja do liczenia liczb, przeliczania walut oraz innych smart komend bez wysyłania danych poza urządzenie.",
+        meta: [
+          "Działa lokalnie w przeglądarce, na tablecie, komputerze czy nawet telefonie i działa również offline.",
+          "Kalkulator z historią i przeliczaniem walut (NBP/Frankfurter), moduł inżynieryjny do podziału osi i siatek, rysowanie wykresów f(x) i geometrii 2D oraz Warsztat z narzędziami budowlano-elektrycznymi.",
+          "Notatnik z wieloma notatkami, zmiennymi globalnymi (@nazwa) i trybem fold — każda linia to wyrażenie obliczane na żywo.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Service Worker", "Canvas API", "NBP API"],
+      },
+      en: {
+        tabLabel: "Smart Calculator PWA",
+        kicker: "PWA / calc-tools",
+        title: "Smart Calculator PWA",
+        description:
+          "An offline-first app for calculating numbers, converting currencies and other smart commands without sending data off the device.",
+        meta: [
+          "Runs locally in a browser, on a tablet, computer or even phone and supports full offline mode via Service Worker cache.",
+          "Calculator with history and live currency conversion (NBP/Frankfurter), engineering module for axis divisions and grids, f(x) graph plotting, 2D geometry drawing, and a Workshop with construction and electrical tools.",
+          "Multi-note notepad with shared global variables (@name) and fold mode — every line is a live-evaluated expression.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Service Worker", "Canvas API", "NBP API"],
       },
     },
   }),
