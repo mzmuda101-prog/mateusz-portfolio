@@ -27,8 +27,6 @@ const repoGrid = getEl("repo-grid");
 const githubStatus = getEl("github-status");
 const revealTargets = document.querySelectorAll(".reveal");
 const heroStage = document.querySelector(".hero-stage");
-const heroStageButton1 = document.querySelector(".hero-stage-button-1");
-const heroStageButton2 = document.querySelector(".hero-stage-button-2");
 const heroShot = document.querySelector(".hero-shot");
 const magneticButtons = document.querySelectorAll(".button-magnetic");
 const heroPanels = Array.from(document.querySelectorAll(".hero-panel-trigger"));
@@ -38,8 +36,12 @@ const langButtons = Array.from(document.querySelectorAll(".lang-button"));
 let currentLang = "pl";
 let activeProjectKey = "excel-workbench-pwa";
 let activeHeroPanel = null;
+let panelFocusedAt = 0;
 let currentRepos = [];
 let githubStatusMode = "loading";
+let panelElevateTimer = null;
+let panelTuckTimer = null;
+let panelFocusResizeTimer = null;
 
 const defaultRepoTheme = { ...defaultProjectProps.repoTheme };
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -694,34 +696,288 @@ if (!prefersReducedMotion) {
   });
 
   window.addEventListener("pointermove", (event) => {
-    if (activeHeroPanel && isPointerFarFromHero(event.clientX, event.clientY)) {
+    if (!activeHeroPanel) return;
+    // Ignore the first moments after open so the emerge animation can finish.
+    if (performance.now() - panelFocusedAt < 500) return;
+    if (isPointerFarFromHero(event.clientX, event.clientY)) {
       setPanelFocus(null);
     }
   });
 }
 // _______________________________________________________________ SET PANEL FOCUS _____________________________________________________________
+const PANEL_ELEVATE_MS = 280;
+const PANEL_SLIDE_MS = 620;
+const PANEL_VARS = ["--panel-tx", "--panel-ty", "--panel-rest-tx", "--panel-rest-ty"];
+const SHOT_VARS = ["--shot-tx", "--shot-ty", "--shot-rot", "--shot-scale"];
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function setVars(el, vars) {
+  Object.entries(vars).forEach(([key, value]) => {
+    if (value == null || value === "") el.style.removeProperty(key);
+    else el.style.setProperty(key, value);
+  });
+}
+
+function clearVars(el, keys) {
+  keys.forEach((key) => el.style.removeProperty(key));
+}
+
+function overlapXY(a, b) {
+  return {
+    x: Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)),
+    y: Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top)),
+  };
+}
+
+function clampToRoom(tx, ty, room) {
+  return {
+    x: clamp(tx, -Math.max(0, room.left), Math.max(0, room.right)),
+    y: clamp(ty, -Math.max(0, room.top), Math.max(0, room.bottom)),
+  };
+}
+
+/** Measure panel/shot/stage as if no focus transforms were applied. */
+function measureHeroGeometry(panel) {
+  const savedPanel = {
+    transition: panel.style.transition,
+    transform: panel.style.transform,
+  };
+  const savedShot = {
+    transition: heroShot.style.transition,
+    transform: heroShot.style.transform,
+  };
+  const hadFocus = heroStage.classList.contains("has-panel-focus");
+  const panelVarSnapshot = Object.fromEntries(PANEL_VARS.map((key) => [key, panel.style.getPropertyValue(key)]));
+
+  panel.style.transition = "none";
+  heroShot.style.transition = "none";
+  panel.style.setProperty("transform", "none", "important");
+  PANEL_VARS.forEach((key) => panel.style.setProperty(key, "0px"));
+  if (hadFocus) heroStage.classList.remove("has-panel-focus");
+  heroShot.style.transform = "";
+  void panel.offsetWidth;
+
+  const geometry = {
+    panel: panel.getBoundingClientRect(),
+    shot: heroShot.getBoundingClientRect(),
+    stage: heroStage.getBoundingClientRect(),
+  };
+
+  if (hadFocus) heroStage.classList.add("has-panel-focus");
+  panel.style.transition = savedPanel.transition;
+  panel.style.transform = savedPanel.transform;
+  setVars(panel, panelVarSnapshot);
+  heroShot.style.transition = savedShot.transition;
+  heroShot.style.transform = savedShot.transform;
+
+  return geometry;
+}
+
+function computePanelSlide(panel) {
+  if (!heroStage || !heroShot) return { x: 0, y: 0 };
+
+  const { panel: panelRect, shot: shotRect, stage: stageRect } = measureHeroGeometry(panel);
+  const isMain = panel.classList.contains("hero-panel-main");
+  const compact = window.innerWidth <= 760;
+  const pad = 14;
+
+  const room = {
+    left: panelRect.left - Math.max(pad, stageRect.left - (isMain ? 56 : 28)),
+    right: Math.min(window.innerWidth - pad, stageRect.right + (isMain ? 28 : 72)) - panelRect.right,
+    top: panelRect.top - Math.max(pad, stageRect.top - (isMain ? 20 : 36)),
+    bottom: Math.min(window.innerHeight - pad, stageRect.bottom + 8) - panelRect.bottom,
+  };
+
+  let nx = (panelRect.left + panelRect.right) / 2 - (shotRect.left + shotRect.right) / 2;
+  let ny = (panelRect.top + panelRect.bottom) / 2 - (shotRect.top + shotRect.bottom) / 2;
+
+  if (isMain) {
+    nx = nx * 0.35 - 0.8;
+    ny = ny * 0.35 - 0.45;
+  } else {
+    nx = nx * 0.4 + 0.55;
+    ny = ny * 0.35 - 0.15;
+  }
+
+  // Steer away from cramped edges (especially: don't dive under the photo).
+  if (room.left < 24 && room.right > room.left) {
+    if (isMain) {
+      nx *= 0.15;
+      ny = -Math.abs(ny) - 0.55;
+    } else nx = Math.abs(nx) + 0.35;
+  }
+  if (room.right < 24 && room.left > room.right) nx = -Math.abs(nx) - 0.35;
+  if (room.top < 24 && room.bottom > room.top) {
+    if (isMain) {
+      ny *= 0.12;
+      nx = nx <= 0 ? -Math.abs(nx) - 0.55 : nx * 0.25;
+    } else ny = Math.abs(ny) + 0.35;
+  }
+  if (room.bottom < 24 && room.top > room.bottom) ny = -Math.abs(ny) - 0.35;
+
+  const len = Math.hypot(nx, ny) || 1;
+  nx /= len;
+  ny /= len;
+
+  const overlap = overlapXY(panelRect, shotRect);
+  const desired = isMain
+    ? clamp(Math.max(overlap.x * Math.abs(nx), overlap.y * Math.abs(ny)) * 0.42 + (compact ? 12 : 16), 30, compact ? 52 : 64)
+    : clamp(Math.max(overlap.x * Math.abs(nx), overlap.y * Math.abs(ny)) * 0.72 + (compact ? 20 : 32), 52, compact ? 96 : 132);
+
+  let { x: tx, y: ty } = clampToRoom(nx * desired, ny * desired, room);
+
+  if (Math.abs(tx) < desired * 0.35 && Math.abs(nx) >= Math.abs(ny)) {
+    ({ x: tx, y: ty } = clampToRoom(tx, Math.sign(ny || (isMain ? -1 : 1)) * desired * 0.7, room));
+  } else if (Math.abs(ty) < desired * 0.35 && Math.abs(ny) > Math.abs(nx)) {
+    ({ x: tx, y: ty } = clampToRoom(Math.sign(nx || (isMain ? -1 : 1)) * desired * 0.7, ty, room));
+  }
+
+  const minTravel = isMain ? (compact ? 24 : 36) : compact ? 32 : 56;
+  if (Math.hypot(tx, ty) < minTravel) {
+    ({ x: tx, y: ty } = clampToRoom(
+      isMain ? -minTravel : minTravel * 0.55,
+      isMain ? -minTravel * 0.5 : -minTravel * 0.85,
+      room
+    ));
+  }
+
+  const nearView =
+    panelRect.bottom > -40 &&
+    panelRect.top < window.innerHeight + 40 &&
+    panelRect.right > -40 &&
+    panelRect.left < window.innerWidth + 40;
+
+  if (nearView) {
+    const viewBottom = window.innerHeight - pad;
+    if (panelRect.bottom + ty > viewBottom) ({ x: tx, y: ty } = clampToRoom(tx, ty - (panelRect.bottom + ty - viewBottom), room));
+    if (panelRect.top + ty < pad) ({ x: tx, y: ty } = clampToRoom(tx, ty + (pad - (panelRect.top + ty)), room));
+  }
+
+  return { x: Math.round(tx), y: Math.round(ty) };
+}
+
+function applyShotRelease(panel, slide) {
+  if (!heroStage || !heroShot) return;
+  const compact = window.innerWidth <= 760;
+  const push = compact ? 0.62 : 0.78;
+  setVars(heroStage, {
+    "--shot-tx": `${Math.round(-slide.x * push + (slide.x >= 0 ? 8 : -8))}px`,
+    "--shot-ty": `${Math.round(-slide.y * push + (compact ? 8 : 4))}px`,
+    "--shot-rot": `${compact ? 0 : panel.classList.contains("hero-panel-main") ? -6.5 : -5}deg`,
+    "--shot-scale": String(compact ? 0.98 : 0.95),
+  });
+  heroShot.style.transform = "";
+}
+
+function clearPanelTimers() {
+  if (panelElevateTimer !== null) {
+    window.clearTimeout(panelElevateTimer);
+    panelElevateTimer = null;
+  }
+  if (panelTuckTimer !== null) {
+    window.clearTimeout(panelTuckTimer);
+    panelTuckTimer = null;
+  }
+}
+
+function raiseFocusedPanel(panel) {
+  panel.classList.add("is-focused");
+  panel.classList.remove("is-emerging");
+  heroStage?.classList.add("is-panel-raised");
+}
+
 function setPanelFocus(activePanel) {
   activeHeroPanel = activePanel;
+  panelFocusedAt = activePanel ? performance.now() : 0;
+  clearPanelTimers();
+  heroStage?.classList.toggle("has-panel-focus", Boolean(activePanel));
 
-  if (heroStage) {
-    heroStage.classList.toggle("has-panel-focus", Boolean(activePanel));
+  if (!activePanel) {
+    clearVars(heroStage, SHOT_VARS);
+    heroStage?.classList.remove("is-panel-raised");
+
+    const openPanels = heroPanels.filter((panel) => panel.classList.contains("is-focused") || panel.classList.contains("is-emerging"));
+
+    heroPanels.forEach((panel) => {
+      panel.setAttribute("aria-expanded", "false");
+      panel.classList.remove("is-dimmed");
+      if (openPanels.includes(panel) && !prefersReducedMotion) {
+        panel.classList.add("is-emerging");
+        panel.classList.remove("is-focused");
+      } else {
+        panel.classList.remove("is-focused", "is-emerging");
+        clearVars(panel, PANEL_VARS);
+      }
+    });
+
+    if (openPanels.length && !prefersReducedMotion) {
+      openPanels.forEach((panel) => clearVars(panel, PANEL_VARS));
+      panelTuckTimer = window.setTimeout(() => {
+        panelTuckTimer = null;
+        if (activeHeroPanel) return;
+        openPanels.forEach((panel) => panel.classList.remove("is-emerging"));
+      }, PANEL_SLIDE_MS);
+    }
+    return;
   }
+
+  const slide = prefersReducedMotion ? { x: 0, y: 0 } : computePanelSlide(activePanel);
+  applyShotRelease(activePanel, slide);
+  heroStage?.classList.remove("is-panel-raised");
 
   heroPanels.forEach((panel) => {
     const isActive = panel === activePanel;
-    panel.classList.toggle("is-focused", isActive);
-    panel.classList.toggle("is-dimmed", Boolean(activePanel) && !isActive);
+    panel.classList.toggle("is-dimmed", !isActive);
+    panel.classList.toggle("is-emerging", isActive);
+    panel.classList.remove("is-focused");
     panel.setAttribute("aria-expanded", String(isActive));
+
+    if (isActive) {
+      setVars(panel, {
+        "--panel-tx": `${slide.x}px`,
+        "--panel-ty": `${slide.y}px`,
+        "--panel-rest-tx": null,
+        "--panel-rest-ty": null,
+      });
+    } else {
+      const isMain = panel.classList.contains("hero-panel-main");
+      setVars(panel, {
+        "--panel-tx": null,
+        "--panel-ty": null,
+        "--panel-rest-tx": `${isMain ? 10 : -8}px`,
+        "--panel-rest-ty": `${isMain ? 8 : -6}px`,
+      });
+    }
   });
+
+  if (prefersReducedMotion) {
+    raiseFocusedPanel(activePanel);
+  } else {
+    panelElevateTimer = window.setTimeout(() => {
+      panelElevateTimer = null;
+      if (activeHeroPanel === activePanel) raiseFocusedPanel(activePanel);
+    }, PANEL_ELEVATE_MS);
+  }
 }
 
 function isPointerFarFromHero(x, y) {
   if (!heroStage) return false;
   const rect = heroStage.getBoundingClientRect();
   const margin = 90;
-
   return x < rect.left - margin || x > rect.right + margin || y < rect.top - margin || y > rect.bottom + margin;
 }
+
+window.addEventListener("resize", () => {
+  if (!activeHeroPanel) return;
+  window.clearTimeout(panelFocusResizeTimer);
+  panelFocusResizeTimer = window.setTimeout(() => {
+    if (activeHeroPanel) setPanelFocus(activeHeroPanel);
+  }, 120);
+});
+
 // ________________________________________________________________ Language controler _________________________________________________________
 const languageController = window.PortfolioLanguage.createLanguageController({
   storageKey: STORAGE_KEY,
