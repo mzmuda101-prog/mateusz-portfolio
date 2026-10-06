@@ -128,6 +128,57 @@ const projects = {
       },
     },
   }),
+  "documents-workbench-pwa": makeProject({
+    accent: "#4088F4",
+    accentDeep: "#2463EB",
+    glow: "rgba(36, 99, 235, 0.30)",
+    glowSoft: "rgba(36, 99, 235, 0.15)",
+    repoTheme: {
+      fillStrength: "18%",
+      borderStrength: "28%",
+      shadowStrength: "24%",
+      softGlowSize: "52%",
+    },
+    image: "./assets/documents-workbench-pwa-1.png",
+    imageAlt: {
+      pl: "Zrzut ekranu Documents Workbench PWA",
+      en: "Screenshot of Documents Workbench PWA",
+    },
+    actions: [
+      { type: "live", href: "https://documents-workbench-pwa.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/documents-workbench-pwa" },
+    ],
+    copy: {
+      pl: {
+        tabLabel: "Documents Workbench PWA",
+        kicker: "PWA / documents-tools",
+        title: "Documents Workbench PWA",
+        description:
+          "Offline-first aplikacja do przeglądania, filtrowania, analizowania plików dokumentów bez backendu i bez wysyłania danych poza urządzenie.",
+        meta: [
+          "Działa lokalnie w przeglądarce, na tablecie, komputerze czy nawet telefonie i wspiera tryb offline.",
+          "Skupiona na realnym workflow wokół dokumentów, a nie na kopiowaniu całego dokumentu.",
+          "Ma narzędzia do inspekcji struktury, filtrów, sortowania i eksportu.",
+          "Ma panel - agregacje, który zastępuje tabele przestawne i lekkie makra.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Documents workflows"],
+      },
+      en: {
+        tabLabel: "Documents Workbench PWA",
+        kicker: "PWA / documents-tools",
+        title: "Documents Workbench PWA",
+        description:
+          "An offline-first app for browsing, filtering, analyzing documents files without a backend and without sending data off the device.",
+        meta: [
+          "It runs locally in a browser, on a tablet, computer or even phone and supports offline mode.",
+          "Focused on real documents workflows instead of copying all of documents.",
+          "Includes tools for structure inspection, filtering, sorting, and export.",
+          "It has an aggregations panel that replaces pivot tables and lightweight macros.",
+        ],
+        stack: ["HTML", "CSS", "JavaScript", "PWA", "Documents workflows"],
+      },
+    },
+  }),
 };
 
 const repoFallback = [
