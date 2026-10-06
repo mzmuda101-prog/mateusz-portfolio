@@ -129,10 +129,10 @@ const projects = {
     },
   }),
   "documents-workbench-pwa": makeProject({
-    accent: "#4088F4",
-    accentDeep: "#2463EB",
-    glow: "rgba(36, 99, 235, 0.30)",
-    glowSoft: "rgba(36, 99, 235, 0.15)",
+    accent: "#4D8EEF",
+    accentDeep: "#3B72E8",
+    glow: "rgba(36, 99, 235, 0.24)",
+    glowSoft: "rgba(36, 99, 235, 0.11)",
     repoTheme: {
       fillStrength: "18%",
       borderStrength: "28%",
