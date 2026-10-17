@@ -960,8 +960,11 @@ main section[id] {
   .hero-shot {
     inset: 7.5rem 1rem 5rem 1rem;
   }
+  /* Single column: the box follows the screenshot's shape instead of
+     cropping a wide app screenshot into a tall frame. */
   .project-visual {
-    min-height: 360px;
+    min-height: 0;
+    aspect-ratio: 7/4;
   }
 }
 @media (max-width: 760px) {
@@ -1051,11 +1054,16 @@ main section[id] {
     opacity: 0.88;
     filter: none;
   }
+  /* Phone: the opened card sits on a softly blurred photo; the other card
+     steps out completely instead of ghosting its text through the photo. */
   .hero-stage.has-panel-focus.is-panel-raised .hero-shot {
-    opacity: 0.3;
+    opacity: 0.5;
+    filter: blur(2px) saturate(0.85);
   }
   .hero-panel-trigger.is-dimmed {
-    opacity: 0.16;
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease, visibility 0s linear 220ms;
   }
   .hero-panel-main {
     top: 0.5rem;
@@ -1063,9 +1071,49 @@ main section[id] {
   .hero-panel-side {
     bottom: 0.5rem;
   }
+  /* At rest only the label and title peek out from under the photo;
+     the description unfolds when the card is opened. */
+  .hero-panel-side p {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
+  }
+  .hero-panel-side.is-emerging p,
+  .hero-panel-side.is-focused p {
+    max-height: 12rem;
+    opacity: 1;
+  }
+  .hero-panel-side strong {
+    margin-bottom: 0.2rem;
+  }
+  .hero-panel-side.is-emerging strong,
+  .hero-panel-side.is-focused strong {
+    margin-bottom: 0.75rem;
+  }
   .hero-shot {
-    inset: 7rem 0 7rem 0;
+    inset: 7.5rem 0 6rem 0;
     transform: none;
+  }
+  .hero-shot img {
+    object-position: left top;
+  }
+  /* Bigger touch targets without changing the look */
+  .refresh {
+    padding: 10px;
+    margin: -10px;
+  }
+  .site-nav a {
+    padding: 0.55rem 0;
+  }
+  .site-nav a::after {
+    bottom: 0.3rem;
+  }
+  .site-nav {
+    padding-bottom: 0.1rem;
+  }
+  .lang-button {
+    min-height: 36px;
   }
   .process-step {
     grid-template-columns: 1fr;
@@ -1089,6 +1137,14 @@ main section[id] {
 @media (hover: none), (pointer: coarse) {
   .cursor-hint {
     display: none;
+  }
+  /* A tap leaves :hover stuck on touch screens — no lift on resting cards */
+  .hero-panel-trigger:not(.is-emerging):not(.is-focused):not(.is-dimmed):hover,
+  .hero-stage-button-2:not(.is-emerging):not(.is-focused):not(.is-dimmed):hover {
+    transform: translate3d(0, 0, 0);
+  }
+  .project-visual:hover img {
+    transform: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

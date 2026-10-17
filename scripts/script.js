@@ -51,6 +51,9 @@ let toastTimer = null;
 
 const defaultRepoTheme = { ...defaultProjectProps.repoTheme };
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+// Mouse-only effects (parallax, magnetic buttons) — on touch a tap fires
+// pointerleave and would leave things tilted or shifted.
+const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 
 // ________________________________________________________________ AUTO COLOR EXTRACTION ________________________________________________________________
@@ -741,7 +744,7 @@ if ("IntersectionObserver" in window) {
   revealTargets.forEach((target) => target.classList.add("is-visible"));
 }
 
-if (heroStage && heroShot && !prefersReducedMotion) {
+if (heroStage && heroShot && !prefersReducedMotion && hasFinePointer) {
   heroStage.addEventListener("pointermove", (event) => {
     if (heroStage.classList.contains("has-panel-focus")) return;
 
@@ -757,7 +760,7 @@ if (heroStage && heroShot && !prefersReducedMotion) {
   });
 }
 
-if (!prefersReducedMotion) {
+if (!prefersReducedMotion && hasFinePointer) {
   magneticButtons.forEach((button) => {
     const label = button.querySelector("span");
     let currentX = 0;
@@ -893,6 +896,17 @@ function computePanelSlide(panel) {
   const isMain = panel.classList.contains("hero-panel-main");
   const compact = window.innerWidth <= 760;
   const pad = 14;
+  // Never slide a card under the sticky header.
+  const topLimit = (siteHeader ? siteHeader.getBoundingClientRect().bottom : 0) + 10;
+
+  // Phones: cards are almost as wide as the stage, so there is no room to
+  // slide out from under the photo — just a short nudge, then lift above it.
+  if (compact) {
+    let ty = isMain ? -8 : 8;
+    if (panelRect.top + ty < topLimit) ty = Math.max(ty, topLimit - panelRect.top);
+    if (panelRect.bottom + ty > window.innerHeight - pad) ty = Math.min(ty, window.innerHeight - pad - panelRect.bottom);
+    return { x: 0, y: Math.round(ty) };
+  }
 
   const room = {
     left: panelRect.left - Math.max(pad, stageRect.left - (isMain ? 56 : 28)),
@@ -963,7 +977,7 @@ function computePanelSlide(panel) {
   if (nearView) {
     const viewBottom = window.innerHeight - pad;
     if (panelRect.bottom + ty > viewBottom) ({ x: tx, y: ty } = clampToRoom(tx, ty - (panelRect.bottom + ty - viewBottom), room));
-    if (panelRect.top + ty < pad) ({ x: tx, y: ty } = clampToRoom(tx, ty + (pad - (panelRect.top + ty)), room));
+    if (panelRect.top + ty < topLimit) ({ x: tx, y: ty } = clampToRoom(tx, ty + (topLimit - (panelRect.top + ty)), room));
   }
 
   return { x: Math.round(tx), y: Math.round(ty) };
@@ -1069,7 +1083,7 @@ function setPanelFocus(activePanel) {
     panelElevateTimer = window.setTimeout(() => {
       panelElevateTimer = null;
       if (activeHeroPanel === activePanel) raiseFocusedPanel(activePanel);
-    }, PANEL_ELEVATE_MS);
+    }, window.innerWidth <= 760 ? 90 : PANEL_ELEVATE_MS);
   }
 }
 
@@ -1078,6 +1092,31 @@ function isPointerFarFromHero(x, y) {
   const rect = heroStage.getBoundingClientRect();
   const margin = 90;
   return x < rect.left - margin || x > rect.right + margin || y < rect.top - margin || y > rect.bottom + margin;
+}
+
+// Touch has no "pointer moved far away" — a tap anywhere outside the cards
+// (including where the hidden card sits) closes the open one.
+let panelClosedByTapAt = 0;
+
+document.addEventListener("pointerdown", (event) => {
+  if (!activeHeroPanel || event.target.closest(".hero-panel-trigger")) return;
+  panelClosedByTapAt = performance.now();
+  setPanelFocus(null);
+});
+
+// The tap that closed a card must not also open the project link under it.
+heroShot?.addEventListener(
+  "click",
+  (event) => {
+    if (performance.now() - panelClosedByTapAt < 700) event.preventDefault();
+  },
+  true
+);
+
+if (heroStage && "IntersectionObserver" in window) {
+  new IntersectionObserver((entries) => {
+    if (activeHeroPanel && !entries[0].isIntersecting) setPanelFocus(null);
+  }).observe(heroStage);
 }
 
 window.addEventListener("resize", () => {
