@@ -3,6 +3,7 @@ const {
   defaultProjectProps,
   projects,
   repoFallback,
+  hiddenRepos,
   repoProjectAliases,
 } = window.PortfolioData;
 const copy = window.PortfolioTranslations;
@@ -32,6 +33,9 @@ const magneticButtons = document.querySelectorAll(".button-magnetic");
 const heroPanels = Array.from(document.querySelectorAll(".hero-panel-trigger"));
 const cursorHint = getEl("cursor-hint");
 const langButtons = Array.from(document.querySelectorAll(".lang-button"));
+const siteHeader = document.querySelector(".site-header");
+const navLinks = Array.from(document.querySelectorAll(".site-nav a[data-nav]"));
+const toast = getEl("toast");
 
 let currentLang = "pl";
 let activeProjectKey = "excel-workbench-pwa";
@@ -42,6 +46,8 @@ let githubStatusMode = "loading";
 let panelElevateTimer = null;
 let panelTuckTimer = null;
 let panelFocusResizeTimer = null;
+let lenis = null;
+let toastTimer = null;
 
 const defaultRepoTheme = { ...defaultProjectProps.repoTheme };
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -55,22 +61,37 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 //   3. Fallback: favicon via ColorThief
 //   4. Last resort: deterministic color from repo name (always works, no network)
 //
-// Results are cached in sessionStorage so extraction runs once per session,
-// never on repeat visits or language switches.
+// Results are cached in localStorage for a week, so extraction doesn't hit
+// GitHub again on repeat visits or language switches.
 
 const colorThief = (typeof ColorThief !== 'undefined') ? new ColorThief() : null;
-const SESSION_CACHE_KEY = 'portfolio-repo-colors-v1';
+const COLOR_CACHE_KEY = 'portfolio-repo-colors-v2';
+const COLOR_CACHE_TTL = 7 * 24 * 60 * 60 * 1000;
 
 // ── Load/save cache ────────────────────────────────────────────────────────────
 
-function loadColorCache() {
+function readStorageJson(key, fallback) {
   try {
-    return JSON.parse(sessionStorage.getItem(SESSION_CACHE_KEY) || '{}');
-  } catch { return {}; }
+    return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback;
+  } catch { return fallback; }
+}
+
+function writeStorageJson(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+}
+
+function loadColorCache() {
+  const cache = readStorageJson(COLOR_CACHE_KEY, {});
+  const now = Date.now();
+  // Drop stale entries so a repo's new look shows up eventually.
+  Object.keys(cache).forEach((key) => {
+    if (!cache[key] || now - cache[key].savedAt > COLOR_CACHE_TTL) delete cache[key];
+  });
+  return cache;
 }
 
 function saveColorCache(cache) {
-  try { sessionStorage.setItem(SESSION_CACHE_KEY, JSON.stringify(cache)); } catch {}
+  writeStorageJson(COLOR_CACHE_KEY, cache);
 }
 
 const repoColorCache = loadColorCache();
@@ -197,13 +218,7 @@ function extractBestColorFromCss(cssText) {
 // ── GitHub CSS fetching ────────────────────────────────────────────────────────
 
 // Common CSS filenames to try, in priority order
-const CSS_CANDIDATES = [
-  'styles.css', 'style.css', 'index.css', 'app.css', 'main.css',
-  'src/styles.css', 'src/style.css', 'src/index.css', 'src/app.css',
-  'css/style.css', 'css/styles.css', 'css/main.css',
-  'public/styles.css', 'assets/styles.css',
-];
-const BRANCHES = ['main', 'master'];
+const CSS_CANDIDATES = ['styles.css', 'style.css', 'css/style.css', 'src/index.css'];
 
 function rawUrl(owner, repo, branch, path) {
   return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
@@ -217,6 +232,7 @@ async function fetchFirstCssFromRepo(htmlUrl) {
 
   // 1. Try GitHub API to get the real file tree (most accurate)
   //    Unauthenticated: 60 req/h per IP — one call per unknown repo is fine
+  let treeListed = false;
   try {
     const treeRes = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`,
@@ -225,6 +241,7 @@ async function fetchFirstCssFromRepo(htmlUrl) {
     if (treeRes.ok) {
       const data = await treeRes.json();
       if (data.tree) {
+        treeListed = !data.truncated;
         // Find all CSS files, skip minified and node_modules
         const cssFiles = data.tree
           .filter(f => f.type === 'blob'
@@ -256,12 +273,14 @@ async function fetchFirstCssFromRepo(htmlUrl) {
     }
   } catch { /* fall through to guessing */ }
 
-  // 2. Fallback: guess common filenames × branches
-  for (const branch of BRANCHES) {
-    for (const path of CSS_CANDIDATES) {
-      const rgb = await fetchAndExtractCss(rawUrl(owner, repo, branch, path));
-      if (rgb) return rgb;
-    }
+  // The full tree had no usable CSS (e.g. a Python repo) — guessing would only
+  // produce a wall of 404s.
+  if (treeListed) return null;
+
+  // 2. Fallback (API rate-limited): guess a few common filenames on the default branch
+  for (const path of CSS_CANDIDATES) {
+    const rgb = await fetchAndExtractCss(rawUrl(owner, repo, 'HEAD', path));
+    if (rgb) return rgb;
   }
 
   return null;
@@ -323,9 +342,9 @@ async function resolveRepoTheme(repo) {
 
   const cacheKey = repo.html_url;
 
-  // Serve from session cache (extracted once per session, never again)
-  if (repoColorCache[cacheKey] !== undefined) {
-    return repoColorCache[cacheKey];
+  // Serve from cache (extracted once a week at most)
+  if (repoColorCache[cacheKey]) {
+    return repoColorCache[cacheKey].theme;
   }
 
   let rgb = null;
@@ -348,8 +367,7 @@ async function resolveRepoTheme(repo) {
   // Layer 3 — deterministic color (always works, no network needed)
   const theme = rgb ? buildThemeFromRgb(...rgb) : colorFromRepoName(repo.name);
 
-  // Cache to sessionStorage — never runs extraction again this session
-  repoColorCache[cacheKey] = theme;
+  repoColorCache[cacheKey] = { theme, savedAt: Date.now() };
   saveColorCache(repoColorCache);
 
   return theme;
@@ -421,25 +439,38 @@ function buildRepoThemeVars(repo) {
 }
 
 function formatDate(dateString) {
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return "—";
   return new Intl.DateTimeFormat(copy[currentLang].locale, {
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }).format(new Date(dateString));
+  }).format(date);
 }
 
 function getGithubStatusText() {
   if (githubStatusMode === "loaded") return copy[currentLang].githubStatusLoaded;
+  if (githubStatusMode === "cached") return copy[currentLang].githubStatusCached;
   if (githubStatusMode === "fallback") return copy[currentLang].githubStatusFallback;
   return copy[currentLang].githubStatusLoading;
 }
 
-function getRepoDescription(repo) {
-  if (typeof repo.description === "object" && repo.description !== null) {
-    return repo.description[currentLang] || repo.description.pl || repo.description.en;
+function getLocalizedDescription(description) {
+  if (typeof description === "object" && description !== null) {
+    return description[currentLang] || description.pl || description.en;
   }
+  return description;
+}
 
-  return repo.description || copy[currentLang].repoNoDescription;
+function getRepoDescription(repo) {
+  // Hand-written PL/EN descriptions win (GitHub "About" is often empty or only
+  // in Polish), then GitHub's own text, then the generic placeholder.
+  const known = repoFallback.find((item) => item.name.toLowerCase() === String(repo.name).toLowerCase());
+  return (
+    (known && getLocalizedDescription(known.description)) ||
+    getLocalizedDescription(repo.description) ||
+    copy[currentLang].repoNoDescription
+  );
 }
 
 function createProjectAction(action, index) {
@@ -565,45 +596,128 @@ function renderSpotlight(projectKey) {
     const tabCopy = getProjectCopy(tab.dataset.project);
     tab.classList.toggle("is-active", isActive);
     tab.setAttribute("aria-selected", String(isActive));
+    tab.tabIndex = isActive ? 0 : -1;
+    if (isActive && spotlight.root) spotlight.root.setAttribute("aria-labelledby", tab.id);
     if (tabCopy) tab.textContent = tabCopy.tabLabel;
   });
 
   activeProjectKey = projectKey;
+  const projectList = document.querySelector(".project-list");
+  if (projectList && typeof revealActiveInRow === "function") revealActiveInRow(projectList);
 }
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    const nextProjectKey = tab.dataset.project;
-    if (nextProjectKey === activeProjectKey) return;
+function selectProject(nextProjectKey) {
+  if (!projects[nextProjectKey] || nextProjectKey === activeProjectKey) return;
 
-    if (spotlight.root) {
-      spotlight.root.classList.add("is-switching");
-      window.setTimeout(() => renderSpotlight(nextProjectKey), 110);
-      window.setTimeout(() => spotlight.root.classList.remove("is-switching"), 320);
-      return;
-    }
+  // Shareable link to the selected project (?project=…), without a history entry.
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set("project", nextProjectKey);
+    window.history.replaceState(null, "", url);
+  } catch {}
 
-    renderSpotlight(nextProjectKey);
+  if (spotlight.root && !prefersReducedMotion) {
+    spotlight.root.classList.add("is-switching");
+    window.setTimeout(() => renderSpotlight(nextProjectKey), 110);
+    window.setTimeout(() => spotlight.root.classList.remove("is-switching"), 320);
+    return;
+  }
+
+  renderSpotlight(nextProjectKey);
+}
+
+function getProjectKeyFromUrl() {
+  try {
+    const value = new URL(window.location.href).searchParams.get("project");
+    if (!value) return null;
+    if (projects[value]) return value;
+    const alias = repoProjectAliases[normalizeRepoToken(value)];
+    return alias && projects[alias] ? alias : null;
+  } catch {
+    return null;
+  }
+}
+
+tabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => selectProject(tab.dataset.project));
+
+  // WAI-ARIA tabs: arrows move between projects, Home/End jump to the ends.
+  tab.addEventListener("keydown", (event) => {
+    const keyToIndex = {
+      ArrowRight: index + 1,
+      ArrowDown: index + 1,
+      ArrowLeft: index - 1,
+      ArrowUp: index - 1,
+      Home: 0,
+      End: tabs.length - 1,
+    };
+    if (!(event.key in keyToIndex)) return;
+    event.preventDefault();
+    const nextTab = tabs[(keyToIndex[event.key] + tabs.length) % tabs.length];
+    nextTab.focus();
+    selectProject(nextTab.dataset.project);
   });
 });
+
+// Warm the other screenshots once the page is idle, so switching tabs is instant.
+(window.requestIdleCallback || ((fn) => window.setTimeout(fn, 1500)))(() => {
+  Object.values(projects).forEach((project) => {
+    const img = new Image();
+    img.decoding = "async";
+    img.src = project.image;
+  });
+});
+
+const REPO_CACHE_KEY = "portfolio-github-repos-v1";
+const REPO_CACHE_FRESH_MS = 60 * 60 * 1000;
+const REPO_LIMIT = 9;
+
+function pickRepoFields(repo) {
+  const { name, description, language, updated_at, pushed_at, html_url, homepage } = repo;
+  return { name, description, language, updated_at: pushed_at || updated_at, html_url, homepage };
+}
+
+function prepareRepos(repos) {
+  const hidden = new Set(hiddenRepos.map((name) => name.toLowerCase()));
+  return repos
+    .filter((repo) => !repo.fork && !repo.archived && !hidden.has(String(repo.name).toLowerCase()))
+    .slice(0, REPO_LIMIT)
+    .map(pickRepoFields);
+}
 
 async function loadRepos() {
   githubStatusMode = "loading";
   githubStatus.textContent = getGithubStatusText();
 
+  // Unauthenticated GitHub API allows 60 requests/hour — a fresh cached copy
+  // renders instantly and keeps the budget for colour extraction.
+  const cached = readStorageJson(REPO_CACHE_KEY, null);
+  if (cached && Array.isArray(cached.repos) && Date.now() - cached.savedAt < REPO_CACHE_FRESH_MS) {
+    githubStatusMode = "loaded";
+    renderRepos(cached.repos);
+    return;
+  }
+
   try {
-    const response = await fetch("https://api.github.com/users/mzmuda101-prog/repos?sort=updated&per_page=9", {
+    const response = await fetch("https://api.github.com/users/mzmuda101-prog/repos?sort=pushed&per_page=30", {
       headers: { Accept: "application/vnd.github+json" },
+      signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined,
     });
 
     if (!response.ok) {
       throw new Error(`GitHub API responded with ${response.status}`);
     }
 
-    const repos = await response.json();
+    const repos = prepareRepos(await response.json());
+    writeStorageJson(REPO_CACHE_KEY, { repos, savedAt: Date.now() });
     githubStatusMode = "loaded";
     renderRepos(repos);
   } catch {
+    if (cached && Array.isArray(cached.repos) && cached.repos.length) {
+      githubStatusMode = "cached";
+      renderRepos(cached.repos);
+      return;
+    }
     githubStatusMode = "fallback";
     renderRepos(repoFallback);
   }
@@ -709,10 +823,6 @@ const PANEL_ELEVATE_MS = 280;
 const PANEL_SLIDE_MS = 620;
 const PANEL_VARS = ["--panel-tx", "--panel-ty", "--panel-rest-tx", "--panel-rest-ty"];
 const SHOT_VARS = ["--shot-tx", "--shot-ty", "--shot-rot", "--shot-scale"];
-
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
 
 function setVars(el, vars) {
   Object.entries(vars).forEach(([key, value]) => {
@@ -1017,9 +1127,251 @@ document.addEventListener("keydown", (event) => {
     setPanelFocus(null);
   }
 });
+// ________________________________________________________________ SMOOTH SCROLL (Lenis) ________________________________________________________________
+function getHeaderOffset() {
+  return (siteHeader ? siteHeader.getBoundingClientRect().height : 0) + 12;
+}
+
+function initSmoothScroll() {
+  // Reduced motion and touch devices keep native scrolling.
+  if (prefersReducedMotion || typeof Lenis === "undefined") return;
+
+  lenis = new Lenis({
+    duration: 1.2,
+    smoothWheel: true,
+    wheelMultiplier: 0.9,
+    lerp: 0.085,
+  });
+
+  // One driver per frame — calling lenis.raf twice doubled the scroll speed.
+  const raf = (time) => {
+    lenis.raf(time);
+    window.requestAnimationFrame(raf);
+  };
+  window.requestAnimationFrame(raf);
+}
+
+// Layout position, ignoring transforms — a not-yet-revealed section is still
+// shifted down by its reveal animation, which would make us land too far.
+function getDocumentTop(element) {
+  let top = 0;
+  for (let node = element; node; node = node.offsetParent) top += node.offsetTop;
+  return top;
+}
+
+function scrollToTarget(target) {
+  const top = target === "top" ? 0 : Math.max(0, getDocumentTop(target) - getHeaderOffset());
+  if (lenis) {
+    lenis.scrollTo(top);
+    return;
+  }
+  window.scrollTo({ top, behavior: prefersReducedMotion ? "auto" : "smooth" });
+}
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey) return;
+
+  const id = link.getAttribute("href").slice(1);
+  const target = id === "top" || id === "" ? "top" : getEl(id);
+  if (!target) return;
+
+  event.preventDefault();
+  scrollToTarget(target);
+
+  // Keep keyboard users where they landed.
+  if (target !== "top") {
+    target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
+});
+
+// ________________________________________________________________ SCROLLSPY (active nav link) ________________________________________________________________
+let currentNavId;
+
+function setCurrentNav(sectionId) {
+  if (sectionId === currentNavId) return;
+  currentNavId = sectionId;
+  navLinks.forEach((link) => {
+    const isCurrent = link.dataset.nav === sectionId;
+    link.classList.toggle("is-current", isCurrent);
+    if (isCurrent) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+  const nav = getEl("site-nav");
+  if (nav) revealActiveInRow(nav);
+}
+
+if ("IntersectionObserver" in window && navLinks.length) {
+  const spySections = navLinks.map((link) => getEl(link.dataset.nav)).filter(Boolean);
+  const visibleSections = new Set();
+  let spyFrame = null;
+
+  const updateSpy = () => {
+    spyFrame = null;
+    // The short last section never reaches the reading line — at the very
+    // bottom of the page it is the one being read.
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    // Otherwise the last section in document order that crosses the reading line wins.
+    const current = atBottom
+      ? spySections[spySections.length - 1]
+      : spySections.filter((section) => visibleSections.has(section.id)).pop();
+    setCurrentNav(current ? current.id : null);
+  };
+
+  const spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visibleSections.add(entry.target.id);
+        else visibleSections.delete(entry.target.id);
+      });
+      updateSpy();
+    },
+    { rootMargin: "-35% 0px -55% 0px" }
+  );
+
+  spySections.forEach((section) => spy.observe(section));
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (spyFrame === null) spyFrame = window.requestAnimationFrame(updateSpy);
+    },
+    { passive: true }
+  );
+}
+
+// ________________________________________________________________ OVERFLOW ROWS (phones) ________________________________________________________________
+// Nav and project tabs become one scrollable row on narrow screens; the edge
+// fades only on the side where something is actually hidden.
+const compactLayout = window.matchMedia("(max-width: 760px)");
+const overflowRows = [getEl("site-nav"), document.querySelector(".project-list")].filter(Boolean);
+
+function updateOverflowFade(row) {
+  const isRow = row.classList.contains("overflow-row");
+  const maxScroll = row.scrollWidth - row.clientWidth;
+  row.classList.toggle("has-more-start", isRow && row.scrollLeft > 2);
+  row.classList.toggle("has-more-end", isRow && maxScroll - row.scrollLeft > 2);
+}
+
+function revealActiveInRow(row) {
+  const active = row.querySelector(".is-active, .is-current");
+  if (!active || !row.classList.contains("overflow-row")) return;
+  const rowRect = row.getBoundingClientRect();
+  const itemRect = active.getBoundingClientRect();
+  if (itemRect.left < rowRect.left + 24 || itemRect.right > rowRect.right - 40) {
+    row.scrollBy({ left: itemRect.left - rowRect.left - 24, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  }
+}
+
+function applyOverflowRows() {
+  overflowRows.forEach((row) => {
+    row.classList.toggle("overflow-row", compactLayout.matches);
+    if (!compactLayout.matches) row.scrollLeft = 0;
+    updateOverflowFade(row);
+  });
+}
+
+overflowRows.forEach((row) => {
+  row.setAttribute("data-lenis-prevent-wheel", "");
+  row.addEventListener("scroll", () => updateOverflowFade(row), { passive: true });
+  // A vertical mouse wheel scrolls the row sideways while it can.
+  row.addEventListener(
+    "wheel",
+    (event) => {
+      if (!row.classList.contains("overflow-row") || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+      const maxScroll = row.scrollWidth - row.clientWidth;
+      const canScroll = (event.deltaY > 0 && row.scrollLeft < maxScroll - 1) || (event.deltaY < 0 && row.scrollLeft > 1);
+      if (!canScroll) return;
+      event.preventDefault();
+      row.scrollLeft += event.deltaY;
+    },
+    { passive: false }
+  );
+  if ("ResizeObserver" in window) new ResizeObserver(() => updateOverflowFade(row)).observe(row);
+});
+
+compactLayout.addEventListener?.("change", applyOverflowRows);
+applyOverflowRows();
+
+// ________________________________________________________________ TOAST ________________________________________________________________
+function showToast(message) {
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2400);
+}
+
+// ________________________________________________________________ COPY EMAIL ________________________________________________________________
+const copyEmailButton = getEl("copy-email");
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      // Permission denied / no user activation — try the legacy path below.
+    }
+  }
+  const field = document.createElement("textarea");
+  field.value = text;
+  field.setAttribute("readonly", "");
+  field.style.position = "fixed";
+  field.style.opacity = "0";
+  document.body.append(field);
+  field.select();
+  const ok = document.execCommand("copy");
+  field.remove();
+  if (!ok) throw new Error("copy failed");
+}
+
+copyEmailButton?.addEventListener("click", async () => {
+  try {
+    await copyText(copyEmailButton.dataset.email);
+    copyEmailButton.classList.add("is-done");
+    window.setTimeout(() => copyEmailButton.classList.remove("is-done"), 1600);
+    showToast(copy[currentLang].copyEmailDone);
+  } catch {
+    showToast(copy[currentLang].copyEmailFailed);
+  }
+});
+
+// ________________________________________________________________ SCREENSHOT LIGHTBOX ________________________________________________________________
+const lightbox = getEl("image-lightbox");
+const lightboxImage = getEl("image-lightbox-img");
+const lightboxCaption = getEl("image-lightbox-caption");
+const spotlightZoom = getEl("spotlight-zoom");
+
+function openLightbox() {
+  if (!lightbox || typeof lightbox.showModal !== "function") {
+    window.open(spotlight.image.currentSrc || spotlight.image.src, "_blank", "noopener");
+    return;
+  }
+  lightboxImage.src = spotlight.image.currentSrc || spotlight.image.src;
+  lightboxImage.alt = spotlight.image.alt;
+  lightboxCaption.textContent = spotlight.title.textContent;
+  cursorHint?.classList.remove("is-visible");
+  lenis?.stop();
+  lightbox.showModal();
+}
+
+spotlightZoom?.addEventListener("click", openLightbox);
+getEl("image-lightbox-close")?.addEventListener("click", () => lightbox.close());
+lightbox?.addEventListener("click", (event) => {
+  // Click on the dimmed backdrop (the dialog itself, not its content) closes it.
+  if (event.target === lightbox) lightbox.close();
+});
+lightbox?.addEventListener("close", () => {
+  lenis?.start();
+  spotlightZoom?.focus({ preventScroll: true });
+});
+
 // ________________________________________________________________ LANGUAGE init ________________________________________________________________
+activeProjectKey = getProjectKeyFromUrl() || activeProjectKey;
 currentLang = languageController.getCurrentLang();
 languageController.init();
 
 languageController.applyLanguage(currentLang);
+initSmoothScroll();
 loadRepos();

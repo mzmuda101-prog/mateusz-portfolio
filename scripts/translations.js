@@ -18,7 +18,7 @@ const translations = {
     },
     langSwitchAria: "Przełącznik języka",
     heroEyebrowHint:
-      "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
+      "Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi",
     heroTitleHint: "najedź na karty po prawej stronie /|(te lekko przykryte)",
     heroEyebrowTop: "Portfolio / Web & utility projects.",
     heroEyebrowBottom: "Głównie Frontend Developer | JavaScript | Firebase",
@@ -36,7 +36,7 @@ const translations = {
     heroPanelMain2: "Excel / workflow / dane",
     heroPanelMain3: "Narzędzia desktopowe i utility apps",
     heroPanelSideLabel: "Aktualnie rozwijane",
-    heroPanelSideTitle: "Excel Workbench PWA",
+    heroPanelSideTitle: "Sheet Workbench PWA",
     heroPanelSideText:
       "Offline-first workbench do eksploracji, filtrowania i przekształcania plików Excel w przeglądarce.",
     introStrip:
@@ -44,7 +44,6 @@ const translations = {
     projectsEyebrow: "Selected work",
     projectsTitle: "Najmocniejsze projekty w jednym miejscu",
     projectTabInfo: "reszta projektów w sekcji: \"GitHub\"",
-    projectTabCalc: "Smart kalkulator PWA",
     projectListAria: "Lista wyróżnionych projektów",
     processEyebrow: "Approach",
     processTitle: "Łączę klimat i wygląd z jasną funkcją produktu",
@@ -75,6 +74,7 @@ const translations = {
     githubStatusLoaded: "Sekcja oraz niektóre palety kolorów są aktualizowane z GitHub API.",
     githubStatusFallback:
       "Nie udało się pobrać API, więc pokazuję przygotowaną listę najważniejszych repozytoriów.",
+    githubStatusCached: "GitHub API jest teraz niedostępne, więc pokazuję ostatnio pobraną listę.",
     repoMixedStack: "Mixed stack",
     repoUpdated: "Aktualizacja",
     repoNoDescription:
@@ -88,7 +88,13 @@ const translations = {
  
     contactPrimaryCta: "Przejdź do projektów",
     contactSecondaryCta: "Zobacz wszystkie repo na GitHubie",
-    contactEmailHint: "kliknij aby wyslac wiadomośc na ten adres email",
+    contactEmailHint: "kliknij aby wysłać wiadomość na ten adres email",
+    copyEmail: "Kopiuj adres",
+    copyEmailDone: "Skopiowano adres e-mail",
+    copyEmailFailed: "Nie udało się skopiować — zaznacz adres ręcznie",
+    spotlightZoomHint: "powiększ zrzut ekranu",
+    spotlightZoomAria: "Powiększ zrzut ekranu",
+    lightboxCloseAria: "Zamknij podgląd",
     clickHint: "Kliknij aby odkryć",
   },
   en: {
@@ -127,7 +133,7 @@ const translations = {
     heroPanelMain2: "Excel / workflow / data",
     heroPanelMain3: "Desktop tools and utility apps",
     heroPanelSideLabel: "Currently evolving",
-    heroPanelSideTitle: "Excel Workbench PWA",
+    heroPanelSideTitle: "Sheet Workbench PWA",
     heroPanelSideText:
       "An offline-first workbench for exploring, filtering, and transforming Excel files directly in the browser.",
     introStrip:
@@ -138,7 +144,6 @@ const translations = {
     processEyebrow: "Approach",
     processTitle: "I connect visual atmosphere with a clear product function",
     projectTabInfo: "rest of the projects in the \"GitHub\" section",
-    projectTabCalc: "Smart Calculator PWA",
     processStep1Title: "Starting point",
     processStep1Text:
       "I look for a real problem or a concrete workflow: what the user needs faster, simpler, or in a clearer form.",
@@ -163,9 +168,10 @@ const translations = {
     githubTitle: "Public repositories pulled live from the profile",
     githubProfileLabel: "Profile:",
     githubStatusLoading: "Loading repositories…",
-    githubStatusLoaded: "This section and some palette colours is being updated from the GitHub API.",
+    githubStatusLoaded: "This section and some palette colours are updated from the GitHub API.",
     githubStatusFallback:
       "The API couldn't be loaded, so I'm showing a prepared list of key repositories.",
+    githubStatusCached: "GitHub API is unavailable right now, so I'm showing the last downloaded list.",
     repoMixedStack: "Mixed stack",
     repoUpdated: "Updated",
     repoNoDescription:
@@ -179,6 +185,12 @@ const translations = {
     contactPrimaryCta: "Go to projects",
     contactSecondaryCta: "See all GitHub repos",
     contactEmailHint: "click to send a message to this email address",
+    copyEmail: "Copy address",
+    copyEmailDone: "Email address copied",
+    copyEmailFailed: "Couldn't copy — select the address manually",
+    spotlightZoomHint: "enlarge screenshot",
+    spotlightZoomAria: "Enlarge screenshot",
+    lightboxCloseAria: "Close preview",
     clickHint: "Click to reveal",
   },
 };

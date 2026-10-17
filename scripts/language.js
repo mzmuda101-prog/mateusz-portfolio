@@ -7,6 +7,30 @@ window.PortfolioLanguage = (() => {
     ["data-i18n-content", "content"],
   ];
 
+  // Storage can throw (Safari private mode, blocked site data) — never let it break the page.
+  function readStoredLang(storageKey) {
+    try {
+      return localStorage.getItem(storageKey);
+    } catch {
+      return null;
+    }
+  }
+
+  function storeLang(storageKey, lang) {
+    try {
+      localStorage.setItem(storageKey, lang);
+    } catch {}
+  }
+
+  // First visit: Polish browsers get PL, everyone else EN.
+  function detectInitialLang(storageKey) {
+    const stored = readStoredLang(storageKey);
+    if (stored === "pl" || stored === "en") return stored;
+    const preferred = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    const first = String(preferred[0] || "pl").toLowerCase();
+    return first.startsWith("pl") ? "pl" : "en";
+  }
+
   function getCopyValue(copy, lang, key) {
     const getValue = (source) =>
       key.split(".").reduce((value, part) => {
@@ -59,7 +83,7 @@ window.PortfolioLanguage = (() => {
     setGithubStatusText,
     setCurrentLang,
   }) {
-    let currentLang = localStorage.getItem(storageKey) === "en" ? "en" : "pl";
+    let currentLang = detectInitialLang(storageKey);
 
     function updateLangSwitchIndicator() {
       const langSwitch = getEl("lang-switch");
@@ -81,7 +105,7 @@ window.PortfolioLanguage = (() => {
     function applyLanguage(lang) {
       currentLang = lang;
       setCurrentLang(lang);
-      localStorage.setItem(storageKey, lang);
+      storeLang(storageKey, lang);
       document.documentElement.lang = lang;
       document.title = copy[lang].pageTitle;
       applyTranslatedAttributes(copy, lang);

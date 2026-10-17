@@ -39,14 +39,14 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/excel-workbench-pwa-1.png",
+    image: "./assets/opt/sheet-workbench-pwa.webp",
     imageAlt: {
       pl: "Zrzut ekranu Sheet Workbench PWA",
       en: "Screenshot of Sheet Workbench PWA",
     },
     actions: [
-      { type: "live", href: "https://excel-workbench-pwa.vercel.app" },
-      { type: "repo", href: "https://github.com/mzmuda101-prog/excel-workbench-pwa" },
+      { type: "live", href: "https://sheet-workbench-pwa.vercel.app" },
+      { type: "repo", href: "https://github.com/mzmuda101-prog/sheet-workbench-pwa" },
     ],
     copy: {
       pl: {
@@ -64,9 +64,9 @@ const projects = {
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Sheet workflows"],
       },
       en: {
-        tabLabel: "Excel Workbench PWA",
+        tabLabel: "Sheet Workbench PWA",
         kicker: "PWA / data tools",
-        title: "Excel Workbench PWA",
+        title: "Sheet Workbench PWA",
         description:
           "An offline-first app for browsing, filtering, analyzing Excel files without a backend and without sending data off the device.",
         meta: [
@@ -90,7 +90,7 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/smart-kalkulator-pwa.png",
+    image: "./assets/opt/smart-kalkulator-pwa.webp",
     imageAlt: {
       pl: "Zrzut ekranu Smart Kalkulator PWA",
       en: "Screenshot of Smart Calculator PWA",
@@ -139,7 +139,7 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/documents-workbench-pwa-1.png",
+    image: "./assets/opt/documents-workbench-pwa.webp",
     imageAlt: {
       pl: "Zrzut ekranu Documents Workbench PWA",
       en: "Screenshot of Documents Workbench PWA",
@@ -154,12 +154,12 @@ const projects = {
         kicker: "PWA / documents-tools",
         title: "Documents Workbench PWA",
         description:
-          "Offline-first aplikacja do przeglądania, filtrowania, analizowania plików dokumentów bez backendu i bez wysyłania danych poza urządzenie.",
+          "Offline-first aplikacja do przeglądania, edycji i analizy dokumentów Word (.docx) w przeglądarce — bez backendu i bez wysyłania plików poza urządzenie.",
         meta: [
           "Działa lokalnie w przeglądarce, na tablecie, komputerze czy nawet telefonie i wspiera tryb offline.",
-          "Skupiona na realnym workflow wokół dokumentów, a nie na kopiowaniu całego dokumentu.",
-          "Ma narzędzia do inspekcji struktury, filtrów, sortowania i eksportu.",
-          "Ma panel - agregacje, który zastępuje tabele przestawne i lekkie makra.",
+          "Edycja .docx z układem stron jak w Wordzie: style, listy, tabele, przypisy, komentarze i formularze.",
+          "Otwiera też PDF-y i zdjęcia dokumentów (OCR) i zamienia je na edytowalny .docx (beta).",
+          "Szkice niezapisanej pracy zostają na urządzeniu, więc łatwo wrócić do przerwanej edycji.",
         ],
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Documents workflows"],
       },
@@ -168,12 +168,12 @@ const projects = {
         kicker: "PWA / documents-tools",
         title: "Documents Workbench PWA",
         description:
-          "An offline-first app for browsing, filtering, analyzing documents files without a backend and without sending data off the device.",
+          "An offline-first app for viewing, editing and analysing Word documents (.docx) in the browser — no backend, and files never leave the device.",
         meta: [
           "It runs locally in a browser, on a tablet, computer or even phone and supports offline mode.",
-          "Focused on real documents workflows instead of copying all of documents.",
-          "Includes tools for structure inspection, filtering, sorting, and export.",
-          "It has an aggregations panel that replaces pivot tables and lightweight macros.",
+          "Edits .docx with Word-like page layout: styles, lists, tables, footnotes, comments and forms.",
+          "Also opens PDFs and photos of documents (OCR) and converts them into editable .docx (beta).",
+          "Drafts of unsaved work stay on the device, so an interrupted edit is easy to recover.",
         ],
         stack: ["HTML", "CSS", "JavaScript", "PWA", "Documents workflows"],
       },
@@ -183,15 +183,37 @@ const projects = {
 
 const repoFallback = [
   {
-    name: "excel-workbench-pwa",
+    name: "sheet-workbench-pwa",
     description: {
       pl: "Offline-first workbench do pracy z plikami Excel w przeglądarce.",
       en: "An offline-first workbench for working with Excel files in the browser.",
     },
     language: "JavaScript",
-    updated_at: "2026-04-22T00:00:00Z",
-    html_url: "https://github.com/mzmuda101-prog/excel-workbench-pwa",
-    homepage: "https://excel-workbench-pwa.vercel.app",
+    updated_at: "2026-10-17T00:00:00Z",
+    html_url: "https://github.com/mzmuda101-prog/sheet-workbench-pwa",
+    homepage: "https://sheet-workbench-pwa.vercel.app",
+  },
+  {
+    name: "documents-workbench-pwa",
+    description: {
+      pl: "Offline-first edytor i przeglądarka dokumentów Word (.docx), PDF i skanów.",
+      en: "An offline-first viewer and editor for Word (.docx) documents, PDFs and scans.",
+    },
+    language: "JavaScript",
+    updated_at: "2026-10-17T00:00:00Z",
+    html_url: "https://github.com/mzmuda101-prog/documents-workbench-pwa",
+    homepage: "https://documents-workbench-pwa.vercel.app",
+  },
+  {
+    name: "smart-kalkulator-pwa",
+    description: {
+      pl: "Kalkulator do praktycznych prac inżynieryjnych, walut i notatek z obliczeniami.",
+      en: "A calculator for practical engineering work, currencies and calculation notes.",
+    },
+    language: "JavaScript",
+    updated_at: "2026-10-10T00:00:00Z",
+    html_url: "https://github.com/mzmuda101-prog/smart-kalkulator-pwa",
+    homepage: "https://kalkulator-by-matm0.vercel.app",
   },
   {
     name: "Portal-Ogloszeniowy",
@@ -199,8 +221,8 @@ const repoFallback = [
       pl: "Marketplace z panelem administratora i integracjami chmurowymi.",
       en: "A marketplace with an admin panel and cloud integrations.",
     },
-    language: "JavaScript",
-    updated_at: "2026-04-22T00:00:00Z",
+    language: "HTML",
+    updated_at: "2026-07-02T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Portal-Ogloszeniowy",
     homepage: "https://portal-ogloszeniowy.vercel.app",
   },
@@ -210,8 +232,8 @@ const repoFallback = [
       pl: "Interaktywny frontend z eksportem danych do Excela.",
       en: "An interactive frontend with Excel data export.",
     },
-    language: "JavaScript",
-    updated_at: "2026-04-22T00:00:00Z",
+    language: "HTML",
+    updated_at: "2026-05-27T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/Data-Collector-Excel-App",
     homepage: "https://strona-6.vercel.app",
   },
@@ -222,14 +244,23 @@ const repoFallback = [
       en: "A code quality analyzer with reports and a learning mode.",
     },
     language: "Python",
-    updated_at: "2026-04-22T00:00:00Z",
+    updated_at: "2026-04-29T00:00:00Z",
     html_url: "https://github.com/mzmuda101-prog/code-learning-analyzer",
     homepage: "",
   },
 ];
 
+// Repos that GitHub lists but that should not get their own card here.
+const hiddenRepos = ["mateusz-portfolio"];
+
 const repoProjectAliases = {
   "excel-workbench-pwa": "excel-workbench-pwa",
+  "sheet-workbench-pwa": "excel-workbench-pwa",
+  "sheet-workbench-pwa-vercel-app": "excel-workbench-pwa",
+  "documents-workbench-pwa": "documents-workbench-pwa",
+  "documents-workbench-pwa-vercel-app": "documents-workbench-pwa",
+  "smart-kalkulator-pwa": "calc-pwa",
+  "kalkulator-by-matm0-vercel-app": "calc-pwa",
   "portal-ogloszeniowy": "portal-ogloszeniowy",
   "portal-ogloszeniowy-vercel-app": "portal-ogloszeniowy",
   "data-collector-excel-app": "data-collector",
@@ -243,6 +274,7 @@ return {
   defaultProjectProps,
   projects,
   repoFallback,
+  hiddenRepos,
   repoProjectAliases,
 };
 })();

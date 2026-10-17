@@ -10,26 +10,42 @@
       content="Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps."
       data-i18n-content="pageDescription"
     />
-    <link rel="icon" type="image/png" href="./assets/favicon.png?v=2" />
-    <link rel="apple-touch-icon" href="./assets/favicon.png?v=2" />
+    <meta name="theme-color" content="#f6f0e8" />
+    <link rel="canonical" href="https://mateusz-portfolio-cyan.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mateusz Zmuda" />
+    <meta property="og:title" content="Mateusz Zmuda | Portfolio" />
+    <meta
+      property="og:description"
+      content="Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps."
+      data-i18n-content="pageDescription"
+    />
+    <meta property="og:url" content="https://mateusz-portfolio-cyan.vercel.app/" />
+    <meta property="og:image" content="https://mateusz-portfolio-cyan.vercel.app/assets/opt/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" sizes="48x48" href="./assets/opt/favicon-48.png?v=3" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/opt/favicon-192.png?v=3" />
+    <link rel="apple-touch-icon" href="./assets/opt/apple-touch-icon.png?v=3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20261017g" />
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
         <a class="brand" href="#top" aria-label="Przejdź do początku strony" id="brand-link" data-i18n-aria-label="brandAria"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
-          <img src="./assets/mateusz-logo.png" alt="Logo Mateusz Zmuda"/>
+          <img src="./assets/opt/mateusz-logo.webp" alt="Logo Mateusz Zmuda" width="44" height="44" />
           <span>Mateusz Zmuda</span>
         </a>
         <div class="header-controls">
-          <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller" id="refresh-link" data-i18n-aria-label="refreshAria" data-i18n-hint="refreshHint">
-            <img src="./assets/Logo Mateusz przezroczyste Refresh.png" alt="Odśwież stronę" id="refresh-image" data-i18n-alt="refreshAlt"/>
+          <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller" id="refresh-link" data-i18n-aria-label="refreshAria" data-i18n-hint="refreshHint">
+            <img src="./assets/opt/refresh-logo.webp" alt="Odśwież stronę" id="refresh-image" data-i18n-alt="refreshAlt" width="24" height="24" />
           </a>
           <nav class="site-nav" aria-label="Główna nawigacja" id="site-nav" data-i18n-aria-label="navAria">
             <a href="#projects" data-nav="projects" data-i18n="nav.projects">Projekty</a>
@@ -47,7 +63,7 @@
       <main id="top">
         <section class="hero reveal">
           <div class="hero-copy">
-            <p class="eyebrow" data-hint="Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi" id="hero-eyebrow" data-i18n-hint="heroEyebrowHint"> <!-- '/|' robi za enter -->
+            <p class="eyebrow" data-hint="Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi" id="hero-eyebrow" data-i18n-hint="heroEyebrowHint"> <!-- '/|' robi za enter -->
               <span id="hero-eyebrow-top" data-i18n="heroEyebrowTop">Portfolio / Web & utility projects.</span> <br><span id="hero-eyebrow-bottom" data-i18n="heroEyebrowBottom">Głównie Frontend Developer | JavaScript | Firebase</span>
             </p>
             <h1 data-hint-class="is-splash smaller" data-hint="najedź na karty po prawej stronie /| (te lekko przykryte)" id="hero-title" data-i18n-hint="heroTitleHint">
@@ -112,17 +128,20 @@
               aria-controls="hero-panel-side-content"
             >
               <span id="hero-panel-side-label" data-i18n="heroPanelSideLabel">Aktualnie rozwijane</span>
-              <strong id="hero-panel-side-title" data-i18n="heroPanelSideTitle">Excel Workbench PWA</strong>
+              <strong id="hero-panel-side-title" data-i18n="heroPanelSideTitle">Sheet Workbench PWA</strong>
               <p id="hero-panel-side-content" data-i18n="heroPanelSideText">
                 Offline-first workbench do eksploracji, filtrowania i
                 przekształcania plików Excel w przeglądarce.
               </p>
             </button>
             <figure class="hero-shot">
-              <a href="https://excel-workbench-pwa.vercel.app/" target="_blank" rel="noopener noreferrer" data-hint=" przejdź do strony projektu" data-hint-class="smaller" id="hero-shot-link" data-i18n-hint="heroShotLinkHint">
+              <a href="https://sheet-workbench-pwa.vercel.app/" target="_blank" rel="noopener noreferrer" data-hint=" przejdź do strony projektu" data-hint-class="smaller" id="hero-shot-link" data-i18n-hint="heroShotLinkHint">
                 <img
-                src="./assets/excel-workbench-pwa-1.png"
-                alt="Zrzut ekranu projektu Excel Workbench PWA"
+                src="./assets/opt/sheet-workbench-pwa.webp"
+                alt="Zrzut ekranu projektu Sheet Workbench PWA"
+                width="1600"
+                height="913"
+                fetchpriority="high"
               /></a>
             </figure>
           </div>
@@ -153,46 +172,56 @@
                 type="button"
                 data-project="excel-workbench-pwa"
                 role="tab"
+                id="project-tab-excel-workbench-pwa"
+                aria-controls="project-spotlight"
                 aria-selected="true"
                 >
-                Excel Workbench PWA
+                Sheet Workbench PWA
                 </button>
-                
+
                 <button
-                class="project-tab is-active"
+                class="project-tab"
                 type="button"
                 data-project="documents-workbench-pwa"
                 role="tab"
+                id="project-tab-documents-workbench-pwa"
+                aria-controls="project-spotlight"
                 aria-selected="false"
-                data-i18n="projectTabDocuments"
+                tabindex="-1"
                 >
                 Documents Workbench PWA
                 </button>
-                
+
                 <button
-                class="project-tab is-active"
+                class="project-tab"
                 type="button"
                 data-project="calc-pwa"
                 role="tab"
+                id="project-tab-calc-pwa"
+                aria-controls="project-spotlight"
                 aria-selected="false"
-                data-i18n="projectTabCalc"
+                tabindex="-1"
                 >
-                Smart Kalkulator (PWA)
+                Smart Kalkulator PWA
                 </button>
-              <span class="project-tab-info" style="opacity:0.5; padding: 1rem 1.1rem"><br><b data-i18n="projectTabInfo">reszta projektów w sekcji: "GitHub"</b></span>
+              <span class="project-tab-info"><b data-i18n="projectTabInfo">reszta projektów w sekcji: "GitHub"</b></span>
             </div>
 
-            <article class="project-spotlight" id="project-spotlight">
-              <div class="project-visual">
+            <article class="project-spotlight" id="project-spotlight" role="tabpanel" aria-labelledby="project-tab-excel-workbench-pwa">
+              <button class="project-visual" type="button" id="spotlight-zoom" data-hint="powiększ zrzut ekranu" data-hint-class="smaller" data-i18n-hint="spotlightZoomHint" data-i18n-aria-label="spotlightZoomAria" aria-label="Powiększ zrzut ekranu">
                 <img
                   id="spotlight-image"
-                  src="./assets/excel-workbench-pwa-1.png"
+                  src="./assets/opt/sheet-workbench-pwa.webp"
                   alt="Podgląd projektu"
+                  width="1600"
+                  height="913"
+                  loading="lazy"
+                  decoding="async"
                 />
-              </div>
+              </button>
               <div class="project-content">
                 <p class="project-kicker" id="spotlight-kicker">PWA / data tools</p>
-                <h3 id="spotlight-title">Excel Workbench PWA</h3>
+                <h3 id="spotlight-title">Sheet Workbench PWA</h3>
                 <p id="spotlight-description">
                   Lokalny, offline-first workbench do eksploracji i lekkiej
                   obróbki plików Excel bez backendu.
@@ -305,7 +334,10 @@
 
         <section class="section contact-section reveal" id="contact">
           <p class="eyebrow" id="contact-eyebrow" data-i18n="contactEyebrow">Kontakt</p>
-          <h4 data-hint="kliknij aby wyslac wiadomośc na ten adres email" id="contact-email-heading" data-i18n-hint="contactEmailHint"><a href="mailto:m.mathew016@gmail.com">m.mathew016@gmail.com</a></h4>
+          <div class="contact-email-row">
+            <h4 data-hint="kliknij aby wysłać wiadomość na ten adres email" id="contact-email-heading" data-i18n-hint="contactEmailHint"><a href="mailto:m.mathew016@gmail.com">m.mathew016@gmail.com</a></h4>
+            <button class="copy-email" type="button" id="copy-email" data-email="m.mathew016@gmail.com" data-i18n="copyEmail">Kopiuj adres</button>
+          </div>
           <h2 id="contact-title" data-i18n="contactTitle">Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.</h2>
           <div class="hero-actions">
             <a class="button button-primary" href="#projects" id="contact-primary-cta" data-i18n="contactPrimaryCta">Przejdź do projektów</a>
@@ -323,79 +355,29 @@
       </main>
     </div>
 
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="image-lightbox-caption">
+      <figure>
+        <img id="image-lightbox-img" alt="" />
+        <figcaption id="image-lightbox-caption"></figcaption>
+      </figure>
+      <button class="image-lightbox-close" type="button" id="image-lightbox-close" data-i18n-aria-label="lightboxCloseAria" aria-label="Zamknij podgląd">×</button>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <div class="cursor-hint" id="cursor-hint" aria-hidden="true">
       <div class="cursor-hint-scaler"> <!-- tu dodalem dodatkowego diva i klase na pozniej -->
         <span id="cursor-hint-text" data-i18n="clickHint">Kliknij aby odkryć</span>
       </div>
     </div>
     
-    <script src="./scripts/translations.js"></script>
-    <script src="./scripts/portfolio-data.js"></script>
-    <script src="./scripts/language.js"></script>
-    <script src="./scripts/cursor-hint.js"></script>
+    <script src="./scripts/translations.js?v=20261017g"></script>
+    <script src="./scripts/portfolio-data.js?v=20261017g"></script>
+    <script src="./scripts/language.js?v=20261017g"></script>
+    <script src="./scripts/cursor-hint.js?v=20261017g"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
-    <script src="./scripts/script.js"></script>
-  
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-
-    <script>
-      // Smooth scroll
-      const lenis = new Lenis({
-        duration: 1.2,
-        smoothWheel: true,
-        smoothTouch: false,
-        wheelMultiplier: 0.9,
-        lerp: 0.085,
-      });
-
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-
-      requestAnimationFrame(raf);
-
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-      });
-
-      gsap.ticker.lagSmoothing(0);
-
-      // Reveal animations
-      const revealElements = document.querySelectorAll('.reveal');
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-        }
-      );
-
-      revealElements.forEach((element) => {
-        observer.observe(element);
-      });
-
-      // Subtle parallax
-      const parallaxElements = document.querySelectorAll('[data-parallax]');
-
-      window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-
-        parallaxElements.forEach((element) => {
-          const speed = parseFloat(element.dataset.parallax);
-          const y = scrollY * speed;
-
-          element.style.transform = `translate3d(0, ${y}px, 0)`;
-        });
-      });
-    </script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script src="./scripts/script.js?v=20261017g"></script>
+  </body>
 
 </html>
