@@ -38,13 +38,12 @@ const navLinks = Array.from(document.querySelectorAll(".site-nav a[data-nav]"));
 const toast = getEl("toast");
 
 let currentLang = "pl";
-let activeProjectKey = "excel-workbench-pwa";
+let activeProjectKey = "documents-workbench-pwa";
 let activeHeroPanel = null;
 let panelFocusedAt = 0;
 let currentRepos = [];
 let githubStatusMode = "loading";
 let panelElevateTimer = null;
-let panelTuckTimer = null;
 let panelFocusResizeTimer = null;
 let lenis = null;
 let toastTimer = null;
@@ -822,8 +821,9 @@ if (!prefersReducedMotion && hasFinePointer) {
   });
 }
 // _______________________________________________________________ SET PANEL FOCUS _____________________________________________________________
-const PANEL_ELEVATE_MS = 280;
-const PANEL_SLIDE_MS = 620;
+// Keep in step with --hero-slide-ms (500ms) / --hero-raise-ms in styles.scss.
+const PANEL_ELEVATE_MS = 230;
+const PANEL_SETTLE_MS = 160;
 const PANEL_VARS = ["--panel-tx", "--panel-ty", "--panel-rest-tx", "--panel-rest-ty"];
 const SHOT_VARS = ["--shot-tx", "--shot-ty", "--shot-rot", "--shot-scale"];
 
@@ -1001,10 +1001,6 @@ function clearPanelTimers() {
     window.clearTimeout(panelElevateTimer);
     panelElevateTimer = null;
   }
-  if (panelTuckTimer !== null) {
-    window.clearTimeout(panelTuckTimer);
-    panelTuckTimer = null;
-  }
 }
 
 function raiseFocusedPanel(panel) {
@@ -1017,37 +1013,58 @@ function setPanelFocus(activePanel) {
   activeHeroPanel = activePanel;
   panelFocusedAt = activePanel ? performance.now() : 0;
   clearPanelTimers();
-  heroStage?.classList.toggle("has-panel-focus", Boolean(activePanel));
 
   if (!activePanel) {
-    clearVars(heroStage, SHOT_VARS);
     heroStage?.classList.remove("is-panel-raised");
 
-    const openPanels = heroPanels.filter((panel) => panel.classList.contains("is-focused") || panel.classList.contains("is-emerging"));
+    const openPanels = heroPanels.filter((panel) =>
+      ["is-focused", "is-emerging", "is-settling"].some((name) => panel.classList.contains(name))
+    );
+    const animate = openPanels.length && !prefersReducedMotion;
+
+    // Tuck the card back under the photo and slide both home, together.
+    // The resting state already sits under the photo and transitions transform.
+    const tuck = () => {
+      heroStage?.classList.remove("has-panel-focus");
+      clearVars(heroStage, SHOT_VARS);
+      openPanels.forEach((panel) => {
+        panel.classList.remove("is-settling", "is-emerging");
+        clearVars(panel, PANEL_VARS);
+      });
+    };
 
     heroPanels.forEach((panel) => {
       panel.setAttribute("aria-expanded", "false");
-      panel.classList.remove("is-dimmed");
-      if (openPanels.includes(panel) && !prefersReducedMotion) {
-        panel.classList.add("is-emerging");
-        panel.classList.remove("is-focused");
+      panel.classList.remove("is-dimmed", "is-focused");
+      if (animate && openPanels.includes(panel)) {
+        // Step 1: drop the lift while still above the photo; the photo turns solid meanwhile.
+        if (!panel.classList.contains("is-emerging")) panel.classList.add("is-settling");
       } else {
-        panel.classList.remove("is-focused", "is-emerging");
+        panel.classList.remove("is-emerging", "is-settling");
         clearVars(panel, PANEL_VARS);
       }
     });
 
-    if (openPanels.length && !prefersReducedMotion) {
-      openPanels.forEach((panel) => clearVars(panel, PANEL_VARS));
-      panelTuckTimer = window.setTimeout(() => {
-        panelTuckTimer = null;
-        if (activeHeroPanel) return;
-        openPanels.forEach((panel) => panel.classList.remove("is-emerging"));
-      }, PANEL_SLIDE_MS);
+    if (!animate) {
+      heroStage?.classList.remove("has-panel-focus");
+      clearVars(heroStage, SHOT_VARS);
+      return;
     }
+
+    // A card still under the photo (closed mid-emerge) has nothing to settle.
+    const needsSettle = openPanels.some((panel) => panel.classList.contains("is-settling"));
+    if (!needsSettle) {
+      tuck();
+      return;
+    }
+    panelElevateTimer = window.setTimeout(() => {
+      panelElevateTimer = null;
+      if (!activeHeroPanel) tuck();
+    }, PANEL_SETTLE_MS);
     return;
   }
 
+  heroStage?.classList.add("has-panel-focus");
   const slide = prefersReducedMotion ? { x: 0, y: 0 } : computePanelSlide(activePanel);
   applyShotRelease(activePanel, slide);
   heroStage?.classList.remove("is-panel-raised");
@@ -1056,7 +1073,7 @@ function setPanelFocus(activePanel) {
     const isActive = panel === activePanel;
     panel.classList.toggle("is-dimmed", !isActive);
     panel.classList.toggle("is-emerging", isActive);
-    panel.classList.remove("is-focused");
+    panel.classList.remove("is-focused", "is-settling");
     panel.setAttribute("aria-expanded", String(isActive));
 
     if (isActive) {

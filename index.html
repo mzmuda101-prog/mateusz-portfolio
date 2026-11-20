@@ -30,7 +30,7 @@
     <link rel="apple-touch-icon" href="./assets/opt/apple-touch-icon.png?v=3" />
     <link rel="preload" href="./assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="./assets/fonts/cormorant-garamond-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="./styles.css?v=20261120d" />
+    <link rel="stylesheet" href="./styles.css?v=20261120i" />
   </head>
   <body>
     <div class="page-shell">
@@ -121,17 +121,15 @@
               aria-controls="hero-panel-side-content"
             >
               <span id="hero-panel-side-label" data-i18n="heroPanelSideLabel">Aktualnie rozwijane</span>
-              <strong id="hero-panel-side-title" data-i18n="heroPanelSideTitle">Sheet Workbench PWA</strong>
-              <p id="hero-panel-side-content" data-i18n="heroPanelSideText">
-                Offline-first workbench do eksploracji, filtrowania i
-                przekształcania plików Excel w przeglądarce.
-              </p>
+              <strong id="hero-panel-side-title" data-i18n="heroPanelSideTitle">Documents Workbench PWA</strong>
+              <p id="hero-panel-side-content" data-i18n="heroPanelSideText">Edytor dokumentów Word (.docx) w przeglądarce, działa offline. Równolegle rozwijam Sheet Workbench PWA do plików Excel.</p>
             </button>
             <figure class="hero-shot">
-              <a href="https://sheet-workbench-pwa.vercel.app/" target="_blank" rel="noopener noreferrer" data-hint=" przejdź do strony projektu" data-hint-class="smaller" id="hero-shot-link" data-i18n-hint="heroShotLinkHint">
+              <a href="https://documents-workbench-pwa.vercel.app/" target="_blank" rel="noopener noreferrer" data-hint=" przejdź do strony projektu" data-hint-class="smaller" id="hero-shot-link" data-i18n-hint="heroShotLinkHint">
                 <img
-                src="./assets/opt/sheet-workbench-pwa.webp?v=20261120"
-                alt="Zrzut ekranu projektu Sheet Workbench PWA"
+                src="./assets/opt/documents-workbench-pwa.webp?v=20261120"
+                alt="Zrzut ekranu projektu Documents Workbench PWA"
+                data-i18n-alt="heroShotAlt"
                 width="1600"
                 height="913"
                 fetchpriority="high"
@@ -159,26 +157,26 @@
                 <button
                 class="project-tab is-active"
                 type="button"
-                data-project="excel-workbench-pwa"
+                data-project="documents-workbench-pwa"
                 role="tab"
-                id="project-tab-excel-workbench-pwa"
+                id="project-tab-documents-workbench-pwa"
                 aria-controls="project-spotlight"
                 aria-selected="true"
                 >
-                Sheet Workbench PWA
+                Documents Workbench PWA
                 </button>
 
                 <button
                 class="project-tab"
                 type="button"
-                data-project="documents-workbench-pwa"
+                data-project="excel-workbench-pwa"
                 role="tab"
-                id="project-tab-documents-workbench-pwa"
+                id="project-tab-excel-workbench-pwa"
                 aria-controls="project-spotlight"
                 aria-selected="false"
                 tabindex="-1"
                 >
-                Documents Workbench PWA
+                Sheet Workbench PWA
                 </button>
 
                 <button
@@ -197,11 +195,11 @@
               <a class="project-tab-info" href="#github" data-i18n="projectTabInfo">Pozostałe projekty w sekcji GitHub</a>
             </div>
 
-            <article class="project-spotlight" id="project-spotlight" role="tabpanel" aria-labelledby="project-tab-excel-workbench-pwa">
+            <article class="project-spotlight" id="project-spotlight" role="tabpanel" aria-labelledby="project-tab-documents-workbench-pwa">
               <button class="project-visual" type="button" id="spotlight-zoom" data-hint="powiększ zrzut ekranu" data-hint-class="smaller" data-i18n-hint="spotlightZoomHint" data-i18n-aria-label="spotlightZoomAria" aria-label="Powiększ zrzut ekranu">
                 <img
                   id="spotlight-image"
-                  src="./assets/opt/sheet-workbench-pwa.webp?v=20261120"
+                  src="./assets/opt/documents-workbench-pwa.webp?v=20261120"
                   alt="Podgląd projektu"
                   width="1600"
                   height="913"
@@ -210,11 +208,10 @@
                 />
               </button>
               <div class="project-content">
-                <p class="project-kicker" id="spotlight-kicker">PWA / data tools</p>
-                <h3 id="spotlight-title">Sheet Workbench PWA</h3>
+                <p class="project-kicker" id="spotlight-kicker">PWA / documents-tools</p>
+                <h3 id="spotlight-title">Documents Workbench PWA</h3>
                 <p id="spotlight-description">
-                  Lokalny, offline-first workbench do eksploracji i lekkiej
-                  obróbki plików Excel bez backendu.
+                  Offline-first aplikacja do przeglądania, edycji i analizy dokumentów Word (.docx) w przeglądarce.
                 </p>
                 <ul class="project-meta" id="spotlight-meta"></ul>
                 <div class="project-stack" id="spotlight-stack"></div>
@@ -314,13 +311,13 @@
       </div>
     </div>
     
-    <script defer src="./scripts/translations.js?v=20261120d"></script>
-    <script defer src="./scripts/portfolio-data.js?v=20261120d"></script>
-    <script defer src="./scripts/language.js?v=20261120d"></script>
-    <script defer src="./scripts/cursor-hint.js?v=20261120d"></script>
+    <script defer src="./scripts/translations.js?v=20261120i"></script>
+    <script defer src="./scripts/portfolio-data.js?v=20261120i"></script>
+    <script defer src="./scripts/language.js?v=20261120i"></script>
+    <script defer src="./scripts/cursor-hint.js?v=20261120i"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
-    <script defer src="./scripts/script.js?v=20261120d"></script>
+    <script defer src="./scripts/script.js?v=20261120i"></script>
   </body>
 
 </html>

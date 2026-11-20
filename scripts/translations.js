@@ -33,9 +33,10 @@ const translations = {
     heroPanelMain2: "Excel / workflow / dane",
     heroPanelMain3: "Narzędzia desktopowe i utility apps",
     heroPanelSideLabel: "Aktualnie rozwijane",
-    heroPanelSideTitle: "Sheet Workbench PWA",
+    heroPanelSideTitle: "Documents Workbench PWA",
     heroPanelSideText:
-      "Offline-first workbench do eksploracji, filtrowania i przekształcania plików Excel w przeglądarce.",
+      "Edytor dokumentów Word (.docx) w przeglądarce, działa offline. Równolegle rozwijam Sheet Workbench PWA do plików Excel.",
+    heroShotAlt: "Zrzut ekranu projektu Documents Workbench PWA",
     introStrip:
       "Najchętniej buduję rzeczy użyteczne: od narzędzi do analizy i pracy z danymi, po strony, które mają wyraźny styl i czytelny cel.",
     projectsEyebrow: "Selected work",
@@ -113,9 +114,10 @@ const translations = {
     heroPanelMain2: "Excel / workflow / data",
     heroPanelMain3: "Desktop tools and utility apps",
     heroPanelSideLabel: "Currently evolving",
-    heroPanelSideTitle: "Sheet Workbench PWA",
+    heroPanelSideTitle: "Documents Workbench PWA",
     heroPanelSideText:
-      "An offline-first workbench for exploring, filtering, and transforming Excel files directly in the browser.",
+      "A Word (.docx) editor in the browser that works offline. Alongside it, I keep developing Sheet Workbench PWA for Excel files.",
+    heroShotAlt: "Screenshot of the Documents Workbench PWA project",
     introStrip:
       "I most enjoy building useful things: from tools for analysis and data work to websites with a clear style and a clear purpose.",
     projectsEyebrow: "Selected work",

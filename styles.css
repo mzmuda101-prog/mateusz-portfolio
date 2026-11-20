@@ -118,17 +118,14 @@ a {
   width: 44px;
   height: 44px;
   -o-object-fit: contain;
-  object-fit: contain;
-  transition: all 0.4s ease-in-out;
+     object-fit: contain;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.brand img:hover {
-  transform: rotate(-4deg) scale(1.1);
-  transition: all 0.4s ease-in-out;
-  width: 44px;
-  height: 44px;
-  -o-object-fit: contain;
-  object-fit: contain;
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover img {
+    transform: rotate(-4deg) scale(1.1);
+  }
 }
 
 
@@ -229,17 +226,15 @@ a {
 }
 
 .site-nav a:hover {
-  text-decoration: none;
   color: var(--text);
-  font-size: 0.95rem;
   scale: 1.05;
-  transition: all 0.2s ease-in-out;
 }
 
 .site-nav a {
   position: relative;
   white-space: nowrap;
   padding: 0.2rem 0;
+  transition: color 200ms ease-out, scale 200ms ease-out;
 }
 
 /* Scrollspy: link of the section currently in view */
@@ -414,6 +409,10 @@ main section[id] {
 }
 
 .hero-stage {
+  /* One timing family for the card reveal; script.js mirrors these values. */
+  --hero-slide-ms: 500ms;
+  --hero-raise-ms: 240ms;
+  --hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   min-height: 680px;
   isolation: isolate;
@@ -422,8 +421,7 @@ main section[id] {
 .hero-stage.has-panel-focus .hero-shot {
   transform: rotate(var(--shot-rot, -6deg)) translate3d(var(--shot-tx, 28px), var(--shot-ty, 8px), 0) scale(var(--shot-scale, 0.95));
   /* Stay mostly solid while the card slides out underneath. */
-  opacity: 0.9;
-  filter: saturate(0.95);
+  /* Fully solid while the card is underneath, so its text never shows through. */
   z-index: 2;
 }
 
@@ -495,7 +493,7 @@ main section[id] {
 .hero-panel-trigger {
   cursor: pointer;
   transform: translate3d(0, 0, 0);
-  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 420ms ease, background-color 320ms ease, border-color 320ms ease, opacity 320ms ease, filter 320ms ease;
+  transition: transform var(--hero-slide-ms) var(--hero-ease), box-shadow var(--hero-raise-ms) ease-out, background-color var(--hero-raise-ms) ease-out, border-color var(--hero-raise-ms) ease-out, opacity var(--hero-raise-ms) ease-out, filter var(--hero-raise-ms) ease-out;
   will-change: transform;
 }
 
@@ -515,6 +513,15 @@ main section[id] {
 .hero-panel-trigger.is-emerging:hover,
 .hero-panel-trigger.is-emerging:focus-visible {
   z-index: 1;
+  transform: translate3d(var(--panel-tx, 0px), var(--panel-ty, 0px), 0);
+}
+
+/* Closing, step 1: the card stays above the photo (still out at its slide
+   position) while the photo turns solid again; then it tucks back under. */
+.hero-panel-trigger.is-settling,
+.hero-panel-trigger.is-settling:hover,
+.hero-panel-trigger.is-settling:focus-visible {
+  z-index: 4;
   transform: translate3d(var(--panel-tx, 0px), var(--panel-ty, 0px), 0);
 }
 
@@ -580,7 +587,7 @@ main section[id] {
   box-shadow: 0 42px 90px rgba(41, 26, 16, 0.22);
   transform: rotate(-4deg) scale(1.05);
   transform-origin: center center;
-  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1), opacity 380ms ease, filter 380ms ease;
+  transition: transform var(--hero-slide-ms) var(--hero-ease), opacity var(--hero-raise-ms) ease-out, filter var(--hero-raise-ms) ease-out;
 }
 
 .hero-shot img,
@@ -1061,8 +1068,6 @@ main section[id] {
   }
   .hero-stage.has-panel-focus .hero-shot {
     transform: rotate(var(--shot-rot, 0deg)) translate3d(var(--shot-tx, 0px), var(--shot-ty, 12px), 0) scale(var(--shot-scale, 0.98));
-    opacity: 0.88;
-    filter: none;
   }
   /* Phone: the opened card sits on a softly blurred photo; the other card
      steps out completely instead of ghosting its text through the photo. */
@@ -1073,7 +1078,7 @@ main section[id] {
   .hero-panel-trigger.is-dimmed {
     opacity: 0;
     visibility: hidden;
-    transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease, visibility 0s linear 220ms;
+    transition: transform var(--hero-slide-ms) var(--hero-ease), opacity var(--hero-raise-ms) ease-out, visibility 0s linear var(--hero-raise-ms);
   }
   .hero-panel-main {
     top: 0.5rem;
@@ -1087,7 +1092,7 @@ main section[id] {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
+    transition: max-height var(--hero-slide-ms) var(--hero-ease), opacity var(--hero-raise-ms) ease-out;
   }
   .hero-panel-side.is-emerging p,
   .hero-panel-side.is-focused p {
@@ -1236,7 +1241,12 @@ button,
 a,
 .project-card,
 .card {
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    opacity 200ms ease-out,
+    box-shadow 200ms ease-out;
 }
 
 .project-card:hover,
