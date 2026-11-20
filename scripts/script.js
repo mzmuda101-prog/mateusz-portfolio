@@ -1191,6 +1191,10 @@ function getHeaderOffset() {
 function initSmoothScroll() {
   // Reduced motion and touch devices keep native scrolling.
   if (prefersReducedMotion || typeof Lenis === "undefined") return;
+  // Safari keeps native scrolling: syncing JS-driven scroll with its threaded
+  // scroller dropped ~9% of frames on a real recording (Chrome: 0%).
+  // shortcut: vendor sniff, revisit if WebKit fixes JS-driven scroll sync.
+  if (navigator.vendor === "Apple Computer, Inc.") return;
 
   lenis = new Lenis({
     duration: 1.2,
