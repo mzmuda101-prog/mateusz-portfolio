@@ -28,25 +28,18 @@
     <link rel="icon" type="image/png" sizes="48x48" href="./assets/opt/favicon-48.png?v=3" />
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/opt/favicon-192.png?v=3" />
     <link rel="apple-touch-icon" href="./assets/opt/apple-touch-icon.png?v=3" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css?v=20261017j" />
+    <link rel="preload" href="./assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./assets/fonts/cormorant-garamond-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./styles.css?v=20261120d" />
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <a class="brand" href="#top" aria-label="Przejdź do początku strony" id="brand-link" data-i18n-aria-label="brandAria"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
+        <a class="brand" href="#top" aria-label="Mateusz Zmuda, przejdź na początek strony" id="brand-link" data-i18n-aria-label="brandAria"> <!-- przypomnienie dzialania mojej funkcji: data-hint-class-only="cursor-hint-blue-transparent" w '< >' i w styles.css odkomentowac klase '.cursor-hint-blue-transparent' -->
           <img src="./assets/opt/mateusz-logo.webp" alt="Logo Mateusz Zmuda" width="44" height="44" />
           <span>Mateusz Zmuda</span>
         </a>
         <div class="header-controls">
-          <a class="refresh" href="javascript:location.reload();" aria-label="Odśwież stronę" data-hint="kliknij aby Odświeżyć stronę" data-hint-class="smaller" id="refresh-link" data-i18n-aria-label="refreshAria" data-i18n-hint="refreshHint">
-            <img src="./assets/opt/refresh-logo.webp" alt="Odśwież stronę" id="refresh-image" data-i18n-alt="refreshAlt" width="24" height="24" />
-          </a>
           <nav class="site-nav" aria-label="Główna nawigacja" id="site-nav" data-i18n-aria-label="navAria">
             <a href="#projects" data-nav="projects" data-i18n="nav.projects">Projekty</a>
             <a href="#about" data-nav="about" data-i18n="nav.about">Profil</a>
@@ -61,7 +54,7 @@
       </header>
 
       <main id="top">
-        <section class="hero reveal">
+        <section class="hero">
           <div class="hero-copy">
             <p class="eyebrow" data-hint="Głównie Frontend Developer, JavaScript, Firebase /| Buduję interaktywne aplikacje webowe i narzędzia do pracy z danymi" id="hero-eyebrow" data-i18n-hint="heroEyebrowHint"> <!-- '/|' robi za enter -->
               <span id="hero-eyebrow-top" data-i18n="heroEyebrowTop">Portfolio / Web & utility projects.</span> <br><span id="hero-eyebrow-bottom" data-i18n="heroEyebrowBottom">Głównie Frontend Developer | JavaScript | Firebase</span>
@@ -99,8 +92,8 @@
                 <span id="hero-metric-2" data-i18n="heroMetric2">główne osie pracy: web, Excel, utility tools</span>
               </div>
               <div>
-                <strong>1</strong>
-                <span id="hero-metric-3" data-i18n="heroMetric3">cel: budować rzeczy przydatne, nie tylko efektowne</span>
+                <strong>0</strong>
+                <span id="hero-metric-3" data-i18n="heroMetric3">plików wysyłanych na serwer: moje PWA działają lokalnie</span>
               </div>
             </div>
           </div>
@@ -137,7 +130,7 @@
             <figure class="hero-shot">
               <a href="https://sheet-workbench-pwa.vercel.app/" target="_blank" rel="noopener noreferrer" data-hint=" przejdź do strony projektu" data-hint-class="smaller" id="hero-shot-link" data-i18n-hint="heroShotLinkHint">
                 <img
-                src="./assets/opt/sheet-workbench-pwa.webp"
+                src="./assets/opt/sheet-workbench-pwa.webp?v=20261120"
                 alt="Zrzut ekranu projektu Sheet Workbench PWA"
                 width="1600"
                 height="913"
@@ -161,12 +154,8 @@
           </div>
 
           <div class="project-layout">
-            <div
-              class="project-list"
-              role="tablist"
-              aria-label="Lista wyróżnionych projektów"
-              data-i18n-aria-label="projectListAria"
-              >
+            <div class="project-list">
+              <div class="project-tabs" role="tablist" aria-label="Lista wyróżnionych projektów" data-i18n-aria-label="projectListAria">
                 <button
                 class="project-tab is-active"
                 type="button"
@@ -204,14 +193,15 @@
                 >
                 Smart Kalkulator PWA
                 </button>
-              <span class="project-tab-info"><b data-i18n="projectTabInfo">reszta projektów w sekcji: "GitHub"</b></span>
+              </div>
+              <a class="project-tab-info" href="#github" data-i18n="projectTabInfo">Pozostałe projekty w sekcji GitHub</a>
             </div>
 
             <article class="project-spotlight" id="project-spotlight" role="tabpanel" aria-labelledby="project-tab-excel-workbench-pwa">
               <button class="project-visual" type="button" id="spotlight-zoom" data-hint="powiększ zrzut ekranu" data-hint-class="smaller" data-i18n-hint="spotlightZoomHint" data-i18n-aria-label="spotlightZoomAria" aria-label="Powiększ zrzut ekranu">
                 <img
                   id="spotlight-image"
-                  src="./assets/opt/sheet-workbench-pwa.webp"
+                  src="./assets/opt/sheet-workbench-pwa.webp?v=20261120"
                   alt="Podgląd projektu"
                   width="1600"
                   height="913"
@@ -234,47 +224,6 @@
           </div>
         </section>
 
-        <section class="section process-section reveal">
-          <div class="section-heading">
-            <p class="eyebrow" id="process-eyebrow" data-i18n="processEyebrow">Approach</p>
-            <h2 id="process-title" data-i18n="processTitle">Łączę klimat i wygląd z jasną funkcją produktu</h2>
-          </div>
-
-          <div class="process-rail">
-            <div class="process-step">
-              <span>01</span>
-              <div>
-                <h3 id="process-step-1-title" data-i18n="processStep1Title">Punkt wyjścia</h3>
-                <p id="process-step-1-text" data-i18n="processStep1Text">
-                  Szukam realnego problemu albo konkretnego przepływu pracy:
-                  czego użytkownik potrzebuje szybciej, prościej albo czytelniej.
-                </p>
-              </div>
-            </div>
-            <div class="process-step">
-              <span>02</span>
-              <div>
-                <h3 id="process-step-2-title" data-i18n="processStep2Title">Forma</h3>
-                <p id="process-step-2-text" data-i18n="processStep2Text">
-                  Potem dopiero dobieram język wizualny: rytm sekcji, proporcje,
-                  ruch i typografię, tak żeby projekt miał charakter, ale nie
-                  przeszkadzał w użyciu.
-                </p>
-              </div>
-            </div>
-            <div class="process-step">
-              <span>03</span>
-              <div>
-                <h3 id="process-step-3-title" data-i18n="processStep3Title">Dowiezienie</h3>
-                <p id="process-step-3-text" data-i18n="processStep3Text">
-                  Lubię domykać projekt do wersji, którą da się uruchomić,
-                  pokazać online, przetestować i dalej rozwijać.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section class="section about-section reveal" id="about">
           <div class="section-heading">
             <p class="eyebrow" id="about-eyebrow" data-i18n="aboutEyebrow">Profile</p>
@@ -284,28 +233,18 @@
           <div class="about-grid">
             <div class="about-block">
               <span>01</span>
-              <h3 id="about-block-1-title" data-i18n="about1Title">Utility-first thinking</h3>
-              <p id="about-block-1-text" data-i18n="about1Text">
-                Najbardziej interesują mnie projekty, które rozwiązują realny
-                problem: upraszczają workflow, porządkują dane albo przyspieszają
-                codzienną pracę.
-              </p>
+              <h3 id="about-block-1-title" data-i18n="about1Title">Realny problem na start</h3>
+              <p id="about-block-1-text" data-i18n="about1Text">Zaczynam od konkretnego przepływu pracy: co użytkownik ma zrobić szybciej, prościej albo czytelniej. Najbardziej lubię projekty, które porządkują dane i przyspieszają codzienną pracę.</p>
             </div>
             <div class="about-block">
               <span>02</span>
               <h3 id="about-block-2-title" data-i18n="about2Title">Frontend z klimatem</h3>
-              <p id="about-block-2-text" data-i18n="about2Text">
-                Nawet w prostych aplikacjach zależy mi na kompozycji, ruchu,
-                rytmie sekcji i wyrazistej warstwie wizualnej.
-              </p>
+              <p id="about-block-2-text" data-i18n="about2Text">Dopiero potem dobieram język wizualny: rytm sekcji, proporcje, ruch i typografię. Projekt ma mieć charakter, ale nie przeszkadzać w użyciu.</p>
             </div>
             <div class="about-block">
               <span>03</span>
               <h3 id="about-block-3-title" data-i18n="about3Title">Od pomysłu do wdrożenia</h3>
-              <p id="about-block-3-text" data-i18n="about3Text">
-                Lubię spinać pełną całość: interfejs, logikę, eksport danych,
-                integracje z chmurą i wersję gotową do pokazania online.
-              </p>
+              <p id="about-block-3-text" data-i18n="about3Text">Domykam całość: interfejs, logikę, eksport danych, integracje z chmurą i wersję online, którą da się przetestować i dalej rozwijać.</p>
             </div>
           </div>
         </section>
@@ -335,7 +274,7 @@
         <section class="section contact-section reveal" id="contact">
           <p class="eyebrow" id="contact-eyebrow" data-i18n="contactEyebrow">Kontakt</p>
           <div class="contact-email-row">
-            <h4 data-hint="kliknij aby wysłać wiadomość na ten adres email" id="contact-email-heading" data-i18n-hint="contactEmailHint"><a href="mailto:m.mathew016@gmail.com">m.mathew016@gmail.com</a></h4>
+            <p class="contact-email" data-hint="kliknij aby wysłać wiadomość na ten adres email" id="contact-email-heading" data-i18n-hint="contactEmailHint"><a href="mailto:m.mathew016@gmail.com">m.mathew016@gmail.com</a></p>
             <button class="copy-email" type="button" id="copy-email" data-email="m.mathew016@gmail.com" data-i18n="copyEmail">Kopiuj adres</button>
           </div>
           <h2 id="contact-title" data-i18n="contactTitle">Otwarty na ciekawe projekty, współpracę i kolejne webowe <br> (i nie tylko...) wyzwania.</h2>
@@ -353,6 +292,10 @@
           </div>
         </section>
       </main>
+      <footer class="site-footer">
+        <p>© 2026 Mateusz Zmuda</p>
+        <a href="#top" data-i18n="footerTop">Wróć na górę</a>
+      </footer>
     </div>
 
     <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="image-lightbox-caption">
@@ -371,13 +314,13 @@
       </div>
     </div>
     
-    <script src="./scripts/translations.js?v=20261017j"></script>
-    <script src="./scripts/portfolio-data.js?v=20261017j"></script>
-    <script src="./scripts/language.js?v=20261017j"></script>
-    <script src="./scripts/cursor-hint.js?v=20261017j"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
-    <script src="./scripts/script.js?v=20261017j"></script>
+    <script defer src="./scripts/translations.js?v=20261120d"></script>
+    <script defer src="./scripts/portfolio-data.js?v=20261120d"></script>
+    <script defer src="./scripts/language.js?v=20261120d"></script>
+    <script defer src="./scripts/cursor-hint.js?v=20261120d"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+    <script defer src="./scripts/script.js?v=20261120d"></script>
   </body>
 
 </html>

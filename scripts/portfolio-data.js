@@ -39,7 +39,7 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/opt/sheet-workbench-pwa.webp",
+    image: "./assets/opt/sheet-workbench-pwa.webp?v=20261120",
     imageAlt: {
       pl: "Zrzut ekranu Sheet Workbench PWA",
       en: "Screenshot of Sheet Workbench PWA",
@@ -90,7 +90,7 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/opt/smart-kalkulator-pwa.webp",
+    image: "./assets/opt/smart-kalkulator-pwa.webp?v=20261120",
     imageAlt: {
       pl: "Zrzut ekranu Smart Kalkulator PWA",
       en: "Screenshot of Smart Calculator PWA",
@@ -139,7 +139,7 @@ const projects = {
       shadowStrength: "24%",
       softGlowSize: "52%",
     },
-    image: "./assets/opt/documents-workbench-pwa.webp",
+    image: "./assets/opt/documents-workbench-pwa.webp?v=20261120",
     imageAlt: {
       pl: "Zrzut ekranu Documents Workbench PWA",
       en: "Screenshot of Documents Workbench PWA",

@@ -5,10 +5,7 @@ const translations = {
     pageTitle: "Mateusz Zmuda | Portfolio",
     pageDescription:
       "Portfolio Mateusza Zmudy: aplikacje webowe, narzędzia do Excela, projekty frontendowe i utility apps.",
-    brandAria: "Przejdź do początku strony",
-    refreshAria: "Odśwież stronę",
-    refreshHint: "kliknij aby Odświeżyć stronę",
-    refreshAlt: "Odśwież stronę",
+    brandAria: "Mateusz Zmuda, przejdź na początek strony",
     navAria: "Główna nawigacja",
     nav: {
       projects: "Najmocniejsze Projekty",
@@ -30,7 +27,7 @@ const translations = {
     heroSecondaryCta: "Otwórz GitHub",
     heroMetric1: "projektów publicznych i showcase'ów",
     heroMetric2: "główne osie pracy: web, Excel, utility tools",
-    heroMetric3: "cel: budować rzeczy przydatne, nie tylko efektowne",
+    heroMetric3: "plików wysyłanych na serwer: moje PWA działają lokalnie",
     heroPanelMainLabel: "Wybrane obszary",
     heroPanelMain1: "Frontend i UI z charakterem",
     heroPanelMain2: "Excel / workflow / dane",
@@ -43,38 +40,23 @@ const translations = {
       "Najchętniej buduję rzeczy użyteczne: od narzędzi do analizy i pracy z danymi, po strony, które mają wyraźny styl i czytelny cel.",
     projectsEyebrow: "Selected work",
     projectsTitle: "Najmocniejsze projekty w jednym miejscu",
-    projectTabInfo: "reszta projektów w sekcji: \"GitHub\"",
+    projectTabInfo: "Pozostałe projekty w sekcji GitHub",
     projectListAria: "Lista wyróżnionych projektów",
-    processEyebrow: "Approach",
-    processTitle: "Łączę klimat i wygląd z jasną funkcją produktu",
-    processStep1Title: "Punkt wyjścia",
-    processStep1Text:
-      "Szukam realnego problemu albo konkretnego przepływu pracy: czego użytkownik potrzebuje szybciej, prościej albo czytelniej.",
-    processStep2Title: "Forma",
-    processStep2Text:
-      "Potem dopiero dobieram język wizualny: rytm sekcji, proporcje, ruch i typografię, tak żeby projekt miał charakter, ale nie przeszkadzał w użyciu.",
-    processStep3Title: "Dowiezienie",
-    processStep3Text:
-      "Lubię domykać projekt do wersji, którą da się uruchomić, pokazać online, przetestować i dalej rozwijać.",
     aboutEyebrow: "Profile",
     aboutTitle: "Jak podchodzę do budowania produktów",
-    about1Title: "Utility-first thinking",
-    about1Text:
-      "Najbardziej interesują mnie projekty, które rozwiązują realny problem: upraszczają workflow, porządkują dane albo przyspieszają codzienną pracę.",
+    about1Title: "Realny problem na start",
+    about1Text: "Zaczynam od konkretnego przepływu pracy: co użytkownik ma zrobić szybciej, prościej albo czytelniej. Najbardziej lubię projekty, które porządkują dane i przyspieszają codzienną pracę.",
     about2Title: "Frontend z klimatem",
-    about2Text:
-      "Nawet w prostych aplikacjach zależy mi na kompozycji, ruchu, rytmie sekcji i wyrazistej warstwie wizualnej.",
+    about2Text: "Dopiero potem dobieram język wizualny: rytm sekcji, proporcje, ruch i typografię. Projekt ma mieć charakter, ale nie przeszkadzać w użyciu.",
     about3Title: "Od pomysłu do wdrożenia",
-    about3Text:
-      "Lubię spinać pełną całość: interfejs, logikę, eksport danych, integracje z chmurą i wersję gotową do pokazania online.",
+    about3Text: "Domykam całość: interfejs, logikę, eksport danych, integracje z chmurą i wersję online, którą da się przetestować i dalej rozwijać.",
     githubEyebrow: "GitHub",
     githubTitle: "Repozytoria publiczne pobierane na żywo z profilu",
     githubProfileLabel: "Profil:",
     githubStatusLoading: "Ładowanie repozytoriów…",
-    githubStatusLoaded: "Sekcja oraz niektóre palety kolorów są aktualizowane z GitHub API.",
-    githubStatusFallback:
-      "Nie udało się pobrać API, więc pokazuję przygotowaną listę najważniejszych repozytoriów.",
-    githubStatusCached: "GitHub API jest teraz niedostępne, więc pokazuję ostatnio pobraną listę.",
+    githubStatusLoaded: "Lista na żywo z GitHuba, od ostatnio aktualizowanych.",
+    githubStatusFallback: "Nie udało się połączyć z GitHubem, więc pokazuję zapisaną listę najważniejszych repozytoriów.",
+    githubStatusCached: "GitHub chwilowo nie odpowiada, więc pokazuję ostatnio pobraną listę.",
     repoMixedStack: "Mixed stack",
     repoUpdated: "Aktualizacja",
     repoNoDescription:
@@ -96,16 +78,14 @@ const translations = {
     spotlightZoomAria: "Powiększ zrzut ekranu",
     lightboxCloseAria: "Zamknij podgląd",
     clickHint: "Kliknij aby odkryć",
+    footerTop: "Wróć na górę",
   },
   en: {
     locale: "en-US",
     pageTitle: "Mateusz Zmuda | Portfolio",
     pageDescription:
       "Mateusz Zmuda's portfolio: web apps, Excel tools, frontend projects, and utility apps.",
-    brandAria: "Go to the top of the page",
-    refreshAria: "Refresh the page",
-    refreshHint: "click to refresh the page",
-    refreshAlt: "Refresh the page",
+    brandAria: "Mateusz Zmuda, go to the top of the page",
     navAria: "Main navigation",
     nav: {
       projects: "Best Projects",
@@ -127,7 +107,7 @@ const translations = {
     heroSecondaryCta: "Open GitHub",
     heroMetric1: "public projects and showcase builds",
     heroMetric2: "main focus areas: web, Excel, utility tools",
-    heroMetric3: "goal: build useful things, not just flashy ones",
+    heroMetric3: "files sent to a server: my PWAs work locally",
     heroPanelMainLabel: "Selected areas",
     heroPanelMain1: "Frontend and UI with character",
     heroPanelMain2: "Excel / workflow / data",
@@ -141,37 +121,22 @@ const translations = {
     projectsEyebrow: "Selected work",
     projectsTitle: "The strongest projects in one place",
     projectListAria: "List of featured projects",
-    processEyebrow: "Approach",
-    processTitle: "I connect visual atmosphere with a clear product function",
-    projectTabInfo: "rest of the projects in the \"GitHub\" section",
-    processStep1Title: "Starting point",
-    processStep1Text:
-      "I look for a real problem or a concrete workflow: what the user needs faster, simpler, or in a clearer form.",
-    processStep2Title: "Form",
-    processStep2Text:
-      "Only then do I shape the visual language: section rhythm, proportions, motion, and typography, so the project has personality without getting in the way.",
-    processStep3Title: "Delivery",
-    processStep3Text:
-      "I like taking projects to a version that can be launched, shown online, tested, and improved further.",
+    projectTabInfo: "More projects in the GitHub section",
     aboutEyebrow: "Profile",
     aboutTitle: "How I approach building products",
-    about1Title: "Utility-first thinking",
-    about1Text:
-      "I'm most interested in projects that solve a real problem: simplifying workflows, organizing data, or speeding up everyday work.",
+    about1Title: "A real problem first",
+    about1Text: "I start from a concrete workflow: what the user needs to do faster, simpler, or more clearly. I most enjoy projects that organize data and speed up everyday work.",
     about2Title: "Frontend with atmosphere",
-    about2Text:
-      "Even in simple apps, I care about composition, motion, section rhythm, and a distinct visual layer.",
+    about2Text: "Only then do I shape the visual language: section rhythm, proportions, motion, and typography. A project should have character without getting in the way.",
     about3Title: "From idea to launch",
-    about3Text:
-      "I like tying the whole thing together: interface, logic, data export, cloud integrations, and a version ready to show online.",
+    about3Text: "I take the whole thing to the finish: interface, logic, data export, cloud integrations, and an online version that can be tested and improved further.",
     githubEyebrow: "GitHub",
     githubTitle: "Public repositories pulled live from the profile",
     githubProfileLabel: "Profile:",
     githubStatusLoading: "Loading repositories…",
-    githubStatusLoaded: "This section and some palette colours are updated from the GitHub API.",
-    githubStatusFallback:
-      "The API couldn't be loaded, so I'm showing a prepared list of key repositories.",
-    githubStatusCached: "GitHub API is unavailable right now, so I'm showing the last downloaded list.",
+    githubStatusLoaded: "Live from GitHub, most recently updated first.",
+    githubStatusFallback: "Couldn't reach GitHub, so I'm showing a saved list of key repositories.",
+    githubStatusCached: "GitHub isn't responding right now, so I'm showing the last downloaded list.",
     repoMixedStack: "Mixed stack",
     repoUpdated: "Updated",
     repoNoDescription:
@@ -192,6 +157,7 @@ const translations = {
     spotlightZoomAria: "Enlarge screenshot",
     lightboxCloseAria: "Close preview",
     clickHint: "Click to reveal",
+    footerTop: "Back to top",
   },
 };
 
